@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.todo_y_pomodoro_app">
+    package="com.solucionesdigitalesapp.todoandpomodoro">
    <application
         android:label="todo_y_pomodoro_app"
         android:name="${applicationName}"

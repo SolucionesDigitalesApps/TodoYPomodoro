@@ -1,0 +1,112 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:todo_y_pomodoro_app/core/utils.dart';
+import 'package:todo_y_pomodoro_app/features/common/widgets/v_spacing.dart';
+
+class CustomTextFormField extends StatelessWidget {
+  final String hintText;
+  final bool obscureText;
+  final Function(String)? onChanged;
+  final String? Function(String?)? validator;
+  final TextInputType? keyboardType;
+  final TextStyle? hintStyle;
+  final String errorMessage;
+  final TextEditingController? controller;
+  final Function()? onTap;
+  final TextInputFormatter? formater;
+  final GlobalKey<FormState>? formKey;
+  final FocusNode? focusNode;
+  final TextAlign textAlign;
+  final double widthPer;
+
+  const CustomTextFormField({
+    required this.hintText, 
+    this.obscureText = false,
+    this.onChanged,
+    this.validator,
+    this.keyboardType,
+    Key? key, 
+    this.hintStyle,
+    this.errorMessage = "",
+    this.controller,
+    this.onTap,
+    this.formater,
+    this.formKey,
+    this.focusNode,
+    this.textAlign = TextAlign.start,
+    this.widthPer = 90
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final hasError = errorMessage.isNotEmpty;
+    return Container(
+      width: mqWidth(context, widthPer),
+      color: hasError ? Colors.white : null,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: mqWidth(context, widthPer),
+            color: Theme.of(context).indicatorColor,
+            child: TextFormField(
+              key: formKey,
+              onTap: onTap,
+              focusNode: focusNode,
+              controller: controller,
+              obscureText: obscureText,
+              onChanged: onChanged,
+              validator: validator,
+              keyboardType: keyboardType,
+              inputFormatters: formater != null ? [formater!] : null,
+              autocorrect: false,
+              style: const TextStyle(
+                fontSize: 18,
+                color: Colors.white
+              ),
+              textAlign: textAlign,
+              decoration: InputDecoration(
+                hintText: hintText,
+                hintStyle: TextStyle(
+                  color: Colors.white.withOpacity(0.6),
+                  fontSize: 18
+                ),
+                contentPadding: EdgeInsets.only(left: mqWidth(context, 3)),
+                border: InputBorder.none,
+                focusColor: Colors.grey,
+                enabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                ),
+                focusedBorder: const OutlineInputBorder(
+                  borderSide: BorderSide.none
+                ),
+              ),
+            ),
+          ),
+          Container(
+            width: mqWidth(context, widthPer),
+            height: 1,
+            color: hasError ? Theme.of(context).dividerColor :Colors.white,
+          ),
+          errorMessage.isNotEmpty ? Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const VSpacing(1),
+              Container(
+                padding: EdgeInsets.only(
+                  left: mqWidth(context, 2)
+                ),
+                child: Text(errorMessage, 
+                  style: const TextStyle(
+                    color: Colors.red
+                  )
+                ),
+              ),
+              const VSpacing(1)
+            ],
+          ) : const SizedBox()
+        ],
+      ),
+    );
+  }
+}
