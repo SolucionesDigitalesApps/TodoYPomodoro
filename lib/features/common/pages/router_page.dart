@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_y_pomodoro_app/features/auth/controllers/auth_controller.dart';
 import 'package:todo_y_pomodoro_app/features/auth/models/user_model.dart';
-import 'package:todo_y_pomodoro_app/features/auth/pages/sign_in_page.dart';
 import 'package:todo_y_pomodoro_app/features/auth/providers/user_provider.dart';
 import 'package:todo_y_pomodoro_app/features/common/controllers/notification_controller.dart';
 import 'package:todo_y_pomodoro_app/features/common/models/error_response.dart';
