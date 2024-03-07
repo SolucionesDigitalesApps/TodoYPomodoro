@@ -7,6 +7,7 @@ import 'package:todo_y_pomodoro_app/features/auth/providers/user_provider.dart';
 import 'package:todo_y_pomodoro_app/features/common/controllers/notification_controller.dart';
 import 'package:todo_y_pomodoro_app/features/common/models/error_response.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/scaffold_wrapper.dart';
+import 'package:todo_y_pomodoro_app/features/tasks/pages/onboarding_page.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/pages/tasks_home_page.dart';
 
 class RouterPage extends StatefulWidget {
@@ -32,7 +33,7 @@ class _RouterPageState extends State<RouterPage> {
     final resp = await Provider.of<UserProvider>(context, listen: false).getCurrentUser();
     if(resp is ErrorResponse){
       if(mounted){
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const SignInPage()), (route) => false);
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const OnboardingPage()), (route) => false);
       }
     }else{
       final user = resp as UserModel;
