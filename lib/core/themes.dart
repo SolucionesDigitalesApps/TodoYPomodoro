@@ -11,6 +11,11 @@ class Themes {
         fontWeight: FontWeight.w800,
         color: Colors.black
       ),
+      displayMedium: TextStyle(
+        fontSize: 24,
+        fontWeight: FontWeight.w600,
+        color: Color(0xff1C1C1C)
+      ),
       displaySmall: TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.w400,

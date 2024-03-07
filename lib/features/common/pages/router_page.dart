@@ -32,7 +32,7 @@ class _RouterPageState extends State<RouterPage> {
     final resp = await Provider.of<UserProvider>(context, listen: false).getCurrentUser();
     if(resp is ErrorResponse){
       if(mounted){
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const OnboardingPage()), (route) => false);
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const TasksHomePage()), (route) => false);
       }
     }else{
       final user = resp as UserModel;
