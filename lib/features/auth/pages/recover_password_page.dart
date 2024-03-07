@@ -1,15 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_y_pomodoro_app/core/navigation.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
 import 'package:todo_y_pomodoro_app/core/validator.dart';
 import 'package:todo_y_pomodoro_app/features/auth/controllers/auth_controller.dart';
 import 'package:todo_y_pomodoro_app/features/auth/models/user_model.dart';
-import 'package:todo_y_pomodoro_app/features/auth/pages/recover_password_page.dart';
 import 'package:todo_y_pomodoro_app/features/auth/providers/user_provider.dart';
 import 'package:todo_y_pomodoro_app/features/common/models/error_response.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/alerts.dart';
+import 'package:todo_y_pomodoro_app/features/common/widgets/app_header.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_button.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_text_form_field.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/general_image.dart';
@@ -18,14 +17,14 @@ import 'package:todo_y_pomodoro_app/features/common/widgets/scaffold_wrapper.dar
 import 'package:todo_y_pomodoro_app/features/common/widgets/v_spacing.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/pages/tasks_home_page.dart';
 
-class SignInPage extends StatefulWidget {
-  const SignInPage({super.key});
+class RecoverPasswordPage extends StatefulWidget {
+  const RecoverPasswordPage({super.key});
 
   @override
-  State<SignInPage> createState() => _SignInPageState();
+  State<RecoverPasswordPage> createState() => _RecoverPasswordPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _RecoverPasswordPageState extends State<RecoverPasswordPage> {
   final authController = AuthController();
   
   final emailController = TextEditingController();
@@ -42,56 +41,24 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return ScaffoldWrapper(
-      onWillPop: () => Future.value(false),
-      backgroundColor: Colors.white,
       body: Stack(
         children: [
           SingleChildScrollView(
             child: Column(
               children: [
-                const VSpacing(15),
-                GeneralImage(
-                  width: mqHeigth(context, 20),
-                  height: mqHeigth(context, 20),
-                  url: "",
-                  fromLocal: false,
-                  fit: BoxFit.cover,
-                ),
-                const VSpacing(10),
+                const VSpacing(5),
+                const AppHeader(title: "Recuperar contraseña"),
+                const VSpacing(5),
                 CustomTextFormField(
                   keyboardType: TextInputType.emailAddress,
                   controller: emailController,
                   hintText: "Correo",
                   errorMessage: emailError,
                 ),
-                const VSpacing(3),
-                CustomTextFormField(
-                  controller: passwordController,
-                  hintText: "Contraseña",
-                  errorMessage: passwordError,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                      onPressed: (){
-                        Navigator.push(context, cupertinoNavigationRoute(context, const RecoverPasswordPage()));
-                      }, 
-                      child: Text(
-                        "Olvidaste tu contraseña?",
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16
-                        )
-                      ),
-                    ),
-                  ],
-                ),
-                const VSpacing(10),
+                const VSpacing(8),
                 CustomButton(
                   onPressed: onSignIn,
-                  label: "Iniciar sesión", 
+                  label: "Enviar email", 
                   width: mqWidth(context, 90), 
                   color: Theme.of(context).primaryColor
                 )
