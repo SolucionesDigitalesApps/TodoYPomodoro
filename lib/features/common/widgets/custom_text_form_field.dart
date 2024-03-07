@@ -40,15 +40,13 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final hasError = errorMessage.isNotEmpty;
-    return Container(
+    return SizedBox(
       width: mqWidth(context, widthPer),
-      color: hasError ? Colors.white : null,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: mqWidth(context, widthPer),
-            color: Theme.of(context).indicatorColor,
             child: TextFormField(
               key: formKey,
               onTap: onTap,
@@ -62,23 +60,31 @@ class CustomTextFormField extends StatelessWidget {
               autocorrect: false,
               style: const TextStyle(
                 fontSize: 18,
-                color: Colors.white
               ),
               textAlign: textAlign,
               decoration: InputDecoration(
                 hintText: hintText,
                 hintStyle: TextStyle(
-                  color: Colors.white.withOpacity(0.6),
-                  fontSize: 18
+                  fontSize: 18,
+                  color: Colors.grey[400],
+                  fontWeight: FontWeight.w400
                 ),
                 contentPadding: EdgeInsets.only(left: mqWidth(context, 3)),
-                border: InputBorder.none,
+                border: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
                 focusColor: Colors.grey,
                 enabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  borderSide: BorderSide(
+                    color: Colors.grey
+                  )
                 ),
-                focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide.none
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  borderSide: BorderSide(
+                    color: Theme.of(context).primaryColor
+                  )
                 ),
               ),
             ),

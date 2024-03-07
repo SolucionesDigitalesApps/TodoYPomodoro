@@ -49,28 +49,48 @@ class _SignInPageState extends State<SignInPage> {
               children: [
                 const VSpacing(15),
                 GeneralImage(
-                  width: mqWidth(context, 60),
-                  url: "assets/images/logo_app.png",
-                  fromLocal: true,
+                  width: mqHeigth(context, 20),
+                  height: mqHeigth(context, 20),
+                  url: "",
+                  fromLocal: false,
+                  fit: BoxFit.cover,
                 ),
                 const VSpacing(10),
                 CustomTextFormField(
                   keyboardType: TextInputType.emailAddress,
                   controller: emailController,
-                  hintText: "Ingrese su correo",
+                  hintText: "Correo",
                   errorMessage: emailError,
                 ),
                 const VSpacing(3),
                 CustomTextFormField(
                   controller: passwordController,
-                  hintText: "Ingrese su contraseña",
+                  hintText: "Contraseña",
                   errorMessage: passwordError,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: (){
+
+                      }, 
+                      child: Text(
+                        "Olvidaste tu contraseña?",
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16
+                        )
+                      ),
+                    ),
+                  ],
                 ),
                 const VSpacing(10),
                 CustomButton(
                   onPressed: onSignIn,
                   label: "Iniciar sesión", 
-                  width: mqWidth(context, 60), 
+                  width: mqWidth(context, 90), 
                   color: Theme.of(context).primaryColor
                 )
               ],

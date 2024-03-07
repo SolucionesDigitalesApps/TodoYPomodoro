@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:todo_y_pomodoro_app/core/navigation.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
+import 'package:todo_y_pomodoro_app/features/auth/pages/sign_in_page.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_button.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/scaffold_wrapper.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/v_spacing.dart';
@@ -27,7 +29,9 @@ class OnboardingPage extends StatelessWidget {
             ),
             const VSpacing(5),
             CustomButton(
-              onPressed: (){}, 
+              onPressed: (){
+                Navigator.push(context, cupertinoNavigationRoute(context, const SignInPage()));
+              }, 
               label: "Start", 
               width: mqWidth(context, 90), 
               color: Theme.of(context).primaryColor
