@@ -6,6 +6,7 @@ import 'package:todo_y_pomodoro_app/features/auth/providers/user_provider.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:todo_y_pomodoro_app/features/common/pages/router_page.dart';
+import 'package:todo_y_pomodoro_app/features/tasks/providers/task_groups_provider.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -16,6 +17,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<UserProvider>(
           create: (context) => UserProvider()
+        ),
+        ChangeNotifierProvider<TaskGroupsProvider>(
+          create: (context) => TaskGroupsProvider()
         ),
       ],
       child: MaterialApp(

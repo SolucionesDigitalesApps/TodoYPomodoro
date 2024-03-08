@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
+import 'package:todo_y_pomodoro_app/features/tasks/models/task_group.dart';
 
 class TaskGroupItem extends StatelessWidget {
+  final TaskGroupModel taskGroupModel;
   final Function() onPressed;
   final Function() onLongPress;
   final bool selected;
-  final String label;
   const TaskGroupItem({
     super.key,
+    required this.taskGroupModel,
     required this.onPressed,
     required this.onLongPress,
     required this.selected,
-    required this.label,
   });
 
   @override
@@ -36,7 +37,7 @@ class TaskGroupItem extends StatelessWidget {
         fillColor: selected ? Theme.of(context).primaryColor : null,
         child: Center(
           child: Text(
-            label,
+            taskGroupModel.label,
             style: TextStyle(
               color: selected ? Colors.white : Theme.of(context).primaryColor,
               fontSize: 16

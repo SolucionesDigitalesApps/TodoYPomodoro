@@ -36,7 +36,7 @@ class _RouterPageState extends State<RouterPage> {
     }else{
       final user = resp as UserModel;
       final token = await notificationController.getToken() ?? "";
-      await authController.updateToken(user.uid, token);
+      await authController.updateToken(user.id, token);
       if(mounted){
         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const TasksHomePage()), (route) => false);
       }
