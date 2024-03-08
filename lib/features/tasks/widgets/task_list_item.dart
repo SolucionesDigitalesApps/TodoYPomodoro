@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:todo_y_pomodoro_app/core/navigation.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/alerts.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_icon_button.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/v_spacing.dart';
+import 'package:todo_y_pomodoro_app/features/pomodoro/pages/pomodoro_page.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/widgets/edit_task_sheet.dart';
 
 class TaskListItem extends StatelessWidget {
   final bool pomodoro;
+  final bool fromPomodoroPage;
   const TaskListItem({
     super.key,
-    this.pomodoro = false
+    this.pomodoro = false,
+    this.fromPomodoroPage = false
   });
 
   @override
@@ -47,7 +51,11 @@ class TaskListItem extends StatelessWidget {
               borderRadius: 30,
               size: 10, 
               borderColor: const Color(0xff919191),
-              onPressed: (){}, 
+              onPressed: (){
+                if(pomodoro && !fromPomodoroPage){
+                  Navigator.push(context, cupertinoNavigationRoute(context, const PomodoroPage()));
+                }
+              }, 
               icon: pomodoro ? const Icon(Icons.play_arrow_rounded) : const Icon(Icons.check)
             )
           ],

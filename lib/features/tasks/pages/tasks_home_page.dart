@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:todo_y_pomodoro_app/core/navigation.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/alerts.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_icon_button.dart';
-import 'package:todo_y_pomodoro_app/features/common/widgets/custom_text_button.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/scaffold_wrapper.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/v_spacing.dart';
+import 'package:todo_y_pomodoro_app/features/tasks/pages/archived_tasks_page.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/widgets/create_task_sheet.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/widgets/task_group_list.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/widgets/task_list_item.dart';
@@ -39,7 +40,9 @@ class TasksHomePage extends StatelessWidget {
                         borderRadius: 30,
                         size: 10, 
                         borderColor: const Color(0xff919191),
-                        onPressed: (){}, 
+                        onPressed: (){
+                          Navigator.push(context, cupertinoNavigationRoute(context, const ArchivedTasksPage()));
+                        }, 
                         icon: const Icon(Icons.archive_outlined)
                       )
                     ],
