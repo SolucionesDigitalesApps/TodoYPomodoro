@@ -11,7 +11,6 @@ import 'package:todo_y_pomodoro_app/features/common/widgets/alerts.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/app_header.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_button.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_text_form_field.dart';
-import 'package:todo_y_pomodoro_app/features/common/widgets/general_image.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/page_loader.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/scaffold_wrapper.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/v_spacing.dart';

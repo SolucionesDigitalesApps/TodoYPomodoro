@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_icon_button.dart';
-import 'package:todo_y_pomodoro_app/features/common/widgets/h_spacing.dart';
 
 class AppHeader extends StatelessWidget {
   final String title;
