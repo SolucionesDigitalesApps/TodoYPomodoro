@@ -3,11 +3,13 @@ import 'package:todo_y_pomodoro_app/core/utils.dart';
 
 class TaskGroupItem extends StatelessWidget {
   final Function() onPressed;
+  final Function() onLongPress;
   final bool selected;
   final String label;
   const TaskGroupItem({
     super.key,
     required this.onPressed,
+    required this.onLongPress,
     required this.selected,
     required this.label,
   });
@@ -27,6 +29,7 @@ class TaskGroupItem extends StatelessWidget {
           )
         ),
         onPressed: onPressed,
+        onLongPress: onLongPress,
         padding: EdgeInsets.symmetric(
           horizontal: mqWidth(context, 3)
         ),

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
 
-class SheetContentView extends StatelessWidget {
+class SheetContentLayout extends StatelessWidget {
   final Widget child;
   final bool extendSheet;
   final Color? backgroundColor;
   final double paddingTopPer;
-  const SheetContentView({
+  const SheetContentLayout({
     super.key,
     required this.child,
     this.backgroundColor,
@@ -28,8 +28,6 @@ class SheetContentView extends StatelessWidget {
           color: backgroundColor ?? Theme.of(context).bottomNavigationBarTheme.backgroundColor,
         ),
         padding: EdgeInsets.only(
-          left: mqWidth(context, 5),
-          right: mqWidth(context, 5),
           top: mqWidth(context, paddingTopPer),
           bottom: extendSheet ? mqHeigth(context, 40) : mqWidth(context, 5),
         ),

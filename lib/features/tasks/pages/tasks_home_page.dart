@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
+import 'package:todo_y_pomodoro_app/features/common/widgets/alerts.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_icon_button.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/scaffold_wrapper.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/v_spacing.dart';
+import 'package:todo_y_pomodoro_app/features/tasks/widgets/create_task_sheet.dart';
+import 'package:todo_y_pomodoro_app/features/tasks/widgets/edit_group_sheet.dart';
+import 'package:todo_y_pomodoro_app/features/tasks/widgets/new_group_sheet.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/widgets/task_group_item.dart';
+import 'package:todo_y_pomodoro_app/features/tasks/widgets/task_group_list.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/widgets/task_list_item.dart';
 
 class TasksHomePage extends StatelessWidget {
@@ -31,50 +36,66 @@ class TasksHomePage extends StatelessWidget {
                     ],
                   ),
                   const VSpacing(3),
+                  const TaskGroupList(),
+                  const VSpacing(2),
                   SizedBox(
-                    height: mqHeigth(context, 5),
+                    height: mqHeigth(context, 80),
                     child: ListView(
-                      scrollDirection: Axis.horizontal,
+                      padding: EdgeInsets.zero,
                       children: [
-                        TaskGroupItem(
-                          onPressed: (){}, 
-                          selected: true, 
-                          label: "Quehaceres"
+                        const Divider(),
+                        const TaskListItem(),
+                        Divider(
+                          height: mqHeigth(context, 3),
                         ),
-                        TaskGroupItem(
-                          onPressed: (){}, 
-                          selected: false, 
-                          label: "Auto"
+                        const TaskListItem(),
+                        Divider(
+                          height: mqHeigth(context, 3),
                         ),
-                        TaskGroupItem(
-                          onPressed: (){}, 
-                          selected: false, 
-                          label: "Casa"
-                        )
+                        const TaskListItem(),
+                        Divider(
+                          height: mqHeigth(context, 3),
+                        ),
+                        const TaskListItem(),
+                        Divider(
+                          height: mqHeigth(context, 3),
+                        ),
+                        const TaskListItem(),
+                        Divider(
+                          height: mqHeigth(context, 3),
+                        ),
+                        const TaskListItem(),
+                        Divider(
+                          height: mqHeigth(context, 3),
+                        ),
+                        const TaskListItem(),
+                        Divider(
+                          height: mqHeigth(context, 3),
+                        ),
+                        const TaskListItem(),
+                        Divider(
+                          height: mqHeigth(context, 3),
+                        ),
+                        const TaskListItem(),
+                        const VSpacing(8)
                       ],
                     ),
                   ),
-                  const VSpacing(2),
-                  const Divider(),
-                  const TaskListItem(),
-                  Divider(
-                    height: mqHeigth(context, 3),
-                  ),
-                  const TaskListItem(),
-                  Divider(
-                    height: mqHeigth(context, 3),
-                  ),
-                  const TaskListItem(),
-                  Divider(
-                    height: mqHeigth(context, 3),
-                  ),
-                  const TaskListItem(),
                 ]
               ),
             )
           )
         ]
-      )
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Theme.of(context).primaryColor,
+        onPressed: (){
+          showCustomBottomSheet(context, const CreateTaskSheet());
+        }, 
+        label: const Text("Nueva tarea"), 
+        icon: const Icon(Icons.add),
+      ),
     );
   }
 }

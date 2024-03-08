@@ -47,6 +47,7 @@ class CustomTextFormField extends StatelessWidget {
         children: [
           SizedBox(
             width: mqWidth(context, widthPer),
+            height: 60,
             child: TextFormField(
               key: formKey,
               onTap: onTap,
@@ -64,12 +65,17 @@ class CustomTextFormField extends StatelessWidget {
               textAlign: textAlign,
               decoration: InputDecoration(
                 hintText: hintText,
+                isDense: true,
                 hintStyle: TextStyle(
                   fontSize: 18,
                   color: Colors.grey[400],
                   fontWeight: FontWeight.w400
                 ),
-                contentPadding: EdgeInsets.only(left: mqWidth(context, 3)),
+                contentPadding: EdgeInsets.only(
+                  left: mqWidth(context, 3),
+                  top: 20,
+                  bottom: 15
+                ),
                 border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),

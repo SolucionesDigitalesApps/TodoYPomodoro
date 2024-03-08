@@ -6,3 +6,4 @@ double mqHeigth(BuildContext context, double percentage){
 double mqWidth(BuildContext context, double percentage){
   return MediaQuery.of(context).size.width * (percentage/100);
 }
+

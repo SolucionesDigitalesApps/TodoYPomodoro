@@ -11,6 +11,7 @@ import 'package:todo_y_pomodoro_app/features/auth/providers/user_provider.dart';
 import 'package:todo_y_pomodoro_app/features/common/models/error_response.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/alerts.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_button.dart';
+import 'package:todo_y_pomodoro_app/features/common/widgets/custom_text_button.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_text_form_field.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/general_image.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/page_loader.dart';
@@ -73,19 +74,12 @@ class _SignInPageState extends State<SignInPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    TextButton(
+                    CustomTextButton(
+                      label: "Olvidaste tu contraseña?", 
                       onPressed: (){
                         Navigator.push(context, cupertinoNavigationRoute(context, const RecoverPasswordPage()));
                       }, 
-                      child: Text(
-                        "Olvidaste tu contraseña?",
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16
-                        )
-                      ),
-                    ),
+                    )
                   ],
                 ),
                 const VSpacing(10),

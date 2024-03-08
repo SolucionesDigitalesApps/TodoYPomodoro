@@ -43,6 +43,7 @@ dependencies:
   firebase_auth: ^4.6.3
   firebase_messaging: ^14.6.3
   cloud_firestore: ^4.8.1
+  duration_picker: ^1.1.1
 
 dev_dependencies:
   flutter_test:
