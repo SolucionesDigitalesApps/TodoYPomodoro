@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/app_header.dart';
+import 'package:todo_y_pomodoro_app/features/common/widgets/app_version_label.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_button.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_text_form_field.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/sheet_content_layout.dart';
@@ -69,6 +70,8 @@ class _CreateTaskSheetState extends State<CreateTaskSheet> {
               width: mqWidth(context, 90), 
               color: Theme.of(context).primaryColor
             ),
+            const VSpacing(2),
+            const AppVersionLabel(),
           ],
         ),
       )

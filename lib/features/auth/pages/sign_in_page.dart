@@ -10,6 +10,7 @@ import 'package:todo_y_pomodoro_app/features/auth/pages/recover_password_page.da
 import 'package:todo_y_pomodoro_app/features/auth/providers/user_provider.dart';
 import 'package:todo_y_pomodoro_app/features/common/models/error_response.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/alerts.dart';
+import 'package:todo_y_pomodoro_app/features/common/widgets/app_version_label.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_button.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_text_button.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_text_form_field.dart';
@@ -88,7 +89,9 @@ class _SignInPageState extends State<SignInPage> {
                   label: "Iniciar sesión", 
                   width: mqWidth(context, 90), 
                   color: Theme.of(context).primaryColor
-                )
+                ),
+                const VSpacing(2),
+                const AppVersionLabel()
               ],
             ),
           ),
