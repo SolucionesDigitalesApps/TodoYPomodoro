@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:todo_y_pomodoro_app/core/navigation.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
+import 'package:todo_y_pomodoro_app/features/auth/pages/sign_in_page.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/alerts.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_icon_button.dart';
+import 'package:todo_y_pomodoro_app/features/common/widgets/h_spacing.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/scaffold_wrapper.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/v_spacing.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/pages/archived_tasks_page.dart';
@@ -36,15 +38,39 @@ class TasksHomePage extends StatelessWidget {
                         'Tareas',
                         style: Theme.of(context).textTheme.displayMedium,
                       ),
-                      CustomIconButton(
-                        borderRadius: 30,
-                        size: 10, 
-                        borderColor: const Color(0xff919191),
-                        onPressed: (){
-                          Navigator.push(context, cupertinoNavigationRoute(context, const ArchivedTasksPage()));
-                        }, 
-                        icon: const Icon(Icons.archive_outlined)
-                      )
+                      Row(
+                        children: [
+                          CustomIconButton(
+                            borderRadius: 30,
+                            size: 10, 
+                            borderColor: const Color(0xff919191),
+                            onPressed: (){
+                              Navigator.push(context, cupertinoNavigationRoute(context, const ArchivedTasksPage()));
+                            }, 
+                            icon: const Icon(Icons.archive_outlined)
+                          ),
+                          const HSpacing(2),
+                          CustomIconButton(
+                            borderRadius: 30,
+                            size: 10, 
+                            borderColor: const Color(0xff919191),
+                            onPressed: (){
+                              Navigator.push(context, cupertinoNavigationRoute(context, const ArchivedTasksPage()));
+                            }, 
+                            icon: const Icon(Icons.language)
+                          ),
+                          const HSpacing(2),
+                          CustomIconButton(
+                            borderRadius: 30,
+                            size: 10, 
+                            borderColor: const Color(0xff919191),
+                            onPressed: (){
+                              Navigator.pushAndRemoveUntil(context, materialNavigationRoute(context, const SignInPage()), (route) => false);
+                            }, 
+                            icon: const Icon(Icons.logout)
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),

@@ -16,22 +16,26 @@ class SheetContentLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bounded = MediaQuery.of(context).textScaleFactor.clamp(1.0, 1.4);
     return Padding(
       padding: MediaQuery.of(context).viewInsets,
-      child: Container(
-        width: mqWidth(context, 100),
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(10),
-            topRight: Radius.circular(10)
+      child: MediaQuery(
+        data: MediaQuery.of(context).copyWith(textScaleFactor: bounded),
+        child: Container(
+          width: mqWidth(context, 100),
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10)
+            ),
+            color: backgroundColor ?? Theme.of(context).bottomNavigationBarTheme.backgroundColor,
           ),
-          color: backgroundColor ?? Theme.of(context).bottomNavigationBarTheme.backgroundColor,
+          padding: EdgeInsets.only(
+            top: mqWidth(context, paddingTopPer),
+            bottom: extendSheet ? mqHeigth(context, 40) : mqWidth(context, 5),
+          ),
+          child: child
         ),
-        padding: EdgeInsets.only(
-          top: mqWidth(context, paddingTopPer),
-          bottom: extendSheet ? mqHeigth(context, 40) : mqWidth(context, 5),
-        ),
-        child: child
       )
     );
   }
