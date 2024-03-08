@@ -21,6 +21,23 @@ class Themes {
         fontWeight: FontWeight.w400,
         color: Color(0xff1C1C1C)
       ),
+      titleLarge: TextStyle(
+        fontSize: 22,
+        fontWeight: FontWeight.w600
+      ),
+      bodyLarge: TextStyle(
+        fontSize: 20,
+        color: Colors.black,
+        fontWeight: FontWeight.w500
+      ),
+      bodyMedium: TextStyle(
+        fontSize: 18,
+        color: Colors.black,
+      ),
+      bodySmall: TextStyle(
+        fontSize: 16,
+        color: Colors.black,
+      )
     )
   );
 

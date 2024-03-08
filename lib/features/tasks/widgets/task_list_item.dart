@@ -34,16 +34,10 @@ class TaskListItem extends StatelessWidget {
               width: mqWidth(context, 80),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text("Este es un titulo bastante largo que ocupa todo edasdsadsadsal anchod e la pantalla", style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500
-                  ), maxLines: 2, overflow: TextOverflow.ellipsis,),
-                  VSpacing(1),
-                  Text("Este es un sutitulo", style: TextStyle(
-                    fontSize: 16
-                  ), maxLines: 1, overflow: TextOverflow.ellipsis,),
+                children: [
+                  Text("Este es un titulo bastante largo que ocupa todo edasdsadsadsal anchod e la pantalla", style: Theme.of(context).textTheme.bodyLarge, maxLines: 2, overflow: TextOverflow.ellipsis,),
+                  const VSpacing(1),
+                  Text("Este es un sutitulo", style: Theme.of(context).textTheme.bodySmall, maxLines: 1, overflow: TextOverflow.ellipsis,),
                 ],
               ),
             ),

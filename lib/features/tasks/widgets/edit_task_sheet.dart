@@ -50,11 +50,8 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                 horizontal: mqWidth(context, 5)
               ),
               child: Row(
-                children: const [
-                  Text("Agregar pomodoro (Opcional)", style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500
-                  )),
+                children: [
+                  Text("Agregar pomodoro (Opcional)", style: Theme.of(context).textTheme.bodyMedium),
                 ],
               ),
             ),

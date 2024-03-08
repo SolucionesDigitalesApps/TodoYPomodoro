@@ -49,9 +49,7 @@ class _PomodoroPageState extends State<PomodoroPage> {
                   ),
                 ),
                 const VSpacing(3),
-                const Text("Stay focus for 25 minutes", style: TextStyle(
-                  fontSize: 18
-                )),
+                Text("Stay focus for 25 minutes", style: Theme.of(context).textTheme.bodyMedium),
                 const VSpacing(2),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

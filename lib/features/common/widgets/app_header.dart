@@ -29,10 +29,7 @@ class AppHeader extends StatelessWidget {
               ),
             ],
           ),
-          Text(title, style: const TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w500
-          )),
+          Text(title, style: Theme.of(context).textTheme.titleLarge),
         ],
       ),
     );
