@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_y_pomodoro_app/core/navigation.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
 import 'package:todo_y_pomodoro_app/features/auth/pages/sign_in_page.dart';
@@ -9,9 +10,11 @@ import 'package:todo_y_pomodoro_app/features/common/widgets/language_bottom_shee
 import 'package:todo_y_pomodoro_app/features/common/widgets/scaffold_wrapper.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/v_spacing.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/pages/archived_tasks_page.dart';
+import 'package:todo_y_pomodoro_app/features/tasks/providers/task_groups_provider.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/widgets/create_task_sheet.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/widgets/task_group_list.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/widgets/task_list_item.dart';
+import 'package:todo_y_pomodoro_app/features/tasks/widgets/tasks_home_options.dart';
 
 class TasksHomePage extends StatelessWidget {
   const TasksHomePage({super.key});
@@ -27,54 +30,7 @@ class TasksHomePage extends StatelessWidget {
             child: Column(
               children: [
                 const VSpacing(5),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: mqWidth(context, 5)
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Tareas',
-                        style: Theme.of(context).textTheme.displayMedium,
-                      ),
-                      Row(
-                        children: [
-                          CustomIconButton(
-                            borderRadius: 30,
-                            size: 10, 
-                            borderColor: const Color(0xff919191),
-                            onPressed: (){
-                              Navigator.push(context, cupertinoNavigationRoute(context, const ArchivedTasksPage()));
-                            }, 
-                            icon: const Icon(Icons.archive_outlined)
-                          ),
-                          const HSpacing(2),
-                          CustomIconButton(
-                            borderRadius: 30,
-                            size: 10, 
-                            borderColor: const Color(0xff919191),
-                            onPressed: (){
-                              showCustomBottomSheet(context, const LanguageBottomSheet());
-                            }, 
-                            icon: const Icon(Icons.language)
-                          ),
-                          const HSpacing(2),
-                          CustomIconButton(
-                            borderRadius: 30,
-                            size: 10, 
-                            borderColor: const Color(0xff919191),
-                            onPressed: (){
-                              Navigator.pushAndRemoveUntil(context, materialNavigationRoute(context, const SignInPage()), (route) => false);
-                            }, 
-                            icon: const Icon(Icons.logout)
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
+                const TasksHomeOptions(),
                 const VSpacing(3),
                 Container(
                   padding: EdgeInsets.symmetric(

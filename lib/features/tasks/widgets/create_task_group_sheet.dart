@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
+import 'package:todo_y_pomodoro_app/features/auth/providers/user_provider.dart';
 import 'package:todo_y_pomodoro_app/features/common/models/error_response.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/alerts.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/app_header.dart';
@@ -54,7 +55,13 @@ class _CreateTaskGroupSheetState extends State<CreateTaskGroupSheet> {
                     return;
                   }
                   final group = Provider.of<TaskGroupsProvider>(context, listen: false);
-                  final taskGroup = TaskGroupModel.empty.copyWith(updatedAt: null, deletedAt: null, label: taskGroupLabelController.text);
+                  final userId = Provider.of<UserProvider>(context, listen: false).currentUser.id;
+                  final taskGroup = TaskGroupModel.empty.copyWith(
+                    updatedAt: null, 
+                    deletedAt: null, 
+                    label: taskGroupLabelController.text,
+                    userId: userId
+                  );
                   final resp = await group.createTaskGroup(taskGroup);
                   if(resp == null) return;
                   if(resp is ErrorResponse){
