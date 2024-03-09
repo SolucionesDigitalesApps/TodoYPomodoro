@@ -32,9 +32,9 @@ class TaskGroupModel {
     "deleted_at": deletedAt
   };
 
-  static get empty => TaskGroupModel(
-    id: "-1",
-    label: "Casa",
+  static TaskGroupModel get empty => TaskGroupModel(
+    id: "",
+    label: "",
     createdAt: DateTime.now(),
     updatedAt: null,
     deletedAt: null,

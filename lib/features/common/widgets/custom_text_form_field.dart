@@ -18,6 +18,7 @@ class CustomTextFormField extends StatelessWidget {
   final FocusNode? focusNode;
   final TextAlign textAlign;
   final double widthPer;
+  final int? maxLength;
 
   const CustomTextFormField({
     required this.hintText, 
@@ -34,7 +35,8 @@ class CustomTextFormField extends StatelessWidget {
     this.formKey,
     this.focusNode,
     this.textAlign = TextAlign.start,
-    this.widthPer = 90
+    this.widthPer = 90,
+    this.maxLength
   }) : super(key: key);
 
   @override
@@ -47,7 +49,6 @@ class CustomTextFormField extends StatelessWidget {
         children: [
           SizedBox(
             width: mqWidth(context, widthPer),
-            height: 60,
             child: TextFormField(
               key: formKey,
               onTap: onTap,
@@ -57,6 +58,7 @@ class CustomTextFormField extends StatelessWidget {
               onChanged: onChanged,
               validator: validator,
               keyboardType: keyboardType,
+              maxLength: maxLength,
               inputFormatters: formater != null ? [formater!] : null,
               autocorrect: false,
               style: const TextStyle(
@@ -95,15 +97,9 @@ class CustomTextFormField extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            width: mqWidth(context, widthPer),
-            height: 1,
-            color: hasError ? Theme.of(context).dividerColor :Colors.white,
-          ),
           errorMessage.isNotEmpty ? Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const VSpacing(1),
               Container(
                 padding: EdgeInsets.only(
                   left: mqWidth(context, 2)
@@ -114,7 +110,6 @@ class CustomTextFormField extends StatelessWidget {
                   )
                 ),
               ),
-              const VSpacing(1)
             ],
           ) : const SizedBox()
         ],

@@ -18,7 +18,7 @@ class TaskGroupsController {
   Future<dynamic> getTaskGroups(String userId) async {
     try {
       QuerySnapshot docsRef = await _db.collection(taskGroupsCollection)
-        .where("deleted_at", isNull: false)
+        .where("deleted_at", isNull: true)
         .where("user_id", isEqualTo: userId)
         .get();
       if (docsRef.docs.isEmpty) {

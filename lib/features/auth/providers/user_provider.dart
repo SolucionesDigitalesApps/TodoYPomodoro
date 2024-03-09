@@ -12,7 +12,7 @@ class UserProvider extends ChangeNotifier {
 
   UserModel currentUser = UserModel.empty.copyWith(
     //TODO: Cambiar
-    id: "UgS44EkwW0XpgukXAlstYUhMC0e2"
+    id: "1"
   );
   bool currentUserLoading = false;
   bool currentUserError = false;

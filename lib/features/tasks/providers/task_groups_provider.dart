@@ -14,6 +14,11 @@ class TaskGroupsProvider extends ChangeNotifier {
   bool taskGroupsError = false;
   List<TaskGroupModel> taskGroups = [];
 
+  void addTaskGroup(TaskGroupModel taskGroup) {
+    taskGroups.add(taskGroup);
+    notifyListeners();
+  }
+
   Future<void> getTasksGroups(String userId) async {
     taskGroupsLoading = true;
     taskGroupsError = false;
@@ -36,7 +41,7 @@ class TaskGroupsProvider extends ChangeNotifier {
   bool createTaskGroupError = false;
   TaskGroupModel createdTaskGroup = TaskGroupModel.empty;
 
-  Future<void> createTaskGroup(TaskGroupModel taskGroup) async {
+  Future<dynamic> createTaskGroup(TaskGroupModel taskGroup) async {
     createTaskGroupLoading = true;
     createTaskGroupError = false;
     notifyListeners();
@@ -49,8 +54,8 @@ class TaskGroupsProvider extends ChangeNotifier {
     }
     createTaskGroupLoading = false;
     createTaskGroupError = false;
-    createdTaskGroup = resp;
     notifyListeners();
+    return createdTaskGroup;
   }
 
   //UPDATE

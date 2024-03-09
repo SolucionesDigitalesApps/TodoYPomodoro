@@ -57,8 +57,12 @@ class _TaskGroupListState extends State<TaskGroupList> {
             return CustomIconButton(
               size: 10, 
               borderColor: Theme.of(context).primaryColor,
-              onPressed: (){
-                showCustomBottomSheet(context, const NewGroupSheet());
+              onPressed: () async {
+                final resp = await showCustomBottomSheet(context, const NewGroupSheet());
+                if(resp == null) return;
+                if(!mounted) return;
+                final userProvider = Provider.of<UserProvider>(context, listen: false);
+                taskGroupsProvider.getTasksGroups(userProvider.currentUser.id);
               }, 
               icon: const Icon(Icons.add)
             );
