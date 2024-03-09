@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:todo_y_pomodoro_app/features/common/models/error_response.dart';
-import 'package:todo_y_pomodoro_app/features/tasks/models/task_group.dart';
+import 'package:todo_y_pomodoro_app/features/tasks/models/task_group_model.dart';
 
 class TaskGroupsController {
 
@@ -13,6 +13,13 @@ class TaskGroupsController {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   final String taskGroupsCollection = "task_groups";
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> taskGroupsStream(String userId) => 
+    _db.collection(taskGroupsCollection).
+      where("deleted_at", isNull: true)
+        .where("user_id", isEqualTo: userId)
+          .orderBy("created_at", descending: false)
+          .snapshots();
 
   //GET
   Future<dynamic> getTaskGroups(String userId) async {
@@ -60,7 +67,9 @@ class TaskGroupsController {
   //DELETE
   Future<dynamic> deleteTaskGroup(TaskGroupModel taskGroupModel) async {
     try{
-      await _db.collection(taskGroupsCollection).doc(taskGroupModel.id).delete();
+      await _db.collection(taskGroupsCollection).doc(taskGroupModel.id).update({
+        "deleted_at": DateTime.now()
+      });
       return true;
     }  on SocketException{
       return ErrorResponse.network;

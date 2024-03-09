@@ -19,6 +19,7 @@ class CustomTextFormField extends StatelessWidget {
   final TextAlign textAlign;
   final double widthPer;
   final int? maxLength;
+  final bool autofocus;
 
   const CustomTextFormField({
     required this.hintText, 
@@ -36,7 +37,8 @@ class CustomTextFormField extends StatelessWidget {
     this.focusNode,
     this.textAlign = TextAlign.start,
     this.widthPer = 90,
-    this.maxLength
+    this.maxLength,
+    this.autofocus = false,
   }) : super(key: key);
 
   @override
@@ -50,6 +52,7 @@ class CustomTextFormField extends StatelessWidget {
           SizedBox(
             width: mqWidth(context, widthPer),
             child: TextFormField(
+              autofocus: autofocus,
               key: formKey,
               onTap: onTap,
               focusNode: focusNode,

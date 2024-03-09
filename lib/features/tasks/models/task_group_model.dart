@@ -1,3 +1,5 @@
+List<TaskGroupModel> taskGroupModelListfromJson(dynamic json) => List<TaskGroupModel>.from(json.map((x) => TaskGroupModel.fromJson(x)));
+
 class TaskGroupModel {
   final String id;
   final String label;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
-import 'package:todo_y_pomodoro_app/features/tasks/models/task_group.dart';
+import 'package:todo_y_pomodoro_app/features/tasks/models/task_group_model.dart';
 
 class TaskGroupItem extends StatelessWidget {
   final TaskGroupModel taskGroupModel;

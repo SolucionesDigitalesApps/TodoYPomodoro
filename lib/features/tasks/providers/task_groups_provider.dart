@@ -1,25 +1,44 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_y_pomodoro_app/features/common/models/error_response.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/controllers/task_groups_controller.dart';
-import 'package:todo_y_pomodoro_app/features/tasks/models/task_group.dart';
+import 'package:todo_y_pomodoro_app/features/tasks/models/task_group_model.dart';
 
 class TaskGroupsProvider extends ChangeNotifier {
 
   final taskGroupsController = TaskGroupsController();
 
-  //GET
-  bool taskGroupsLoading = false;
-  bool taskGroupsError = false;
-  List<TaskGroupModel> taskGroups = [];
 
   void addTaskGroup(TaskGroupModel taskGroup) {
     taskGroups.add(taskGroup);
     notifyListeners();
   }
 
-  Future<void> getTasksGroups(String userId) async {
+  //GET
+  StreamSubscription<dynamic>? taskGroupsSubscription;
+  bool taskGroupsLoading = true;
+  bool taskGroupsError = false;
+  List<TaskGroupModel> taskGroups = [];
+
+  Future<void> getTaskGroupsSubscription(String userId) async {
+    if(taskGroupsSubscription != null) return;
+    taskGroupsLoading = true;
+    taskGroupsError = false;
+    taskGroupsSubscription = taskGroupsController.taskGroupsStream(userId).listen((snapshots) {
+      taskGroups = taskGroupsController.parseTaskGroups(snapshots.docs);
+      taskGroupsLoading = false;
+      taskGroupsError = false;
+      notifyListeners();
+    }, onError: (error){
+      taskGroupsLoading = false;
+      taskGroupsError = true;
+      notifyListeners();
+    });
+  }
+
+  Future<dynamic> getTasksGroups(String userId) async {
     taskGroupsLoading = true;
     taskGroupsError = false;
     notifyListeners();
@@ -28,12 +47,13 @@ class TaskGroupsProvider extends ChangeNotifier {
       taskGroupsLoading = false;
       taskGroupsError = true;
       notifyListeners();
-      return;
+      return resp;
     }
     taskGroupsLoading = false;
     taskGroupsError = false;
     taskGroups = resp;
     notifyListeners();
+    return true;
   }
 
   //CREATE
@@ -41,60 +61,71 @@ class TaskGroupsProvider extends ChangeNotifier {
   bool createTaskGroupError = false;
   TaskGroupModel createdTaskGroup = TaskGroupModel.empty;
 
-  Future<dynamic> createTaskGroup(TaskGroupModel taskGroup) async {
+  Future<dynamic> createTaskGroup(TaskGroupModel taskGroupModel) async {
     createTaskGroupLoading = true;
     createTaskGroupError = false;
     notifyListeners();
-    final resp = await taskGroupsController.createTaskGroup(taskGroup);
+    final resp = await taskGroupsController.createTaskGroup(taskGroupModel);
     if(resp is ErrorResponse){
       createTaskGroupLoading = false;
       createTaskGroupError = true;
       notifyListeners();
-      return;
+      return resp;
     }
     createTaskGroupLoading = false;
     createTaskGroupError = false;
     notifyListeners();
-    return createdTaskGroup;
+    return true;
   }
 
   //UPDATE
   bool updateTaskGroupLoading = false;
   bool updateTaskGroupError = false;
 
-  Future<void> updateTaskGroup(TaskGroupModel taskGroup) async {
+  Future<dynamic> updateTaskGroup(TaskGroupModel taskGroupModel) async {
     updateTaskGroupLoading = true;
     updateTaskGroupError = false;
     notifyListeners();
-    final resp = await taskGroupsController.updateTaskGroup(taskGroup);
+    final resp = await taskGroupsController.updateTaskGroup(taskGroupModel);
     if(resp is ErrorResponse){
       updateTaskGroupLoading = false;
       updateTaskGroupError = true;
       notifyListeners();
-      return;
+      return resp;
     }
     updateTaskGroupLoading = false;
     updateTaskGroupError = false;
     notifyListeners();
+    return true;
   }
 
   //DELETE
   bool deleteTaskGroupLoading = false;
   bool deleteTaskGroupError = false;
 
-  Future<void> deleteTaskGroup(TaskGroupModel taskGroup) async {
+  Future<dynamic> deleteTaskGroup(TaskGroupModel taskGroupModel) async {
     deleteTaskGroupLoading = true;
     deleteTaskGroupError = false;
     notifyListeners();
-    final resp = await taskGroupsController.deleteTaskGroup(taskGroup);
+    final resp = await taskGroupsController.deleteTaskGroup(taskGroupModel);
     if(resp is ErrorResponse){
       deleteTaskGroupLoading = false;
       deleteTaskGroupError = true;
       notifyListeners();
-      return;
+      return resp;
     }
     deleteTaskGroupLoading = false;
     deleteTaskGroupError = false;
     notifyListeners();
+    return true;
+  }
+
+  cancelAllStreams(){
+    //CREATE FLOW
+    taskGroupsSubscription?.cancel();
+    taskGroupsSubscription = null;
+    taskGroupsLoading = true;
+    taskGroupsError = false;
+    //TODO: Cancel all other streams
   }
 }

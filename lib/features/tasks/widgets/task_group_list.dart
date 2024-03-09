@@ -8,8 +8,8 @@ import 'package:todo_y_pomodoro_app/features/common/widgets/empty_view.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/error_view.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/loading_view.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/providers/task_groups_provider.dart';
-import 'package:todo_y_pomodoro_app/features/tasks/widgets/edit_group_sheet.dart';
-import 'package:todo_y_pomodoro_app/features/tasks/widgets/new_group_sheet.dart';
+import 'package:todo_y_pomodoro_app/features/tasks/widgets/edit_task_group_sheet.dart';
+import 'package:todo_y_pomodoro_app/features/tasks/widgets/create_task_group_sheet.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/widgets/task_group_item.dart';
 
 class TaskGroupList extends StatefulWidget {
@@ -21,12 +21,13 @@ class TaskGroupList extends StatefulWidget {
 
 class _TaskGroupListState extends State<TaskGroupList> {
   late TaskGroupsProvider taskGroupsProvider;
+  
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final userProvider = Provider.of<UserProvider>(context, listen: false);
-      taskGroupsProvider.getTasksGroups(userProvider.currentUser.id);
+      taskGroupsProvider.getTaskGroupsSubscription(userProvider.currentUser.id);
     });
   }
 
@@ -35,7 +36,6 @@ class _TaskGroupListState extends State<TaskGroupList> {
     taskGroupsProvider = Provider.of<TaskGroupsProvider>(context);
     return taskGroupsProvider.taskGroupsLoading ? const LoadingView(heigth: 5) :
       taskGroupsProvider.taskGroupsError ? const ErrorView(heigth: 5) :
-      taskGroupsProvider.taskGroups.isEmpty ? const EmptyView(heigth: 5) :
     SizedBox(
       height: mqHeigth(context, 5),
       child: ListView.builder(
@@ -49,7 +49,7 @@ class _TaskGroupListState extends State<TaskGroupList> {
               key: Key("Task_group_item_${item.id}"),
               onPressed: (){}, 
               onLongPress: (){
-                showCustomBottomSheet(context, const EditGroupSheet());
+                showCustomBottomSheet(context, EditTaskGroupSheet(taskGroupModel: item,));
               },
               selected: true, 
             );
@@ -58,11 +58,7 @@ class _TaskGroupListState extends State<TaskGroupList> {
               size: 10, 
               borderColor: Theme.of(context).primaryColor,
               onPressed: () async {
-                final resp = await showCustomBottomSheet(context, const NewGroupSheet());
-                if(resp == null) return;
-                if(!mounted) return;
-                final userProvider = Provider.of<UserProvider>(context, listen: false);
-                taskGroupsProvider.getTasksGroups(userProvider.currentUser.id);
+                showCustomBottomSheet(context, const CreateTaskGroupSheet());
               }, 
               icon: const Icon(Icons.add)
             );

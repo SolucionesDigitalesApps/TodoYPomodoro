@@ -8,19 +8,19 @@ import 'package:todo_y_pomodoro_app/features/common/widgets/custom_button.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_text_form_field.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/sheet_content_layout.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/v_spacing.dart';
-import 'package:todo_y_pomodoro_app/features/tasks/models/task_group.dart';
+import 'package:todo_y_pomodoro_app/features/tasks/models/task_group_model.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/providers/task_groups_provider.dart';
 
-class NewGroupSheet extends StatefulWidget {
-  const NewGroupSheet({super.key});
+class CreateTaskGroupSheet extends StatefulWidget {
+  const CreateTaskGroupSheet({super.key});
 
   @override
-  State<NewGroupSheet> createState() => _NewGroupSheetState();
+  State<CreateTaskGroupSheet> createState() => _CreateTaskGroupSheetState();
 }
 
-class _NewGroupSheetState extends State<NewGroupSheet> {
+class _CreateTaskGroupSheetState extends State<CreateTaskGroupSheet> {
   String groupNameError = '';
-  final groupNameController = TextEditingController();
+  final taskGroupLabelController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,8 @@ class _NewGroupSheetState extends State<NewGroupSheet> {
           const AppHeader(title: "Nuevo grupo de tareas"),
           const VSpacing(3),
           CustomTextFormField(
-            controller: groupNameController,
+            autofocus: true,
+            controller: taskGroupLabelController,
             keyboardType: TextInputType.emailAddress,
             hintText: "Ingrese el nombre del grupo",
             errorMessage: groupNameError,
@@ -47,21 +48,22 @@ class _NewGroupSheetState extends State<NewGroupSheet> {
             builder: (context, createTaskGroupLoading, _) {
               return CustomButton(
                 onPressed: () async {
-                  if(groupNameController.text.isEmpty){
+                  if(taskGroupLabelController.text.isEmpty){
                     groupNameError = "El nombre del grupo no puede estar vacío";
                     setState(() {});
                     return;
                   }
                   final group = Provider.of<TaskGroupsProvider>(context, listen: false);
-                  final taskGroup = TaskGroupModel.empty.copyWith(updatedAt: null, deletedAt: null, label: groupNameController.text);
+                  final taskGroup = TaskGroupModel.empty.copyWith(updatedAt: null, deletedAt: null, label: taskGroupLabelController.text);
                   final resp = await group.createTaskGroup(taskGroup);
                   if(resp == null) return;
                   if(resp is ErrorResponse){
                     if(!mounted) return;
                     showErrorAlert(context, "Estimado usuario", [resp.message]);
+                    return;
                   }
                   if(!mounted) return;
-                  Navigator.pop(context, true);
+                  Navigator.pop(context);
                 },
                 label: "Crear", 
                 width: mqWidth(context, 90), 
