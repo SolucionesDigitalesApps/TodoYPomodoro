@@ -42,6 +42,7 @@ class _DurationSelectorState extends State<DurationSelector> {
 
   @override
   Widget build(BuildContext context) {
+    final bool hasContent = widget.currentDuration != null;
     return InkWell(
       onTap: () async {
         var resultingDuration = await showDurationPicker(
@@ -65,9 +66,9 @@ class _DurationSelectorState extends State<DurationSelector> {
         ),
         child: Row(
           children: [
-            Text(widget.currentDuration != null ? formatDuration(widget.currentDuration!) : widget.hintText, style: TextStyle(
+            Text(hasContent ? formatDuration(widget.currentDuration!) : widget.hintText, style: TextStyle(
               fontSize: 18,
-              color: Colors.grey[400],
+              color: hasContent ? Colors.black : Colors.grey[400],
               fontWeight: FontWeight.w400
             )),
           ],

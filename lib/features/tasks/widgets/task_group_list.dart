@@ -1,14 +1,16 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
 import 'package:todo_y_pomodoro_app/features/auth/providers/user_provider.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/alerts.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_icon_button.dart';
-import 'package:todo_y_pomodoro_app/features/common/widgets/empty_view.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/error_view.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/loading_view.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/providers/task_groups_provider.dart';
-import 'package:todo_y_pomodoro_app/features/tasks/widgets/edit_task_group_sheet.dart';
+import 'package:todo_y_pomodoro_app/features/tasks/providers/tasks_activity_provider.dart';
+import 'package:todo_y_pomodoro_app/features/tasks/widgets/update_task_group_sheet.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/widgets/create_task_group_sheet.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/widgets/task_group_item.dart';
 
@@ -21,6 +23,7 @@ class TaskGroupList extends StatefulWidget {
 
 class _TaskGroupListState extends State<TaskGroupList> {
   late TaskGroupsProvider taskGroupsProvider;
+  StreamSubscription<dynamic>? taskGroupSubs;
   
   @override
   void initState() {
@@ -32,11 +35,21 @@ class _TaskGroupListState extends State<TaskGroupList> {
   }
 
   @override
+  void dispose() {
+    taskGroupSubs?.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     taskGroupsProvider = Provider.of<TaskGroupsProvider>(context);
+    final tasksActivityProvider = Provider.of<TasksActivityProvider>(context);
     return taskGroupsProvider.taskGroupsLoading ? const LoadingView(heigth: 5) :
       taskGroupsProvider.taskGroupsError ? const ErrorView(heigth: 5) :
-    SizedBox(
+    Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: mqWidth(context, 5)
+      ),
       height: mqHeigth(context, 5),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -45,13 +58,13 @@ class _TaskGroupListState extends State<TaskGroupList> {
           if(index < taskGroupsProvider.taskGroups.length) {
             final item = taskGroupsProvider.taskGroups[index];
             return TaskGroupItem(
-              taskGroupModel: item,
+              taskGroupModelTarget: item,
+              taskGroupModelSelected: tasksActivityProvider.selectedTaskGroupId,
               key: Key("Task_group_item_${item.id}"),
               onPressed: (){}, 
               onLongPress: (){
-                showCustomBottomSheet(context, EditTaskGroupSheet(taskGroupModel: item,));
+                showCustomBottomSheet(context, UpdateTaskGroupSheet(taskGroupModel: item,));
               },
-              selected: true, 
             );
           }else{
             return CustomIconButton(

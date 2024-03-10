@@ -11,19 +11,20 @@ import 'package:todo_y_pomodoro_app/features/common/widgets/sheet_content_layout
 import 'package:todo_y_pomodoro_app/features/common/widgets/v_spacing.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/models/task_group_model.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/providers/task_groups_provider.dart';
+import 'package:todo_y_pomodoro_app/features/tasks/providers/tasks_provider.dart';
 
-class EditTaskGroupSheet extends StatefulWidget {
+class UpdateTaskGroupSheet extends StatefulWidget {
   final TaskGroupModel taskGroupModel;
-  const EditTaskGroupSheet({
+  const UpdateTaskGroupSheet({
     super.key,
     required this.taskGroupModel
   });
 
   @override
-  State<EditTaskGroupSheet> createState() => _EditTaskGroupSheetState();
+  State<UpdateTaskGroupSheet> createState() => _UpdateTaskGroupSheetState();
 }
 
-class _EditTaskGroupSheetState extends State<EditTaskGroupSheet> {
+class _UpdateTaskGroupSheetState extends State<UpdateTaskGroupSheet> {
   late TextEditingController taskGroupLabelController;
   String groupNameError = '';
 
@@ -83,12 +84,12 @@ class _EditTaskGroupSheetState extends State<EditTaskGroupSheet> {
             }
           ),
           const VSpacing(3),
-          Selector<TaskGroupsProvider, bool>(
-            selector: (context, userProvider) => userProvider.deleteTaskGroupLoading,
-            builder: (context, deleteTaskGroupLoading, _) {
+          Selector<TasksProvider, bool>(
+            selector: (context, userProvider) => userProvider.deleteTaskLoading,
+            builder: (context, deleteTaskLoading, _) {
               return CustomTextButton(
                 label: "Eliminar grupo", 
-                loading: deleteTaskGroupLoading, 
+                loading: deleteTaskLoading, 
                 onPressed: () async {
                   final taskGroupsProvider = Provider.of<TaskGroupsProvider>(context, listen: false);
                   final resp = await taskGroupsProvider.deleteTaskGroup(widget.taskGroupModel);

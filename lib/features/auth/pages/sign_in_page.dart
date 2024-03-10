@@ -19,6 +19,7 @@ import 'package:todo_y_pomodoro_app/features/common/widgets/page_loader.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/scaffold_wrapper.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/v_spacing.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/pages/tasks_home_page.dart';
+import 'package:todo_y_pomodoro_app/features/tasks/providers/tasks_activity_provider.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -163,6 +164,7 @@ class _SignInPageState extends State<SignInPage> {
     }
     if(mounted){
       Provider.of<UserProvider>(context, listen: false).setNewUser(data);
+      Provider.of<TasksActivityProvider>(context, listen: false).selectedTaskGroupId = data.lastGroupId;
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const TasksHomePage()), (route) => false);
     }
   }

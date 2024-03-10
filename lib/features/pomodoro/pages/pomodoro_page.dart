@@ -1,15 +1,21 @@
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
+import 'package:todo_y_pomodoro_app/core/date_utils.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/app_header.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_icon_button.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/h_spacing.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/scaffold_wrapper.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/v_spacing.dart';
+import 'package:todo_y_pomodoro_app/features/tasks/models/task_model.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/widgets/task_list_item.dart';
 
 class PomodoroPage extends StatefulWidget {
-  const PomodoroPage({super.key});
+  final TaskModel taskModel;
+  const PomodoroPage({
+    super.key,
+    required this.taskModel,
+  });
 
   @override
   State<PomodoroPage> createState() => _PomodoroPageState();
@@ -29,13 +35,14 @@ class _PomodoroPageState extends State<PomodoroPage> {
                 const VSpacing(5),
                 const AppHeader(title: "Pomodoro Timer"),
                 const VSpacing(2),
-                const TaskListItem(
+                TaskListItem(
+                  taskModel: widget.taskModel,
                   fromPomodoroPage: true,
                 ),
                 const VSpacing(3),
                 CircularCountDownTimer(
                   controller: controller,
-                  duration: 100,
+                  duration: widget.taskModel.pomodoro *  60,
                   width: mqWidth(context, 70),
                   height: mqWidth(context, 70),
                   fillColor: Colors.white,
@@ -49,7 +56,7 @@ class _PomodoroPageState extends State<PomodoroPage> {
                   ),
                 ),
                 const VSpacing(3),
-                Text("Stay focus for 25 minutes", style: Theme.of(context).textTheme.bodyMedium),
+                Text("Stay focus for ${formatSeconds(widget.taskModel.pomodoro)}", style: Theme.of(context).textTheme.bodyMedium),
                 const VSpacing(2),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

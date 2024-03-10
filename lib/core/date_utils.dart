@@ -7,3 +7,9 @@ String formatDuration(Duration duration) {
      .where((element) => element.isNotEmpty)
      .join(' and ');
 }
+//Create a function to convert int seconds to string like "25 minutes"
+String formatSeconds(int seconds) {
+  final minutes = seconds.remainder(60);
+  final formattedMinutes = minutes > 0? '$minutes minute' : '';
+  return formattedMinutes;
+}

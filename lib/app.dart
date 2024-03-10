@@ -7,6 +7,8 @@ import 'package:todo_y_pomodoro_app/features/auth/providers/user_provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:todo_y_pomodoro_app/features/common/pages/router_page.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/providers/task_groups_provider.dart';
+import 'package:todo_y_pomodoro_app/features/tasks/providers/tasks_activity_provider.dart';
+import 'package:todo_y_pomodoro_app/features/tasks/providers/tasks_provider.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -20,6 +22,12 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<TaskGroupsProvider>(
           create: (context) => TaskGroupsProvider()
+        ),
+        ChangeNotifierProvider<TasksProvider>(
+          create: (context) => TasksProvider()
+        ),
+        ChangeNotifierProvider<TasksActivityProvider>(
+          create: (context) => TasksActivityProvider()
         ),
       ],
       child: MaterialApp(

@@ -5,8 +5,8 @@ import 'package:todo_y_pomodoro_app/features/auth/providers/user_provider.dart';
 import 'package:todo_y_pomodoro_app/features/common/models/error_response.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/alerts.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/app_header.dart';
-import 'package:todo_y_pomodoro_app/features/common/widgets/app_version_label.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_button.dart';
+import 'package:todo_y_pomodoro_app/features/common/widgets/custom_text_button.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_text_form_field.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/sheet_content_layout.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/v_spacing.dart';
@@ -15,22 +15,32 @@ import 'package:todo_y_pomodoro_app/features/tasks/models/task_model.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/providers/tasks_provider.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/widgets/task_group_list.dart';
 
-class CreateTaskSheet extends StatefulWidget {
+class UpdateTaskSheet extends StatefulWidget {
+  final TaskModel taskModel;
   final String taskGroupId;
-  const CreateTaskSheet({
+  const UpdateTaskSheet({
     super.key,
-    required this.taskGroupId
+    required this.taskModel,
+    required this.taskGroupId,
   });
 
   @override
-  State<CreateTaskSheet> createState() => _CreateTaskSheetState();
+  State<UpdateTaskSheet> createState() => _UpdateTaskSheetState();
 }
 
-class _CreateTaskSheetState extends State<CreateTaskSheet> {
-  final taskTitleController = TextEditingController();
-  final taskDescriptionController = TextEditingController();
-  Duration selectedDuration = const Duration(seconds: 0);
+class _UpdateTaskSheetState extends State<UpdateTaskSheet> {
+  late TextEditingController taskTitleController;
+  late TextEditingController taskDescriptionController;
+  late Duration selectedDuration;
   String groupNameError = '';
+
+  @override
+  void initState() {
+    taskTitleController = TextEditingController(text: widget.taskModel.title);
+    taskDescriptionController = TextEditingController(text: widget.taskModel.description);
+    selectedDuration = Duration(seconds: widget.taskModel.pomodoro);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +49,7 @@ class _CreateTaskSheetState extends State<CreateTaskSheet> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const AppHeader(title: "Crear tarea"),
+            const AppHeader(title: "Editar tarea"),
             const VSpacing(3),
             const TaskGroupList(),
             const VSpacing(3),
@@ -68,8 +78,8 @@ class _CreateTaskSheetState extends State<CreateTaskSheet> {
             ),
             const VSpacing(1),
             DurationSelector(
-              onSelectDuration: (newDuration){
-                selectedDuration = newDuration;
+              onSelectDuration: (newDate){
+                selectedDuration = newDate;
                 setState(() {});
               }, 
               currentDuration: selectedDuration, 
@@ -77,10 +87,10 @@ class _CreateTaskSheetState extends State<CreateTaskSheet> {
             ),
             const VSpacing(5),
             Selector<TasksProvider, bool>(
-              selector: (context, tasksProvider) => tasksProvider.createTaskLoading,
-              builder: (context, createTaskLoading, _) {
+              selector: (context, tasksProvider) => tasksProvider.updateTaskLoading,
+              builder: (context, updateTaskLoading, _) {
                 return CustomButton(
-                  loading: createTaskLoading,
+                  loading: updateTaskLoading,
                   onPressed: () async {
                     if(taskTitleController.text.isEmpty){
                       groupNameError = "El título de la tarea no puede estar vacío";
@@ -90,7 +100,7 @@ class _CreateTaskSheetState extends State<CreateTaskSheet> {
                     final tasksProvider = Provider.of<TasksProvider>(context, listen: false);
                     final userId = Provider.of<UserProvider>(context, listen: false).currentUser.id;
                     final task = TaskModel.empty.copyWith(
-                      updatedAt: null, 
+                      updatedAt: DateTime.now(), 
                       deletedAt: null, 
                       title: taskTitleController.text,
                       description: taskDescriptionController.text,
@@ -108,14 +118,35 @@ class _CreateTaskSheetState extends State<CreateTaskSheet> {
                     if(!mounted) return;
                     Navigator.pop(context);
                   },
-                  label: "Crear tarea", 
+                  label: "Editar tarea", 
                   width: mqWidth(context, 90), 
                   color: Theme.of(context).primaryColor
                 );
               }
             ),
-            const VSpacing(2),
-            const AppVersionLabel(),
+            const VSpacing(3),
+
+            Selector<TasksProvider, bool>(
+              selector: (context, tasksProvider) => tasksProvider.deleteTaskLoading,
+              builder: (context, deleteTaskLoading, _) {
+                return CustomTextButton(
+                  loading: deleteTaskLoading,
+                  label: "Eliminar tarea", 
+                  onPressed: () async {
+                    final tasksProvider = Provider.of<TasksProvider>(context, listen: false);
+                    final resp = await tasksProvider.deleteTask(widget.taskModel);
+                    if(resp == null) return;
+                    if(resp is ErrorResponse){
+                      if(!mounted) return;
+                      showErrorAlert(context, "Estimado usuario", [resp.message]);
+                      return;
+                    }
+                    if(!mounted) return;
+                    Navigator.pop(context);
+                  }, 
+                );
+              }
+            ),
           ],
         ),
       )

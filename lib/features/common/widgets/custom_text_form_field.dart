@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
-import 'package:todo_y_pomodoro_app/features/common/widgets/v_spacing.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final String hintText;
@@ -43,7 +42,6 @@ class CustomTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hasError = errorMessage.isNotEmpty;
     return SizedBox(
       width: mqWidth(context, widthPer),
       child: Column(

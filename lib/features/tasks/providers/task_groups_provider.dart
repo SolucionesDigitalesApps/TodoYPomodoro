@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_y_pomodoro_app/features/common/models/error_response.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/controllers/task_groups_controller.dart';
@@ -9,12 +8,6 @@ import 'package:todo_y_pomodoro_app/features/tasks/models/task_group_model.dart'
 class TaskGroupsProvider extends ChangeNotifier {
 
   final taskGroupsController = TaskGroupsController();
-
-
-  void addTaskGroup(TaskGroupModel taskGroup) {
-    taskGroups.add(taskGroup);
-    notifyListeners();
-  }
 
   //GET
   StreamSubscription<dynamic>? taskGroupsSubscription;

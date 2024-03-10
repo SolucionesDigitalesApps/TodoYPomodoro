@@ -3,20 +3,21 @@ import 'package:todo_y_pomodoro_app/core/utils.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/models/task_group_model.dart';
 
 class TaskGroupItem extends StatelessWidget {
-  final TaskGroupModel taskGroupModel;
+  final TaskGroupModel taskGroupModelTarget;
+  final String taskGroupModelSelected;
   final Function() onPressed;
   final Function() onLongPress;
-  final bool selected;
   const TaskGroupItem({
     super.key,
-    required this.taskGroupModel,
+    required this.taskGroupModelTarget,
+    required this.taskGroupModelSelected,
     required this.onPressed,
     required this.onLongPress,
-    required this.selected,
   });
 
   @override
   Widget build(BuildContext context) {
+    final bool selected = taskGroupModelSelected == taskGroupModelTarget.id;
     return Container(
       margin: EdgeInsets.only(
         right: mqWidth(context, 3)
@@ -37,7 +38,7 @@ class TaskGroupItem extends StatelessWidget {
         fillColor: selected ? Theme.of(context).primaryColor : null,
         child: Center(
           child: Text(
-            taskGroupModel.label,
+            taskGroupModelTarget.label,
             style: TextStyle(
               color: selected ? Colors.white : Theme.of(context).primaryColor,
               fontSize: 16
