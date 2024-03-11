@@ -10,7 +10,9 @@
         "empty": "Sin resultados",
         "create": "Crear",
         "tasks": "Tareas",
-        "edit": "Editar"
+        "edit": "Editar",
+        "update": "Actualizar",
+        "not_now": "Ahora no"
     },
     "validators": {
         "invalid_email": "El correo electrónico no es válido",
@@ -106,5 +108,9 @@
             "alert1": "Solo se pueden crear hasta",
             "alert2": "grupos de tareas"
         }
+    },
+    "updates": {
+        "must1": "Debe ir a",
+        "must2": "manualmente"
     }
 }

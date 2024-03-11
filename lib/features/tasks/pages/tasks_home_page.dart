@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_y_pomodoro_app/core/navigation.dart';
+import 'package:todo_y_pomodoro_app/core/utils.dart';
 import 'package:todo_y_pomodoro_app/features/auth/controllers/auth_controller.dart';
 import 'package:todo_y_pomodoro_app/features/auth/pages/sign_in_page.dart';
 import 'package:todo_y_pomodoro_app/features/auth/providers/user_provider.dart';
+import 'package:todo_y_pomodoro_app/features/common/controllers/common_controller.dart';
 import 'package:todo_y_pomodoro_app/features/common/models/error_response.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/alerts.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/page_loader.dart';
@@ -30,6 +32,7 @@ class TasksHomePage extends StatefulWidget {
 }
 
 class _TasksHomePageState extends State<TasksHomePage> {
+  final commonController = CommonController();
   StreamSubscription<TaskGroupModel>? createdTaskGroupSubs;
   StreamSubscription<dynamic>? userSubs;
 
@@ -49,6 +52,7 @@ class _TasksHomePageState extends State<TasksHomePage> {
         signOutUser(disabled: true);
       }
     });
+    getAppUpdate();
   }
 
   @override
@@ -136,6 +140,13 @@ class _TasksHomePageState extends State<TasksHomePage> {
           [FlutterI18n.translate(context, "general.disabled")]
         );
       });
+    }
+  }
+
+  Future<void> getAppUpdate() async {
+    final appUpdate = await commonController.checkForUpdates();
+    if(appUpdate != null && mounted){
+      showAppUpdateOrNot(context, appUpdate);
     }
   }
 }

@@ -10,6 +10,7 @@ import 'package:todo_y_pomodoro_app/features/auth/models/user_model.dart';
 import 'package:todo_y_pomodoro_app/features/auth/pages/recover_password_page.dart';
 import 'package:todo_y_pomodoro_app/features/auth/pages/sign_up_page.dart';
 import 'package:todo_y_pomodoro_app/features/auth/providers/user_provider.dart';
+import 'package:todo_y_pomodoro_app/features/common/controllers/common_controller.dart';
 import 'package:todo_y_pomodoro_app/features/common/models/error_response.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/alerts.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/app_version_label.dart';
@@ -32,6 +33,7 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage> {
   final authController = AuthController();
+  final commonController = CommonController();
   
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -43,6 +45,12 @@ class _SignInPageState extends State<SignInPage> {
   String passwordError = "";
 
   bool loading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    getAppUpdate();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,6 +119,12 @@ class _SignInPageState extends State<SignInPage> {
         ],
       )
     );
+  }
+  Future<void> getAppUpdate() async {
+    final appUpdate = await commonController.checkForUpdates();
+    if(appUpdate != null && mounted){
+      showAppUpdateOrNot(context, appUpdate);
+    }
   }
   Future<void> onSignIn() async {
     emailError = emailValidator(context, emailController.text);
