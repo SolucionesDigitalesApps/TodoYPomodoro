@@ -54,6 +54,7 @@ class _CreateTaskGroupSheetState extends State<CreateTaskGroupSheet> {
                     setState(() {});
                     return;
                   }
+                  FocusScope.of(context).unfocus();
                   final group = Provider.of<TaskGroupsProvider>(context, listen: false);
                   final userId = Provider.of<UserProvider>(context, listen: false).currentUser.id;
                   final taskGroup = TaskGroupModel.empty.copyWith(

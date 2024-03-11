@@ -62,6 +62,7 @@ class _UpdateTaskGroupSheetState extends State<UpdateTaskGroupSheet> {
                     setState(() {});
                     return;
                   }
+                  FocusScope.of(context).unfocus();
                   final taskGroupsProvider = Provider.of<TaskGroupsProvider>(context, listen: false);
                   final newTaskGroup = widget.taskGroupModel.copyWith(
                     label: taskGroupLabelController.text,
@@ -99,6 +100,7 @@ class _UpdateTaskGroupSheetState extends State<UpdateTaskGroupSheet> {
                     showInfoAlert(context, "Estimado usuario", "No se puede eliminar el grupo porque tiene tareas relacionadas");
                     return;
                   }
+                  FocusScope.of(context).unfocus();
                   final taskGroupsProvider = Provider.of<TaskGroupsProvider>(context, listen: false);
                   final resp = await taskGroupsProvider.deleteTaskGroup(widget.taskGroupModel);
                   if(resp == null) return;

@@ -27,7 +27,6 @@ class TasksController {
     _db.collection(tasksCollection).
       where("deleted_at", isNull: true)
         .where("user_id", isEqualTo: userId)
-          .where("group_id", isEqualTo: groupId)
           .where("state", isEqualTo: TaskState.completed.value)
           .orderBy("updated_at", descending: false)
           .snapshots();

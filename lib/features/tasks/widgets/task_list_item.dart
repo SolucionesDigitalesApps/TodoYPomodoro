@@ -30,6 +30,7 @@ class TaskListItem extends StatelessWidget {
       ),
       child: InkWell(
         onTap: (){
+          if(taskModel.state != TaskState.pending.value) return;
           showCustomBottomSheet(context, UpdateTaskSheet(
             taskModel: taskModel,
           ));
@@ -48,6 +49,7 @@ class TaskListItem extends StatelessWidget {
                 ],
               ),
             ),
+            if(taskModel.state == TaskState.pending.value)
             CustomIconButton(
               borderRadius: 30,
               size: 10, 

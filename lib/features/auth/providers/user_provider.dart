@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_y_pomodoro_app/features/auth/controllers/auth_controller.dart';
 import 'package:todo_y_pomodoro_app/features/auth/controllers/user_controller.dart';
@@ -47,7 +48,7 @@ class UserProvider extends ChangeNotifier {
   bool userSubsError = false;
   bool userSubsLoading = false;
 
-  /* final _userController = StreamController<UserModel>.broadcast();
+  final _userController = StreamController<UserModel>.broadcast();
   Function(UserModel) get userSink => _userController.sink.add;
   Stream<UserModel> get userStream => _userController.stream;
 
@@ -73,7 +74,7 @@ class UserProvider extends ChangeNotifier {
       userSubsError = true;
       notifyListeners();
     });
-  } */
+  }
 
   @override
   void dispose() {

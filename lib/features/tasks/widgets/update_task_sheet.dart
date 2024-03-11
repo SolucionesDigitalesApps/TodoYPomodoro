@@ -97,9 +97,10 @@ class _UpdateTaskSheetState extends State<UpdateTaskSheet> {
                       setState(() {});
                       return;
                     }
+                    FocusScope.of(context).unfocus();
                     final tasksProvider = Provider.of<TasksProvider>(context, listen: false);
                     final userId = Provider.of<UserProvider>(context, listen: false).currentUser.id;
-                    final task = TaskModel.empty.copyWith(
+                    final task = widget.taskModel.copyWith(
                       id: widget.taskModel.id,
                       updatedAt: DateTime.now(), 
                       deletedAt: null, 
@@ -126,7 +127,6 @@ class _UpdateTaskSheetState extends State<UpdateTaskSheet> {
               }
             ),
             const VSpacing(3),
-
             Selector<TasksProvider, bool>(
               selector: (context, tasksProvider) => tasksProvider.deleteTaskLoading,
               builder: (context, deleteTaskLoading, _) {
@@ -134,6 +134,7 @@ class _UpdateTaskSheetState extends State<UpdateTaskSheet> {
                   loading: deleteTaskLoading,
                   label: "Eliminar tarea", 
                   onPressed: () async {
+                    FocusScope.of(context).unfocus();
                     final tasksProvider = Provider.of<TasksProvider>(context, listen: false);
                     final resp = await tasksProvider.deleteTask(widget.taskModel);
                     if(resp == null) return;

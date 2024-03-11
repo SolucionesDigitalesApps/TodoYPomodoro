@@ -4,11 +4,11 @@ extension TaskStateExtension on TaskState {
   String get value {
     switch (this) {
       case TaskState.pending:
-        return 'Pendiente';
+        return 'pending';
       case TaskState.completed:
-        return 'Completado';
+        return 'completed';
       case TaskState.deleted:
-        return 'Eliminado';
+        return 'deleted';
       default:
         return 'none';
     }

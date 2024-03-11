@@ -13,6 +13,7 @@ class TaskGroupsProvider extends ChangeNotifier {
   StreamSubscription<dynamic>? taskGroupsSubscription;
   bool taskGroupsLoading = true;
   bool taskGroupsError = false;
+  bool taskGroupsInitialized = false;
   List<TaskGroupModel> taskGroups = [];
 
   Future<void> getTaskGroupsSubscription(String userId) async {
@@ -23,30 +24,16 @@ class TaskGroupsProvider extends ChangeNotifier {
       taskGroups = taskGroupsController.parseTaskGroups(snapshots.docs);
       taskGroupsLoading = false;
       taskGroupsError = false;
+      if(taskGroups.isNotEmpty && !taskGroupsInitialized){
+        selectTaskGroupSink(taskGroups.first);
+      }
+      taskGroupsInitialized = true;
       notifyListeners();
     }, onError: (error){
       taskGroupsLoading = false;
       taskGroupsError = true;
       notifyListeners();
     });
-  }
-
-  Future<dynamic> getTasksGroups(String userId) async {
-    taskGroupsLoading = true;
-    taskGroupsError = false;
-    notifyListeners();
-    final resp = await taskGroupsController.getTaskGroups(userId);
-    if(resp is ErrorResponse){
-      taskGroupsLoading = false;
-      taskGroupsError = true;
-      notifyListeners();
-      return resp;
-    }
-    taskGroupsLoading = false;
-    taskGroupsError = false;
-    taskGroups = resp;
-    notifyListeners();
-    return true;
   }
 
   //CREATE

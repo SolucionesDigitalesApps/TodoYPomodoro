@@ -40,6 +40,8 @@ class TasksProvider extends ChangeNotifier {
   bool tasksArchivedError = false;
   List<TaskModel> tasksArchived = [];
 
+  List<TaskModel> tasksArchivedPerGroup(String groupId) => tasksArchived.where((task) => task.groupId == groupId).toList();
+
   Future<void> getTasksArchivedSubscription(String userId, String groupId) async {
     if(tasksArchivedSubscription != null) return;
     tasksArchivedLoading = true;
@@ -55,24 +57,6 @@ class TasksProvider extends ChangeNotifier {
       tasksArchivedError = true;
       notifyListeners();
     });
-  }
-
-  Future<dynamic> getTasks(String userId, String groupId) async {
-    tasksLoading = true;
-    tasksError = false;
-    notifyListeners();
-    final resp = await tasksController.getTasks(userId, groupId);
-    if(resp is ErrorResponse){
-      tasksLoading = false;
-      tasksError = true;
-      notifyListeners();
-      return resp;
-    }
-    tasksLoading = false;
-    tasksError = false;
-    tasks = resp;
-    notifyListeners();
-    return true;
   }
 
   //CREATE

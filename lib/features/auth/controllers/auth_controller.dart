@@ -19,6 +19,7 @@ class AuthController {
   Future<dynamic> signOut() async {
     try {
       await _auth.signOut();
+      return true;
     } on FirebaseAuthException catch (e) {
       return ErrorResponse(
         statusCode: 400, 

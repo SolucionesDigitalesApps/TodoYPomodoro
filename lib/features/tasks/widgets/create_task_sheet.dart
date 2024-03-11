@@ -88,6 +88,7 @@ class _CreateTaskSheetState extends State<CreateTaskSheet> {
                       setState(() {});
                       return;
                     }
+                    FocusScope.of(context).unfocus();
                     final tasksProvider = Provider.of<TasksProvider>(context, listen: false);
                     final userId = Provider.of<UserProvider>(context, listen: false).currentUser.id;
                     final task = TaskModel.empty.copyWith(

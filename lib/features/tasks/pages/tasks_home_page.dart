@@ -2,6 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_y_pomodoro_app/core/navigation.dart';
+import 'package:todo_y_pomodoro_app/features/auth/controllers/auth_controller.dart';
+import 'package:todo_y_pomodoro_app/features/auth/pages/sign_in_page.dart';
+import 'package:todo_y_pomodoro_app/features/auth/providers/user_provider.dart';
+import 'package:todo_y_pomodoro_app/features/common/models/error_response.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/alerts.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/page_loader.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/scaffold_wrapper.dart';
@@ -25,6 +30,7 @@ class TasksHomePage extends StatefulWidget {
 
 class _TasksHomePageState extends State<TasksHomePage> {
   StreamSubscription<TaskGroupModel>? createdTaskGroupSubs;
+  StreamSubscription<dynamic>? userSubs;
 
   @override
   void initState() {
@@ -34,6 +40,13 @@ class _TasksHomePageState extends State<TasksHomePage> {
       if(!mounted) return;
       final tasksActivityProvider = Provider.of<TasksActivityProvider>(context, listen: false);
       tasksActivityProvider.selectedTaskGroupId = event.id;
+    });
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    userProvider.getUserSubscription();
+    userSubs = userProvider.userStream.listen((event) {
+      if(!event.enabled){
+        signOutUser(disabled: true);
+      }
     });
   }
 
@@ -52,14 +65,16 @@ class _TasksHomePageState extends State<TasksHomePage> {
         children: [
           SingleChildScrollView(
             child: Column(
-              children: const [
-                VSpacing(5),
-                TasksHomeOptions(),
-                VSpacing(3),
-                TaskGroupList(),
-                VSpacing(2),
-                Divider(),
-                TasksList()
+              children: [
+                const VSpacing(5),
+                TasksHomeOptions(
+                  onSignOut: ()=> signOutUser(disabled: false)
+                ),
+                const VSpacing(3),
+                const TaskGroupList(),
+                const VSpacing(2),
+                const Divider(),
+                const TasksList()
               ]
             )
           ),
@@ -89,5 +104,34 @@ class _TasksHomePageState extends State<TasksHomePage> {
         icon: const Icon(Icons.add),
       ),
     );
+  }
+
+  void signOutUser({bool disabled = false}) async {
+    final authController = AuthController();
+    final resp = await authController.signOut();
+    if(resp == null) return;
+    if(resp is ErrorResponse){
+      if(!mounted) return;
+      showErrorAlert(context, "Estimado usuario", [resp.message]);
+      return;
+    }
+    // ignore: use_build_context_synchronously
+    if(!context.mounted) return;
+    final taskGroupsProvider = Provider.of<TaskGroupsProvider>(context, listen: false);
+    final tasksActivityProvider = Provider.of<TasksActivityProvider>(context, listen: false);
+    final tasksProvider = Provider.of<TasksProvider>(context, listen: false);
+    taskGroupsProvider.disposeProvider();
+    tasksActivityProvider.disposeProvider();
+    tasksProvider.disposeProvider();
+    Navigator.pushAndRemoveUntil(context, materialNavigationRoute(context, const SignInPage()), (route) => false);
+    if(disabled){
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showErrorAlert(
+          context,
+          "Estimado usuario",
+          ["Su cuenta se encuentra deshabilitada. Comuníquese con el administrador para más información"]
+        );
+      });
+    }
   }
 }
