@@ -136,6 +136,5 @@ class TaskGroupsProvider extends ChangeNotifier {
     taskGroupsLoading = true;
     taskGroupsError = false;
     taskGroups.clear();
-    //TODO: Cancel all other streams
   }
 }

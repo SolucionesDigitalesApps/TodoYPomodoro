@@ -47,8 +47,9 @@ class _TasksListState extends State<TasksList> {
             taskModel: taskModel
           );
         },
-        padding: EdgeInsets.zero,
-        //TODO: Añadir espacio al final
+        padding: EdgeInsets.only(
+          bottom: mqHeigth(context, 8)
+        ),
       ),
     );
   }

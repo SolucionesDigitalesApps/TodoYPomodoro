@@ -9,7 +9,6 @@ import 'package:todo_y_pomodoro_app/features/common/widgets/custom_icon_button.d
 import 'package:todo_y_pomodoro_app/features/common/widgets/v_spacing.dart';
 import 'package:todo_y_pomodoro_app/features/pomodoro/pages/pomodoro_page.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/models/task_model.dart';
-import 'package:todo_y_pomodoro_app/features/tasks/providers/tasks_activity_provider.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/providers/tasks_provider.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/widgets/update_task_sheet.dart';
 
@@ -31,10 +30,8 @@ class TaskListItem extends StatelessWidget {
       ),
       child: InkWell(
         onTap: (){
-          final tasksActivityProvider = Provider.of<TasksActivityProvider>(context, listen: false);
           showCustomBottomSheet(context, UpdateTaskSheet(
             taskModel: taskModel,
-            taskGroupId: tasksActivityProvider.selectedTaskGroupId,
           ));
         },
         child: Row(

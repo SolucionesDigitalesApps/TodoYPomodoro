@@ -163,7 +163,6 @@ class TasksProvider extends ChangeNotifier {
     updateTaskLoading = false;
     updateTaskError = false;
 
-    //TODO: Cancel all other streams
   }
 
 

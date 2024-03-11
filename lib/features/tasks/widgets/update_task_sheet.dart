@@ -12,16 +12,15 @@ import 'package:todo_y_pomodoro_app/features/common/widgets/sheet_content_layout
 import 'package:todo_y_pomodoro_app/features/common/widgets/v_spacing.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/duration_selector.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/models/task_model.dart';
+import 'package:todo_y_pomodoro_app/features/tasks/providers/tasks_activity_provider.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/providers/tasks_provider.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/widgets/task_group_list.dart';
 
 class UpdateTaskSheet extends StatefulWidget {
   final TaskModel taskModel;
-  final String taskGroupId;
   const UpdateTaskSheet({
     super.key,
     required this.taskModel,
-    required this.taskGroupId,
   });
 
   @override
@@ -44,6 +43,7 @@ class _UpdateTaskSheetState extends State<UpdateTaskSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final taskGroupId = Provider.of<TasksActivityProvider>(context, listen: false).selectedTaskGroupId;
     return SheetContentLayout(
       child: SingleChildScrollView(
         child: Column(
@@ -51,7 +51,6 @@ class _UpdateTaskSheetState extends State<UpdateTaskSheet> {
           children: [
             const AppHeader(title: "Editar tarea"),
             const VSpacing(3),
-            //TODO: Verificar cambio de grupo
             const TaskGroupList(),
             const VSpacing(3),
             CustomTextFormField(
@@ -108,7 +107,7 @@ class _UpdateTaskSheetState extends State<UpdateTaskSheet> {
                       description: taskDescriptionController.text,
                       pomodoro: selectedDuration.inSeconds,
                       userId: userId,
-                      groupId: widget.taskGroupId
+                      groupId: taskGroupId
                     );
                     final resp = await tasksProvider.updateTask(task);
                     if(resp == null) return;

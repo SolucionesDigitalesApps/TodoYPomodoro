@@ -13,7 +13,6 @@ class TasksActivityProvider extends ChangeNotifier {
 
   disposeProvider(){
     _selectedTaskGroupId = "";
-    //TODO: Cancel all other streams
   }
 
 
