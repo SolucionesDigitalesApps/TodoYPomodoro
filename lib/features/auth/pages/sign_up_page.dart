@@ -1,35 +1,31 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_y_pomodoro_app/core/navigation.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
 import 'package:todo_y_pomodoro_app/core/validator.dart';
 import 'package:todo_y_pomodoro_app/features/auth/controllers/auth_controller.dart';
 import 'package:todo_y_pomodoro_app/features/auth/models/user_model.dart';
-import 'package:todo_y_pomodoro_app/features/auth/pages/recover_password_page.dart';
-import 'package:todo_y_pomodoro_app/features/auth/pages/sign_up_page.dart';
 import 'package:todo_y_pomodoro_app/features/auth/providers/user_provider.dart';
 import 'package:todo_y_pomodoro_app/features/common/models/error_response.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/alerts.dart';
+import 'package:todo_y_pomodoro_app/features/common/widgets/app_header.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/app_version_label.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_button.dart';
-import 'package:todo_y_pomodoro_app/features/common/widgets/custom_text_button.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_text_form_field.dart';
-import 'package:todo_y_pomodoro_app/features/common/widgets/general_image.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/page_loader.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/scaffold_wrapper.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/v_spacing.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/pages/tasks_home_page.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/providers/tasks_activity_provider.dart';
 
-class SignInPage extends StatefulWidget {
-  const SignInPage({super.key});
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
 
   @override
-  State<SignInPage> createState() => _SignInPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _SignUpPageState extends State<SignUpPage> {
   final authController = AuthController();
   
   final emailController = TextEditingController();
@@ -53,15 +49,9 @@ class _SignInPageState extends State<SignInPage> {
           SingleChildScrollView(
             child: Column(
               children: [
-                const VSpacing(15),
-                GeneralImage(
-                  width: mqHeigth(context, 20),
-                  height: mqHeigth(context, 20),
-                  url: "",
-                  fromLocal: false,
-                  fit: BoxFit.cover,
-                ),
-                const VSpacing(10),
+                const VSpacing(5),
+                const AppHeader(title: "Crear cuenta"),
+                const VSpacing(5),
                 CustomTextFormField(
                   keyboardType: TextInputType.emailAddress,
                   controller: emailController,
@@ -74,44 +64,27 @@ class _SignInPageState extends State<SignInPage> {
                   hintText: "Contraseña",
                   errorMessage: passwordError,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    CustomTextButton(
-                      label: "Olvidaste tu contraseña?", 
-                      onPressed: (){
-                        Navigator.push(context, cupertinoNavigationRoute(context, const RecoverPasswordPage()));
-                      }, 
-                    )
-                  ],
-                ),
                 const VSpacing(10),
                 CustomButton(
-                  onPressed: onSignIn,
-                  label: "Iniciar sesión", 
+                  onPressed: onSignUp,
+                  label: "Crear cuenta", 
                   width: mqWidth(context, 90), 
                   color: Theme.of(context).primaryColor
                 ),
                 const VSpacing(2),
-                CustomTextButton(
-                  label: "Crear una nueva cuenta", 
-                  onPressed: (){
-                    Navigator.push(context, cupertinoNavigationRoute(context, const SignUpPage()));
-                  }, 
-                ),
                 const AppVersionLabel()
               ],
             ),
           ),
           PageLoader(
             loading: loading, 
-            message: "Iniciando sesión"
+            message: "Creando cuenta...", 
           )
         ],
       )
     );
   }
-  Future<void> onSignIn() async {
+  Future<void> onSignUp() async {
     emailError = emailValidator(emailController.text);
     passwordError = passwordValidator(passwordController.text);
     if(emailError.isNotEmpty || passwordError.isNotEmpty){
@@ -124,7 +97,7 @@ class _SignInPageState extends State<SignInPage> {
     setState(() {
       loading = true;
     });
-    final response = await authController.signInUserEmailPassword(emailController.text, passwordController.text);
+    final response = await authController.signUpUserEmailPassword(emailController.text, passwordController.text);
     if(response is ErrorResponse){
       setState(() {
         loading = false;
@@ -139,7 +112,13 @@ class _SignInPageState extends State<SignInPage> {
       return;
     }
     final respTemp = response as User;
-    final responseUser = await authController.fetchUserById(respTemp.uid);
+    final userModel = UserModel(
+      id: respTemp.uid, 
+      email: emailController.text, 
+      enabled: true, 
+      lastGroupId: ""
+    );
+    final responseUser = await authController.createUserById(userModel);
     if(responseUser is ErrorResponse){
       setState(() {
         loading = false;
@@ -154,24 +133,9 @@ class _SignInPageState extends State<SignInPage> {
       await authController.signOut();
       return;
     }
-    final data = responseUser as UserModel;
-    if(!data.enabled){
-      setState(() {
-        loading = false;
-      });
-      if(mounted){
-        showErrorAlert(
-          context, 
-          "Estimado usuario", 
-          ["Su cuenta se encuentra deshabilitada. Comuníquese con el administrador para más información"]
-        );
-      }
-      await authController.signOut();
-      return;
-    }
     if(mounted){
-      Provider.of<UserProvider>(context, listen: false).setNewUser(data);
-      Provider.of<TasksActivityProvider>(context, listen: false).selectedTaskGroupId = data.lastGroupId;
+      Provider.of<UserProvider>(context, listen: false).setNewUser(userModel);
+      Provider.of<TasksActivityProvider>(context, listen: false).selectedTaskGroupId = userModel.lastGroupId;
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const TasksHomePage()), (route) => false);
     }
   }

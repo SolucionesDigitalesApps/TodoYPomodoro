@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_y_pomodoro_app/features/auth/controllers/auth_controller.dart';
 import 'package:todo_y_pomodoro_app/features/auth/models/user_model.dart';
+import 'package:todo_y_pomodoro_app/features/auth/pages/sign_in_page.dart';
 import 'package:todo_y_pomodoro_app/features/auth/providers/user_provider.dart';
 import 'package:todo_y_pomodoro_app/features/common/controllers/notification_controller.dart';
 import 'package:todo_y_pomodoro_app/features/common/models/error_response.dart';
@@ -32,16 +33,16 @@ class _RouterPageState extends State<RouterPage> {
     final resp = await Provider.of<UserProvider>(context, listen: false).getCurrentUser();
     if(resp is ErrorResponse){
       if(mounted){
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const TasksHomePage()), (route) => false);
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const SignInPage()), (route) => false);
       }
-    }else{
-      final user = resp as UserModel;
-      final token = await notificationController.getToken() ?? "";
-      await authController.updateToken(user.id, token);
-      if(mounted){
-        Provider.of<TasksActivityProvider>(context, listen: false).selectedTaskGroupId = user.lastGroupId;
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const TasksHomePage()), (route) => false);
-      }
+      return;
+    }
+    final user = resp as UserModel;
+    final token = await notificationController.getToken() ?? "";
+    await authController.updateToken(user.id, token);
+    if(mounted){
+      Provider.of<TasksActivityProvider>(context, listen: false).selectedTaskGroupId = user.lastGroupId;
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const TasksHomePage()), (route) => false);
     }
   }
   

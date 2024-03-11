@@ -51,6 +51,7 @@ class _UpdateTaskSheetState extends State<UpdateTaskSheet> {
           children: [
             const AppHeader(title: "Editar tarea"),
             const VSpacing(3),
+            //TODO: Verificar cambio de grupo
             const TaskGroupList(),
             const VSpacing(3),
             CustomTextFormField(
@@ -100,6 +101,7 @@ class _UpdateTaskSheetState extends State<UpdateTaskSheet> {
                     final tasksProvider = Provider.of<TasksProvider>(context, listen: false);
                     final userId = Provider.of<UserProvider>(context, listen: false).currentUser.id;
                     final task = TaskModel.empty.copyWith(
+                      id: widget.taskModel.id,
                       updatedAt: DateTime.now(), 
                       deletedAt: null, 
                       title: taskTitleController.text,
@@ -108,7 +110,7 @@ class _UpdateTaskSheetState extends State<UpdateTaskSheet> {
                       userId: userId,
                       groupId: widget.taskGroupId
                     );
-                    final resp = await tasksProvider.createTask(task);
+                    final resp = await tasksProvider.updateTask(task);
                     if(resp == null) return;
                     if(resp is ErrorResponse){
                       if(!mounted) return;

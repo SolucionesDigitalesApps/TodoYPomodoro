@@ -22,14 +22,15 @@ class _TasksListState extends State<TasksList> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final userId = Provider.of<UserProvider>(context, listen: false).currentUser.id;
-      final tasksActivityProvider = Provider.of<TasksActivityProvider>(context, listen: false);
-      Provider.of<TasksProvider>(context, listen: false).getTasksSubscription(userId, tasksActivityProvider.selectedTaskGroupId);
+      Provider.of<TasksProvider>(context, listen: false).getTasksSubscription(userId);
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final tasksActivityProvider = Provider.of<TasksActivityProvider>(context);
     final tasksProvider = Provider.of<TasksProvider>(context);
+    final taskList = tasksProvider.tasksPerGroup(tasksActivityProvider.selectedTaskGroupId);
     return tasksProvider.tasksLoading ? const LoadingView(heigth: 80) :
       tasksProvider.tasksError ? const ErrorView(heigth: 80) : 
     SizedBox(
@@ -38,9 +39,9 @@ class _TasksListState extends State<TasksList> {
         onReorder: (oldIndex, newIndex) {
           
         },
-        itemCount: tasksProvider.tasks.length,
+        itemCount: taskList.length,
         itemBuilder: (context, index) {
-          final taskModel = tasksProvider.tasks[index];
+          final taskModel = taskList[index];
           return TaskListItem(
             key: Key("task_list_item_${taskModel.id}"),
             taskModel: taskModel

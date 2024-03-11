@@ -22,7 +22,7 @@ class PomodoroPage extends StatefulWidget {
 }
 
 class _PomodoroPageState extends State<PomodoroPage> {
-  CountDownController controller = CountDownController();
+  CountDownController pomodoroController = CountDownController();
   @override
   Widget build(BuildContext context) {
     return ScaffoldWrapper(
@@ -41,8 +41,8 @@ class _PomodoroPageState extends State<PomodoroPage> {
                 ),
                 const VSpacing(3),
                 CircularCountDownTimer(
-                  controller: controller,
-                  duration: widget.taskModel.pomodoro *  60,
+                  controller: pomodoroController,
+                  duration: widget.taskModel.pomodoro,
                   width: mqWidth(context, 70),
                   height: mqWidth(context, 70),
                   fillColor: Colors.white,
@@ -64,7 +64,9 @@ class _PomodoroPageState extends State<PomodoroPage> {
                     CustomIconButton(
                       borderRadius: 30,
                       size: 15, 
-                      onPressed: (){}, 
+                      onPressed: (){
+                        pomodoroController.restart();
+                      }, 
                       fillColor: const Color(0xffF2F2F2),
                       icon: const Icon(Icons.refresh_rounded, color: Color(0xffAFAFAF))
                     ),

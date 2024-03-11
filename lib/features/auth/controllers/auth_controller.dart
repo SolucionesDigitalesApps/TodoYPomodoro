@@ -120,6 +120,48 @@ class AuthController {
     }
   }
 
+  Future<dynamic> signUpUserEmailPassword(String email, String password) async {
+    try {
+      final credential = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password
+      );
+      if(credential.user != null){
+        return credential.user!;
+      }else{
+        return ErrorResponse.unknown;
+      }
+    } on FirebaseAuthException catch (e) {
+      if(e.code == "invalid-email"){
+        return ErrorResponse(
+          statusCode: 400, 
+          message: "El email ingresado es inválido"
+        );
+      }else if (e.code == "email-already-in-use"){
+        return ErrorResponse(
+          statusCode: 401, 
+          message: "El email se encuentra registrado"
+        );
+      }else if (e.code == "operation-not-allowed"){
+        return ErrorResponse(
+          statusCode: 402, 
+          message: "No se encuentra habilitado el registro de usuarios"
+        );
+      }else if (e.code == "weak-password"){
+        return ErrorResponse(
+          statusCode: 403, 
+          message: "La contraseña no es segura. Use números y letras"
+        );
+      }else{
+        return ErrorResponse.unknown;
+      }
+    } on SocketException{
+      return ErrorResponse.network;
+    } catch(_){
+      return ErrorResponse.unknown;
+    }
+  }
+
   Future<dynamic> loadUserSession() async {
     final user = _auth.currentUser;
     if(user == null){
@@ -145,6 +187,18 @@ class AuthController {
       return ErrorResponse.unknown;
     }
   }
+
+  Future<dynamic> createUserById(UserModel userModel) async {
+    try {
+      await _db.collection(usersCollection).doc(userModel.id).set(userModel.toJson());
+      return true;
+    }  on SocketException{
+      return ErrorResponse.network;
+    } catch(_){
+      return ErrorResponse.unknown;
+    }
+  }
+
   Future<dynamic> updateToken(String userId, String token) async {
     try {
       DocumentReference refUser = _db.collection(usersCollection).doc(userId);

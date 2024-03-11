@@ -15,12 +15,14 @@ class TasksProvider extends ChangeNotifier {
   bool tasksError = false;
   List<TaskModel> tasks = [];
 
-  Future<void> getTasksSubscription(String userId, String groupId) async {
+  List<TaskModel> tasksPerGroup(String groupId) => tasks.where((task) => task.groupId == groupId).toList();
+
+  Future<void> getTasksSubscription(String userId) async {
     if(tasksSubscription != null) return;
     tasksLoading = true;
     tasksError = false;
     notifyListeners();
-    tasksSubscription = tasksController.tasksStream(userId, groupId).listen((snapshots) {
+    tasksSubscription = tasksController.tasksStream(userId).listen((snapshots) {
       tasks = tasksController.parseTasks(snapshots.docs);
       tasksLoading = false;
       tasksError = false;
@@ -28,6 +30,29 @@ class TasksProvider extends ChangeNotifier {
     }, onError: (error){
       tasksLoading = false;
       tasksError = true;
+      notifyListeners();
+    });
+  }
+
+  //GET
+  StreamSubscription<dynamic>? tasksArchivedSubscription;
+  bool tasksArchivedLoading = true;
+  bool tasksArchivedError = false;
+  List<TaskModel> tasksArchived = [];
+
+  Future<void> getTasksArchivedSubscription(String userId, String groupId) async {
+    if(tasksArchivedSubscription != null) return;
+    tasksArchivedLoading = true;
+    tasksArchivedError = false;
+    notifyListeners();
+    tasksArchivedSubscription = tasksController.tasksArchivedStream(userId, groupId).listen((snapshots) {
+      tasksArchived = tasksController.parseTasks(snapshots.docs);
+      tasksArchivedLoading = false;
+      tasksArchivedError = false;
+      notifyListeners();
+    }, onError: (error){
+      tasksArchivedLoading = false;
+      tasksArchivedError = true;
       notifyListeners();
     });
   }

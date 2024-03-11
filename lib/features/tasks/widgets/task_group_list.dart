@@ -61,7 +61,9 @@ class _TaskGroupListState extends State<TaskGroupList> {
               taskGroupModelTarget: item,
               taskGroupModelSelected: tasksActivityProvider.selectedTaskGroupId,
               key: Key("Task_group_item_${item.id}"),
-              onPressed: (){}, 
+              onPressed: (){
+                Provider.of<TasksActivityProvider>(context, listen: false).selectedTaskGroupId = item.id;
+              }, 
               onLongPress: (){
                 showCustomBottomSheet(context, UpdateTaskGroupSheet(taskGroupModel: item,));
               },

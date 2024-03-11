@@ -14,12 +14,19 @@ class TasksController {
 
   final String tasksCollection = "tasks";
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> tasksStream(String userId, String groupId) => 
+  Stream<QuerySnapshot<Map<String, dynamic>>> tasksStream(String userId) => 
     _db.collection(tasksCollection).
       where("deleted_at", isNull: true)
         .where("user_id", isEqualTo: userId)
-          .where("group_id", isEqualTo: groupId)
           .orderBy("created_at", descending: false)
+          .snapshots();
+          
+  Stream<QuerySnapshot<Map<String, dynamic>>> tasksArchivedStream(String userId, String groupId) => 
+    _db.collection(tasksCollection).
+      where("deleted_at", isNull: false)
+        .where("user_id", isEqualTo: userId)
+          .where("group_id", isEqualTo: groupId)
+          .orderBy("deleted_at", descending: false)
           .snapshots();
 
   //GET
