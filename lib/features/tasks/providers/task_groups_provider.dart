@@ -54,6 +54,10 @@ class TaskGroupsProvider extends ChangeNotifier {
   bool createTaskGroupError = false;
   TaskGroupModel createdTaskGroup = TaskGroupModel.empty;
 
+  final _selectTaskGroupController = StreamController<TaskGroupModel>.broadcast();
+  Function(TaskGroupModel) get selectTaskGroupSink => _selectTaskGroupController.sink.add;
+  Stream<TaskGroupModel> get selectTaskGroupStream => _selectTaskGroupController.stream;
+
   Future<dynamic> createTaskGroup(TaskGroupModel taskGroupModel) async {
     createTaskGroupLoading = true;
     createTaskGroupError = false;
@@ -67,6 +71,12 @@ class TaskGroupsProvider extends ChangeNotifier {
     }
     createTaskGroupLoading = false;
     createTaskGroupError = false;
+    final data = resp as String;
+    selectTaskGroupSink(taskGroupModel.copyWith(
+      id: data,
+      updatedAt: taskGroupModel.updatedAt, 
+      deletedAt: taskGroupModel.deletedAt
+    ));
     notifyListeners();
     return true;
   }
@@ -106,6 +116,12 @@ class TaskGroupsProvider extends ChangeNotifier {
       deleteTaskGroupError = true;
       notifyListeners();
       return resp;
+    }
+    final restTaskGroups = taskGroups.where((element) => element.id != taskGroupModel.id).toList();
+    if(restTaskGroups.isNotEmpty){
+      selectTaskGroupSink(restTaskGroups.last);
+    }else{
+      selectTaskGroupSink(TaskGroupModel.empty);
     }
     deleteTaskGroupLoading = false;
     deleteTaskGroupError = false;

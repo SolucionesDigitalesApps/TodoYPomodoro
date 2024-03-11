@@ -4,7 +4,7 @@ class TaskModel {
   final String title;
   final String description;
   final int pomodoro;
-  final String state;
+  final String state;//TaskState => TaskState.pending, TaskState.completed, TaskState.deleted
   final String groupId;
   final String userId;
   final DateTime createdAt;

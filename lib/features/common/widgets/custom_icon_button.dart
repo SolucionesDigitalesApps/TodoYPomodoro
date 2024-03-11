@@ -13,6 +13,7 @@ class CustomIconButton extends StatelessWidget {
   final Color? splashColor;
   final bool heightRef;
   final double borderWidth;
+  final bool loading;
 
   const CustomIconButton({
     Key? key, 
@@ -26,7 +27,8 @@ class CustomIconButton extends StatelessWidget {
     this.iconPer = 0.6,
     this.splashColor,
     this.heightRef = false,
-    this.borderWidth = 1 
+    this.borderWidth = 1,
+    this.loading = false
   }) : super(key: key);
 
   @override
@@ -56,7 +58,9 @@ class CustomIconButton extends StatelessWidget {
         ),
         child: SizedBox(
           width: mqWidth(context, size * iconPer),
-          child: icon
+          child: !loading ? icon : CircularProgressIndicator(
+            color: Theme.of(context).primaryColor,
+          ),
         )
       ),
     );

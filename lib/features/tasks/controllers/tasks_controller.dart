@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:todo_y_pomodoro_app/core/task_state_enum.dart';
 import 'package:todo_y_pomodoro_app/features/common/models/error_response.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/models/task_model.dart';
 
@@ -17,16 +18,18 @@ class TasksController {
   Stream<QuerySnapshot<Map<String, dynamic>>> tasksStream(String userId) => 
     _db.collection(tasksCollection).
       where("deleted_at", isNull: true)
+        .where("state", isEqualTo: TaskState.pending.value)
         .where("user_id", isEqualTo: userId)
           .orderBy("created_at", descending: false)
           .snapshots();
           
   Stream<QuerySnapshot<Map<String, dynamic>>> tasksArchivedStream(String userId, String groupId) => 
     _db.collection(tasksCollection).
-      where("deleted_at", isNull: false)
+      where("deleted_at", isNull: true)
         .where("user_id", isEqualTo: userId)
           .where("group_id", isEqualTo: groupId)
-          .orderBy("deleted_at", descending: false)
+          .where("state", isEqualTo: TaskState.completed.value)
+          .orderBy("updated_at", descending: false)
           .snapshots();
 
   //GET

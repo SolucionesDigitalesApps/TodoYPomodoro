@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_y_pomodoro_app/core/task_state_enum.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
 import 'package:todo_y_pomodoro_app/features/auth/providers/user_provider.dart';
 import 'package:todo_y_pomodoro_app/features/common/models/error_response.dart';
@@ -12,14 +13,13 @@ import 'package:todo_y_pomodoro_app/features/common/widgets/sheet_content_layout
 import 'package:todo_y_pomodoro_app/features/common/widgets/v_spacing.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/duration_selector.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/models/task_model.dart';
+import 'package:todo_y_pomodoro_app/features/tasks/providers/tasks_activity_provider.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/providers/tasks_provider.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/widgets/task_group_list.dart';
 
 class CreateTaskSheet extends StatefulWidget {
-  final String taskGroupId;
   const CreateTaskSheet({
     super.key,
-    required this.taskGroupId
   });
 
   @override
@@ -34,6 +34,7 @@ class _CreateTaskSheetState extends State<CreateTaskSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final taskGroupId = Provider.of<TasksActivityProvider>(context).selectedTaskGroupId;
     return SheetContentLayout(
       child: SingleChildScrollView(
         child: Column(
@@ -93,10 +94,11 @@ class _CreateTaskSheetState extends State<CreateTaskSheet> {
                       updatedAt: null, 
                       deletedAt: null, 
                       title: taskTitleController.text,
+                      state: TaskState.pending.value,
                       description: taskDescriptionController.text,
                       pomodoro: selectedDuration.inSeconds,
                       userId: userId,
-                      groupId: widget.taskGroupId
+                      groupId: taskGroupId
                     );
                     final resp = await tasksProvider.createTask(task);
                     if(resp == null) return;

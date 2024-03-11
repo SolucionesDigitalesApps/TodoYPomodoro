@@ -45,7 +45,7 @@ class TaskGroupsController {
       await _db.collection(taskGroupsCollection).doc(ref.id).update({
         "id": ref.id
       });
-      return true;
+      return ref.id;
     } on SocketException{
       return ErrorResponse.network;
     } catch(_){
