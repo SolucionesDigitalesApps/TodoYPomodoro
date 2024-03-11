@@ -11,7 +11,6 @@ class UserProvider extends ChangeNotifier {
   final userController = UserController();
 
   UserModel currentUser = UserModel.empty.copyWith(
-    //TODO: Cambiar
     id: ""
   );
   bool currentUserLoading = false;

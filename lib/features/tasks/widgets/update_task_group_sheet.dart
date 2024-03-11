@@ -11,6 +11,7 @@ import 'package:todo_y_pomodoro_app/features/common/widgets/sheet_content_layout
 import 'package:todo_y_pomodoro_app/features/common/widgets/v_spacing.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/models/task_group_model.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/providers/task_groups_provider.dart';
+import 'package:todo_y_pomodoro_app/features/tasks/providers/tasks_activity_provider.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/providers/tasks_provider.dart';
 
 class UpdateTaskGroupSheet extends StatefulWidget {
@@ -91,6 +92,13 @@ class _UpdateTaskGroupSheetState extends State<UpdateTaskGroupSheet> {
                 label: "Eliminar grupo", 
                 loading: deleteTaskLoading, 
                 onPressed: () async {
+                  final groupId = Provider.of<TasksActivityProvider>(context, listen: false).selectedTaskGroupId;
+                  final tasksProvider = Provider.of<TasksProvider>(context, listen: false);
+                  final currentTasks = tasksProvider.tasksPerGroup(groupId);
+                  if(currentTasks.isNotEmpty){
+                    showInfoAlert(context, "Estimado usuario", "No se puede eliminar el grupo porque tiene tareas relacionadas");
+                    return;
+                  }
                   final taskGroupsProvider = Provider.of<TaskGroupsProvider>(context, listen: false);
                   final resp = await taskGroupsProvider.deleteTaskGroup(widget.taskGroupModel);
                   if(resp == null) return;

@@ -10,6 +10,8 @@ import 'package:todo_y_pomodoro_app/features/common/widgets/h_spacing.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/language_bottom_sheet.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/pages/archived_tasks_page.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/providers/task_groups_provider.dart';
+import 'package:todo_y_pomodoro_app/features/tasks/providers/tasks_activity_provider.dart';
+import 'package:todo_y_pomodoro_app/features/tasks/providers/tasks_provider.dart';
 
 class TasksHomeOptions extends StatelessWidget {
   const TasksHomeOptions({super.key});
@@ -60,7 +62,11 @@ class TasksHomeOptions extends StatelessWidget {
                   // ignore: use_build_context_synchronously
                   if(!context.mounted) return;
                   final taskGroupsProvider = Provider.of<TaskGroupsProvider>(context, listen: false);
-                  taskGroupsProvider.cancelAllStreams();
+                  final tasksActivityProvider = Provider.of<TasksActivityProvider>(context, listen: false);
+                  final tasksProvider = Provider.of<TasksProvider>(context, listen: false);
+                  taskGroupsProvider.disposeProvider();
+                  tasksActivityProvider.disposeProvider();
+                  tasksProvider.disposeProvider();
                   Navigator.pushAndRemoveUntil(context, materialNavigationRoute(context, const SignInPage()), (route) => false);
                 }, 
                 icon: const Icon(Icons.logout)

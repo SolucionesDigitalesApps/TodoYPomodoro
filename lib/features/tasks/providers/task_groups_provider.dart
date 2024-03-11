@@ -113,12 +113,13 @@ class TaskGroupsProvider extends ChangeNotifier {
     return true;
   }
 
-  cancelAllStreams(){
+  disposeProvider(){
     //CREATE FLOW
     taskGroupsSubscription?.cancel();
     taskGroupsSubscription = null;
     taskGroupsLoading = true;
     taskGroupsError = false;
+    taskGroups.clear();
     //TODO: Cancel all other streams
   }
 }

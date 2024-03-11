@@ -139,12 +139,32 @@ class TasksProvider extends ChangeNotifier {
     return true;
   }
 
-  cancelAllStreams(){
+  disposeProvider(){
     //CREATE FLOW
     tasksSubscription?.cancel();
     tasksSubscription = null;
     tasksLoading = true;
     tasksError = false;
+    tasks.clear();
+
+    tasksArchivedSubscription?.cancel();
+    tasksArchivedSubscription = null;
+    tasksArchivedLoading = true;
+    tasksArchivedError = false;
+    tasksArchived.clear();
+
+    createTaskLoading = false;
+    createTaskError = false;
+    createdTask = TaskModel.empty;
+
+    deleteTaskLoading = false;
+    deleteTaskError = false;
+
+    updateTaskLoading = false;
+    updateTaskError = false;
+
     //TODO: Cancel all other streams
   }
+
+
 }
