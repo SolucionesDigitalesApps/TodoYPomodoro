@@ -59,23 +59,28 @@ class TaskListItem extends StatelessWidget {
                   Navigator.push(context, cupertinoNavigationRoute(context, PomodoroPage(
                     taskModel: taskModel,
                   )));
+                  return;
                 }
-                if(!taskModel.hasPomodoro){
-                  final tasksProvider = Provider.of<TasksProvider>(context, listen: false);
-                  final resp = await tasksProvider.updateTask(taskModel.copyWith(
-                    updatedAt: DateTime.now(), 
-                    deletedAt: null,
-                    state: TaskState.completed.value
-                  ));
-                  if(resp == null) return;
-                  if(resp is ErrorResponse){
-                    // ignore: use_build_context_synchronously
-                    if(!context.mounted) return;
-                    showErrorAlert(context, "Estimado usuario", [resp.message]);
-                  }
+                final tasksProvider = Provider.of<TasksProvider>(context, listen: false);
+                final resp = await tasksProvider.updateTask(taskModel.copyWith(
+                  updatedAt: DateTime.now(), 
+                  deletedAt: null,
+                  state: TaskState.completed.value
+                ));
+                if(resp == null) return;
+                if(resp is ErrorResponse){
+                  // ignore: use_build_context_synchronously
+                  if(!context.mounted) return;
+                  showErrorAlert(context, "Estimado usuario", [resp.message]);
+                  return;
+                }
+                if(fromPomodoroPage){
+                  // ignore: use_build_context_synchronously
+                  if(!context.mounted) return;
+                  Navigator.pop(context);
                 }
               }, 
-              icon: taskModel.hasPomodoro ? const Icon(Icons.play_arrow_rounded) : const Icon(Icons.check)
+              icon: taskModel.hasPomodoro && !fromPomodoroPage ? const Icon(Icons.play_arrow_rounded) : const Icon(Icons.check)
             )
           ],
         ),

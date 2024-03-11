@@ -9,7 +9,20 @@ String formatDuration(Duration duration) {
 }
 //Create a function to convert int seconds to string like "25 minutes"
 String formatSeconds(int seconds) {
-  final minutes = seconds.remainder(60);
-  final formattedMinutes = minutes > 0? '$minutes minute' : '';
-  return formattedMinutes;
+  if (seconds < 60) {
+    return '$seconds seconds';
+  } else {
+    int minutes = seconds ~/ 60;
+    if (minutes < 60) {
+      return '$minutes ${minutes == 1 ? 'minute' : 'minutes'}';
+    } else {
+      int hours = minutes ~/ 60;
+      if (hours < 24) {
+        return '$hours ${hours == 1 ? 'hour' : 'hours'}';
+      } else {
+        int days = hours ~/ 24;
+        return '$days ${days == 1 ? 'day' : 'days'}';
+      }
+    }
+  }
 }
