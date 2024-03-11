@@ -35,6 +35,26 @@ class UserProvider extends ChangeNotifier {
     return currentUser;
   }
 
+  bool updateUserLoading = false;
+  bool updateUserError = false;
+
+  Future<dynamic> updateUser(UserModel userModel) async {
+    updateUserLoading = true;
+    updateUserError = false;
+    notifyListeners();
+    final data = await authController.updateUser(userModel);
+    if (data is ErrorResponse) {
+      updateUserLoading = false;
+      updateUserError = true;
+      notifyListeners();
+      return data;
+    }
+    updateUserLoading = false;
+    updateUserError = false;
+    notifyListeners();
+    return true;
+  }
+
   void setNewUser(UserModel newUser) {
     currentUser = newUser;
     notifyListeners();

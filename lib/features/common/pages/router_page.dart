@@ -38,8 +38,9 @@ class _RouterPageState extends State<RouterPage> {
       return;
     }
     final user = resp as UserModel;
-    final token = await notificationController.getToken() ?? "";
-    await authController.updateToken(user.id, token);
+    //TODO: Actualizar token
+    // final token = await notificationController.getToken() ?? "";
+    // await authController.updateUser(user.copyWith());
     if(mounted){
       Provider.of<TasksActivityProvider>(context, listen: false).selectedTaskGroupId = user.lastGroupId;
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const TasksHomePage()), (route) => false);

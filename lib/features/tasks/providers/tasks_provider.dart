@@ -15,7 +15,31 @@ class TasksProvider extends ChangeNotifier {
   bool tasksError = false;
   List<TaskModel> tasks = [];
 
-  List<TaskModel> tasksPerGroup(String groupId) => tasks.where((task) => task.groupId == groupId).toList();
+  List<TaskModel> tasksPerGroup(String groupId) => 
+    tasks.where((task) => task.groupId == groupId).toList();
+  
+  void swapTasks<TaskModel>(int index1, int index2) {
+    final orders = tasks.map((e) => e.order).toList();
+    if (index1 < 0 || index2 < 0 || index1 >= tasks.length || index2 >= tasks.length) {
+      return;
+    }
+    
+    if (index1 == index2) {
+      return;
+    }
+    final tempMoving = tasks[index1];
+    tasks.removeAt(index1);
+    tasks.insert(index2, tempMoving);
+    for(int i = 0; i < tasks.length; i++) {
+      tasks[i] = tasks[i].copyWith(
+        updatedAt: tasks[i].updatedAt, 
+        deletedAt: tasks[i].deletedAt,
+        order: orders[i]
+      );
+    }
+    notifyListeners();
+    tasksController.swapTasks(tasks);
+  }
 
   Future<void> getTasksSubscription(String userId) async {
     if(tasksSubscription != null) return;

@@ -200,12 +200,10 @@ class AuthController {
     }
   }
 
-  Future<dynamic> updateToken(String userId, String token) async {
+  Future<dynamic> updateUser(UserModel userModel) async {
     try {
-      DocumentReference refUser = _db.collection(usersCollection).doc(userId);
-      await refUser.update({
-        "token": token
-      });
+      DocumentReference refUser = _db.collection(usersCollection).doc(userModel.id);
+      await refUser.update(userModel.toJson());
       return true;
     }  on SocketException{
       return ErrorResponse.network;

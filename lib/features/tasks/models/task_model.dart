@@ -10,6 +10,7 @@ class TaskModel {
   final DateTime createdAt;
   final DateTime? updatedAt;
   final DateTime? deletedAt;
+  final int order;
 
   TaskModel({
     required this.id,
@@ -22,6 +23,7 @@ class TaskModel {
     required this.createdAt,
     required this.updatedAt,
     required this.deletedAt,
+    required this.order,
   });
 
   factory TaskModel.fromJson(Map<String, dynamic> json) => TaskModel(
@@ -34,7 +36,8 @@ class TaskModel {
     userId: json["user_id"]?? "",
     createdAt: json["created_at"].toDate(),
     updatedAt: json["updated_at"]?.toDate(),
-    deletedAt: json["deleted_at"]?.toDate()
+    deletedAt: json["deleted_at"]?.toDate(),
+    order: json["order"] ?? 0
   );
 
   Map<String, dynamic> toJson() => {
@@ -47,7 +50,8 @@ class TaskModel {
     "user_id" : userId,
     "created_at": createdAt,
     "updated_at": updatedAt,
-    "deleted_at": deletedAt
+    "deleted_at": deletedAt,
+    "order" : order,
   };
 
   static TaskModel get empty => TaskModel(
@@ -61,6 +65,7 @@ class TaskModel {
     createdAt: DateTime.now(),
     updatedAt: null,
     deletedAt: null,
+    order: 0
   );
 
   TaskModel copyWith({
@@ -74,6 +79,7 @@ class TaskModel {
     DateTime? createdAt,
     required DateTime? updatedAt,
     required DateTime? deletedAt,
+    int? order,
   }) => TaskModel(
     id: id?? this.id,
     title: title?? this.title,
@@ -85,6 +91,7 @@ class TaskModel {
     createdAt: createdAt ?? this.createdAt,
     updatedAt: updatedAt,
     deletedAt: deletedAt,
+    order: order?? this.order,
   );
 
   bool get hasPomodoro => pomodoro > 0;

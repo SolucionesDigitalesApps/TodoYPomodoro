@@ -20,7 +20,7 @@ class TasksController {
       where("deleted_at", isNull: true)
         .where("state", isEqualTo: TaskState.pending.value)
         .where("user_id", isEqualTo: userId)
-          .orderBy("created_at", descending: false)
+          .orderBy("order", descending: true)
           .snapshots();
           
   Stream<QuerySnapshot<Map<String, dynamic>>> tasksArchivedStream(String userId, String groupId) => 
@@ -68,6 +68,26 @@ class TasksController {
     try{
       DocumentReference docsRef = _db.collection(tasksCollection).doc(taskModel.id);
       await docsRef.update(taskModel.toJson());
+      return true;
+    }  on SocketException{
+      return ErrorResponse.network;
+    } catch(_){
+      return ErrorResponse.unknown;
+    }
+  }
+  Future<dynamic> swapTasks(List<TaskModel> taskModels) async {
+    try {
+      final batch = _db.batch();
+
+      for (final taskModel in taskModels) {
+        // Reference to the document
+        DocumentReference documentRef =
+            _db.collection(tasksCollection).doc(taskModel.id);
+
+        // Update specific fields in the document
+        batch.update(documentRef, taskModel.toJson());
+      }
+      await batch.commit();
       return true;
     }  on SocketException{
       return ErrorResponse.network;

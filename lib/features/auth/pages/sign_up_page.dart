@@ -116,7 +116,8 @@ class _SignUpPageState extends State<SignUpPage> {
       id: respTemp.uid, 
       email: emailController.text, 
       enabled: true, 
-      lastGroupId: ""
+      lastGroupId: "",
+      lastTaskOrder: 0
     );
     final responseUser = await authController.createUserById(userModel);
     if(responseUser is ErrorResponse){

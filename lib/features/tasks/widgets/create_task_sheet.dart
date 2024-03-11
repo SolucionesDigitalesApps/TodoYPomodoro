@@ -77,43 +77,62 @@ class _CreateTaskSheetState extends State<CreateTaskSheet> {
               hintText: "Seleccion tiempo"
             ),
             const VSpacing(5),
-            Selector<TasksProvider, bool>(
-              selector: (context, tasksProvider) => tasksProvider.createTaskLoading,
-              builder: (context, createTaskLoading, _) {
-                return CustomButton(
-                  loading: createTaskLoading,
-                  onPressed: () async {
-                    if(taskTitleController.text.isEmpty){
-                      groupNameError = "El título de la tarea no puede estar vacío";
-                      setState(() {});
-                      return;
-                    }
-                    FocusScope.of(context).unfocus();
-                    final tasksProvider = Provider.of<TasksProvider>(context, listen: false);
-                    final userId = Provider.of<UserProvider>(context, listen: false).currentUser.id;
-                    final task = TaskModel.empty.copyWith(
-                      updatedAt: null, 
-                      deletedAt: null, 
-                      title: taskTitleController.text,
-                      state: TaskState.pending.value,
-                      description: taskDescriptionController.text,
-                      pomodoro: selectedDuration.inSeconds,
-                      userId: userId,
-                      groupId: taskGroupId
+            Selector<UserProvider, bool>(
+              selector: (context, userProvider) => userProvider.updateUserLoading,
+              builder: (context, updateUserLoading, _) {
+                return Selector<TasksProvider, bool>(
+                  selector: (context, tasksProvider) => tasksProvider.createTaskLoading,
+                  builder: (context, createTaskLoading, _) {
+                    return CustomButton(
+                      loading: createTaskLoading || updateUserLoading,
+                      onPressed: () async {
+                        if(taskTitleController.text.isEmpty){
+                          groupNameError = "El título de la tarea no puede estar vacío";
+                          setState(() {});
+                          return;
+                        }
+                        FocusScope.of(context).unfocus();
+                        final tasksProvider = Provider.of<TasksProvider>(context, listen: false);
+                        final userProvider = Provider.of<UserProvider>(context, listen: false);
+                        final newOrder = userProvider.currentUser.lastTaskOrder + 1;
+                        final task = TaskModel.empty.copyWith(
+                          updatedAt: null, 
+                          deletedAt: null, 
+                          title: taskTitleController.text,
+                          state: TaskState.pending.value,
+                          description: taskDescriptionController.text,
+                          pomodoro: selectedDuration.inSeconds,
+                          userId: userProvider.currentUser.id,
+                          groupId: taskGroupId,
+                          order: newOrder
+                        );
+                        final resp = await tasksProvider.createTask(task);
+                        if(resp == null) return;
+                        if(resp is ErrorResponse){
+                          if(!mounted) return;
+                          showErrorAlert(context, "Estimado usuario", [resp.message]);
+                          return;
+                        }
+                        final respUser = await userProvider.updateUser(userProvider.currentUser.copyWith(
+                          lastTaskOrder: newOrder
+                        ));
+                        if(respUser == null) return;
+                        if(respUser is ErrorResponse){
+                          if(!mounted) return;
+                          showErrorAlert(context, "Estimado usuario", [resp.message]);
+                          return;
+                        }
+                        userProvider.setNewUser(userProvider.currentUser.copyWith(
+                          lastTaskOrder: newOrder
+                        ));
+                        if(!mounted) return;
+                        Navigator.pop(context);
+                      },
+                      label: "Crear tarea", 
+                      width: mqWidth(context, 90), 
+                      color: Theme.of(context).primaryColor
                     );
-                    final resp = await tasksProvider.createTask(task);
-                    if(resp == null) return;
-                    if(resp is ErrorResponse){
-                      if(!mounted) return;
-                      showErrorAlert(context, "Estimado usuario", [resp.message]);
-                      return;
-                    }
-                    if(!mounted) return;
-                    Navigator.pop(context);
-                  },
-                  label: "Crear tarea", 
-                  width: mqWidth(context, 90), 
-                  color: Theme.of(context).primaryColor
+                  }
                 );
               }
             ),
