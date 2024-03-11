@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:todo_y_pomodoro_app/core/navigation.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
 import 'package:todo_y_pomodoro_app/features/auth/pages/sign_in_page.dart';
@@ -32,7 +33,7 @@ class OnboardingPage extends StatelessWidget {
               onPressed: (){
                 Navigator.push(context, cupertinoNavigationRoute(context, const SignInPage()));
               }, 
-              label: "Start", 
+              label: FlutterI18n.translate(context, "general.next"), 
               width: mqWidth(context, 90), 
               color: Theme.of(context).primaryColor
             )

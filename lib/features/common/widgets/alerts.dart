@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/v_spacing.dart';
 
@@ -29,7 +30,7 @@ Future<void> showInfoAlert(BuildContext context, String title, String message) a
       actions: [        
         TextButton(
           onPressed: () => Navigator.pop(context), 
-          child: const Text("Cerrar")
+          child: Text(FlutterI18n.translate(context, "general.close"))
         )
       ],
     )
@@ -63,13 +64,13 @@ Future<bool?> showQuestionAlert(BuildContext context, String title, String messa
       actions: [        
         if(cancelEnabled) TextButton(
           onPressed: () => Navigator.pop(context), 
-          child: const Text("Cancelar", style: TextStyle(
+          child: Text(FlutterI18n.translate(context, "general.cancel"), style: const TextStyle(
             color: Colors.black54
           ))
         ),
         TextButton(
           onPressed: () => Navigator.pop(context, true), 
-          child: const Text("Aceptar")
+          child: Text(FlutterI18n.translate(context, "general.accept"))
         )
       ],
     )
@@ -92,7 +93,7 @@ Future<void> showSuccessAlert(BuildContext context, String title, String message
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context), 
-          child: const Text("Cerrar")
+          child: Text(FlutterI18n.translate(context, "general.close"))
         )
       ],
     )
@@ -127,7 +128,7 @@ Future<void> showErrorAlert(BuildContext context, String title, List<String> mes
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context), 
-          child: const Text("Cerrar")
+          child: Text(FlutterI18n.translate(context, "general.close"))
         )
       ],
     )

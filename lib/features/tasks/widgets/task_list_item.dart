@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_y_pomodoro_app/core/navigation.dart';
 import 'package:todo_y_pomodoro_app/core/task_state_enum.dart';
@@ -71,7 +72,7 @@ class TaskListItem extends StatelessWidget {
                 if(resp is ErrorResponse){
                   // ignore: use_build_context_synchronously
                   if(!context.mounted) return;
-                  showErrorAlert(context, "Estimado usuario", [resp.message]);
+                  showErrorAlert(context, FlutterI18n.translate(context, "general.dear"), [resp.message]);
                   return;
                 }
                 if(fromPomodoroPage){

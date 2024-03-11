@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_y_pomodoro_app/core/constants.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
@@ -76,7 +77,7 @@ class _TaskGroupListState extends State<TaskGroupList> {
               onPressed: () async {
                 final taskGroups = Provider.of<TaskGroupsProvider>(context, listen: false).taskGroups;
                 if(taskGroups.length >= groupsLimit){
-                  showInfoAlert(context, "Estimado usuario", "Solo se pueden crear hasta $groupsLimit grupos de tareas");
+                  showInfoAlert(context, FlutterI18n.translate(context, "general.dear"), "${FlutterI18n.translate(context, "widgets.task_group_list.alert1")} $groupsLimit ${FlutterI18n.translate(context, "widgets.task_group_list.alert2")}");
                   return;
                 }
                 showCustomBottomSheet(context, const CreateTaskGroupSheet());

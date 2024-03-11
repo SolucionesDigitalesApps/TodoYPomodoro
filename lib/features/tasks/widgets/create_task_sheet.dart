@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_y_pomodoro_app/core/task_state_enum.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
@@ -40,20 +41,20 @@ class _CreateTaskSheetState extends State<CreateTaskSheet> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const AppHeader(title: "Crear tarea"),
+            AppHeader(title: FlutterI18n.translate(context, "pages.create_task_sheet.title")),
             const VSpacing(3),
             const TaskGroupList(),
             const VSpacing(3),
             CustomTextFormField(
               controller: taskTitleController,
               keyboardType: TextInputType.emailAddress,
-              hintText: "Título de la tarea",
+              hintText: FlutterI18n.translate(context, "pages.create_task_sheet.title_input"),
               errorMessage: groupNameError,
             ),const VSpacing(3),
             CustomTextFormField(
               controller: taskDescriptionController,
               keyboardType: TextInputType.emailAddress,
-              hintText: "Descripción de la tarea (Opcional)",
+              hintText: FlutterI18n.translate(context, "pages.create_task_sheet.description_input"),
               errorMessage: groupNameError,
             ),
             const VSpacing(2),
@@ -63,7 +64,7 @@ class _CreateTaskSheetState extends State<CreateTaskSheet> {
               ),
               child: Row(
                 children: [
-                  Text("Agregar pomodoro (Opcional)", style: Theme.of(context).textTheme.bodyMedium),
+                  Text(FlutterI18n.translate(context, "pages.create_task_sheet.pomodoro_input"), style: Theme.of(context).textTheme.bodyMedium),
                 ],
               ),
             ),
@@ -74,7 +75,7 @@ class _CreateTaskSheetState extends State<CreateTaskSheet> {
                 setState(() {});
               }, 
               currentDuration: selectedDuration, 
-              hintText: "Seleccion tiempo"
+              hintText: FlutterI18n.translate(context, "pages.create_task_sheet.select_time")
             ),
             const VSpacing(5),
             Selector<UserProvider, bool>(
@@ -87,7 +88,7 @@ class _CreateTaskSheetState extends State<CreateTaskSheet> {
                       loading: createTaskLoading || updateUserLoading,
                       onPressed: () async {
                         if(taskTitleController.text.isEmpty){
-                          groupNameError = "El título de la tarea no puede estar vacío";
+                          groupNameError = FlutterI18n.translate(context, "pages.create_task_sheet.title_not_empty");
                           setState(() {});
                           return;
                         }
@@ -110,7 +111,7 @@ class _CreateTaskSheetState extends State<CreateTaskSheet> {
                         if(resp == null) return;
                         if(resp is ErrorResponse){
                           if(!mounted) return;
-                          showErrorAlert(context, "Estimado usuario", [resp.message]);
+                          showErrorAlert(context, FlutterI18n.translate(context, "general.dear"), [resp.message]);
                           return;
                         }
                         final respUser = await userProvider.updateUser(userProvider.currentUser.copyWith(
@@ -119,7 +120,7 @@ class _CreateTaskSheetState extends State<CreateTaskSheet> {
                         if(respUser == null) return;
                         if(respUser is ErrorResponse){
                           if(!mounted) return;
-                          showErrorAlert(context, "Estimado usuario", [resp.message]);
+                          showErrorAlert(context, FlutterI18n.translate(context, "general.dear"), [resp.message]);
                           return;
                         }
                         userProvider.setNewUser(userProvider.currentUser.copyWith(
@@ -128,7 +129,7 @@ class _CreateTaskSheetState extends State<CreateTaskSheet> {
                         if(!mounted) return;
                         Navigator.pop(context);
                       },
-                      label: "Crear tarea", 
+                      label: FlutterI18n.translate(context, "pages.create_task_sheet.create"), 
                       width: mqWidth(context, 90), 
                       color: Theme.of(context).primaryColor
                     );

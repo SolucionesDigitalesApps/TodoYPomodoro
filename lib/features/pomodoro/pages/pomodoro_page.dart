@@ -1,5 +1,6 @@
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_y_pomodoro_app/core/date_utils.dart';
 import 'package:todo_y_pomodoro_app/core/task_state_enum.dart';
@@ -38,7 +39,7 @@ class _PomodoroPageState extends State<PomodoroPage> {
             child: Column(
               children: [
                 const VSpacing(5),
-                const AppHeader(title: "Pomodoro Timer"),
+                AppHeader(title: FlutterI18n.translate(context, "pages.pomodoro.title")),
                 const VSpacing(2),
                 TaskListItem(
                   taskModel: widget.taskModel,
@@ -60,7 +61,7 @@ class _PomodoroPageState extends State<PomodoroPage> {
                     fontWeight: FontWeight.bold,
                   ),
                   onComplete: () async {
-                    await showSuccessAlert(context, "Estimado usuario", "La tarea ha finalizado");
+                    await showSuccessAlert(context, FlutterI18n.translate(context, "general.dear"), FlutterI18n.translate(context, "pages.pomodoro.finished"));
                     // ignore: use_build_context_synchronously
                     if(!context.mounted) return;
                     final tasksProvider = Provider.of<TasksProvider>(context, listen: false);
@@ -73,7 +74,7 @@ class _PomodoroPageState extends State<PomodoroPage> {
                     if(resp is ErrorResponse){
                       // ignore: use_build_context_synchronously
                       if(!context.mounted) return;
-                      showErrorAlert(context, "Estimado usuario", [resp.message]);
+                      showErrorAlert(context, FlutterI18n.translate(context, "general.dear"), [resp.message]);
                       return;
                     }
                     // ignore: use_build_context_synchronously
@@ -82,7 +83,7 @@ class _PomodoroPageState extends State<PomodoroPage> {
                   },
                 ),
                 const VSpacing(3),
-                Text("Stay focus for ${formatSeconds(widget.taskModel.pomodoro)}", style: Theme.of(context).textTheme.bodyMedium),
+                Text("${FlutterI18n.translate(context, "pages.pomodoro.focus")} ${formatSeconds(context, widget.taskModel.pomodoro)}", style: Theme.of(context).textTheme.bodyMedium),
                 const VSpacing(2),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

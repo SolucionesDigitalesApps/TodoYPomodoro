@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/general_image.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/v_spacing.dart';
@@ -22,8 +23,8 @@ class OnboardingSlide extends StatelessWidget {
           height: mqHeigth(context, 17),
           child: Column(
             children: [
-              Text("Task Pomodoro", style: Theme.of(context).textTheme.displayLarge),
-              Text("Organize tasks and complete them easily", style: Theme.of(context).textTheme.displaySmall, textAlign: TextAlign.center),
+              Text(FlutterI18n.translate(context, "pages.onboarding.title"), style: Theme.of(context).textTheme.displayLarge),
+              Text(FlutterI18n.translate(context, "pages.onboarding.description"), style: Theme.of(context).textTheme.displaySmall, textAlign: TextAlign.center),
             ],
           )
         ),

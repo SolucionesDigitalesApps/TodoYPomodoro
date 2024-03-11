@@ -27,7 +27,7 @@ class _DurationSelectorState extends State<DurationSelector> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if(widget.currentDuration != null){
-        controller.text = formatDuration(widget.currentDuration!);
+        controller.text = formatDuration(context, widget.currentDuration!);
       }
     });
   }
@@ -35,7 +35,7 @@ class _DurationSelectorState extends State<DurationSelector> {
   @override
   void didUpdateWidget(covariant DurationSelector oldWidget) {
     if(widget.currentDuration != null){
-      controller.text = formatDuration(widget.currentDuration!);
+      controller.text = formatDuration(context, widget.currentDuration!);
     }
     super.didUpdateWidget(oldWidget);
   }
@@ -66,7 +66,7 @@ class _DurationSelectorState extends State<DurationSelector> {
         ),
         child: Row(
           children: [
-            Text(hasContent ? formatDuration(widget.currentDuration!) : widget.hintText, style: TextStyle(
+            Text(hasContent ? formatDuration(context, widget.currentDuration!) : widget.hintText, style: TextStyle(
               fontSize: 18,
               color: hasContent ? Colors.black : Colors.grey[400],
               fontWeight: FontWeight.w400

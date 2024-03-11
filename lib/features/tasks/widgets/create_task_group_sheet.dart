@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
 import 'package:todo_y_pomodoro_app/features/auth/providers/user_provider.dart';
@@ -29,13 +30,13 @@ class _CreateTaskGroupSheetState extends State<CreateTaskGroupSheet> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const AppHeader(title: "Nuevo grupo de tareas"),
+          AppHeader(title: FlutterI18n.translate(context, "pages.create_task_group_sheet.title")),
           const VSpacing(3),
           CustomTextFormField(
             autofocus: true,
             controller: taskGroupLabelController,
             keyboardType: TextInputType.emailAddress,
-            hintText: "Ingrese el nombre del grupo",
+            hintText: FlutterI18n.translate(context, "pages.create_task_group_sheet.label_input"),
             errorMessage: groupNameError,
             maxLength: 30,
             onTap: (){
@@ -50,7 +51,7 @@ class _CreateTaskGroupSheetState extends State<CreateTaskGroupSheet> {
               return CustomButton(
                 onPressed: () async {
                   if(taskGroupLabelController.text.isEmpty){
-                    groupNameError = "El nombre del grupo no puede estar vacío";
+                    groupNameError = FlutterI18n.translate(context, "pages.create_task_group_sheet.label_not_empty");
                     setState(() {});
                     return;
                   }
@@ -67,13 +68,13 @@ class _CreateTaskGroupSheetState extends State<CreateTaskGroupSheet> {
                   if(resp == null) return;
                   if(resp is ErrorResponse){
                     if(!mounted) return;
-                    showErrorAlert(context, "Estimado usuario", [resp.message]);
+                    showErrorAlert(context, FlutterI18n.translate(context, "general.dear"), [resp.message]);
                     return;
                   }
                   if(!mounted) return;
                   Navigator.pop(context);
                 },
-                label: "Crear", 
+                label: FlutterI18n.translate(context, "general.create"), 
                 width: mqWidth(context, 90), 
                 loading: createTaskGroupLoading,
                 color: Theme.of(context).primaryColor

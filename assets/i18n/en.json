@@ -1,0 +1,110 @@
+{
+    "general": {
+        "cancel": "Cancel",
+        "accept": "Accept",
+        "close": "Close",
+        "next": "Next",
+        "error": "Error",
+        "dear": "Dear user",
+        "disabled": "Your account is disabled. Please contact the administrator for more information",
+        "empty": "No results",
+        "create": "Create",
+        "tasks": "Tasks",
+        "edit": "Edit"
+    },
+    "validators": {
+        "invalid_email": "Invalid email",
+        "invalid_password": "Invalid password"
+    },
+    "time": {
+        "minute": "minute",
+        "minutes": "minutes",
+        "hour": "hour",
+        "hours": "hours",
+        "day": "day",
+        "days": "days",
+        "and": "and"
+    },
+    "pages": {
+        "sign_in": {
+            "email_label": "Email",
+            "password_label": "Password",
+            "forget_account": "Forgot your password?",
+            "sign_in": "Sign In",
+            "sign_up": "Create Account",
+            "signingin": "Signing in..."
+        },
+        "sign_up": {
+            "title": "Create Account",
+            "email_label": "Email",
+            "password_label": "Password",
+            "sign_up": "Sign Up",
+            "sigupingup": "Creating account..."
+        },
+        "recover": {
+            "title": "Recover Password",
+            "email_label": "Email",
+            "send": "Send Email",
+            "sending": "Sending email...",
+            "sent_success": "An email has been sent to your email address"
+        },
+        "task_home": {
+            "updating_tasks": "Updating tasks...",
+            "new_task": "New task"
+        },
+        "tasks_archived": {
+            "title": "Archived Tasks"
+        },
+        "language_sheet": {
+            "title": "Select Language",
+            "spanish": "Spanish",
+            "english": "English"
+        },
+        "pomodoro": {
+            "title": "Pomodoro",
+            "finished": "Task finished",
+            "focus": "Stay focused for"
+        },
+        "create_task_group_sheet": {
+            "title": "New Task Group",
+            "label_input": "Enter group name",
+            "label_not_empty": "Group name cannot be empty"
+        },
+        "create_task_sheet": {
+            "title": "Create Task",
+            "title_input": "Task title",
+            "description_input": "Task description (Optional)",
+            "pomodoro_input": "Add pomodoro (Optional)",
+            "select_time": "Select time",
+            "title_not_empty": "Task title cannot be empty",
+            "create": "Create Task"
+        },
+        "onboarding": {
+            "title": "Tasks and Pomodoro",
+            "description": "Organize your tasks and complete them easily"
+        },
+        "update_task_group_sheet": {
+            "title": "Edit Task Group",
+            "name_input": "Enter group name",
+            "name_not_empty": "Group name cannot be empty",
+            "delete": "Delete Group",
+            "cant_delete": "Cannot delete group because it has related tasks"
+        },
+        "update_task_sheet": {
+            "title": "Edit Task",
+            "title_input": "Task title",
+            "description_input": "Task description (Optional)",
+            "pomodoro_input": "Add pomodoro (Optional)",
+            "select_time": "Select time",
+            "title_not_empty": "Task title cannot be empty",
+            "update": "Update Task",
+            "delete": "Delete Task"
+        }
+    },
+    "widgets": {
+        "task_group_list": {
+            "alert1": "Only",
+            "alert2": "task groups"
+        }
+    }
+}

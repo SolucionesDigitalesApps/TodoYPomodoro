@@ -1,0 +1,110 @@
+{
+    "general": {
+        "cancel": "Cancelar",
+        "accept": "Aceptar",
+        "close": "Cerrar",
+        "next": "Siguiente",
+        "error": "Ocurrió un error",
+        "dear": "Estimado usuario",
+        "disabled": "Su cuenta se encuentra deshabilitada. Comuníquese con el administrador para más información",
+        "empty": "Sin resultados",
+        "create": "Crear",
+        "tasks": "Tareas",
+        "edit": "Editar"
+    },
+    "validators": {
+        "invalid_email": "El correo electrónico no es válido",
+        "invalid_password": "La contraseña no es válida"
+    },
+    "time": {
+        "minute": "minuto",
+        "minutes": "minutos",
+        "hour": "hora",
+        "hours": "horas",
+        "day": "día",
+        "days": "días",
+        "and": " y "
+    },
+    "pages": {
+        "sign_in": {
+            "email_label": "Correo electrónico",
+            "password_label": "Contraseña",
+            "forget_account": "¿Olvidaste tu contraseña?",
+            "sign_in": "Iniciar sesión",
+            "sign_up": "Crear cuenta",
+            "signingin": "Iniciando sesión..."
+        },
+        "sign_up": {
+            "title": "Crear cuenta",
+            "email_label": "Correo electrónico",
+            "password_label": "Contraseña",
+            "sign_up": "Crear cuenta",
+            "sigupingup": "Creando cuenta..."
+        },
+        "recover": {
+            "title": "Recuperar contraseña",
+            "email_label": "Correo electrónico",
+            "send": "Enviar correo",
+            "sending": "Enviando correo...",
+            "sent_success": "Se ha enviado un correo a su dirección de correo electrónico"
+        },
+        "task_home": {
+            "updating_tasks": "Actualizando tareas...",
+            "new_task": "Nueva tarea"
+        },
+        "tasks_archived": {
+            "title": "Tareas completadas"
+        },
+        "language_sheet": {
+            "title": "Seleccione lenguaje",
+            "spanish": "Español",
+            "english": "Inglés"
+        },
+        "pomodoro": {
+            "title": "Pomodoro",
+            "finished": "La tarea ha finalizado",
+            "focus": "Mantente enfocado por"
+        },
+        "create_task_group_sheet": {
+            "title": "Nuevo grupo de tareas",
+            "label_input": "Ingrese el nombre del grupo",
+            "label_not_empty": "El nombre del grupo no puede estar vacío"
+        },
+        "create_task_sheet": {
+            "title": "Crear tarea",
+            "title_input": "Título de la tarea",
+            "description_input": "Descripción de la tarea (Opcional)",
+            "pomodoro_input": "Agregar pomodoro (Opcional)",
+            "select_time": "Seleccione tiempo",
+            "title_not_empty": "El título de la tarea no puede estar vacío",
+            "create": "Crear tarea"
+        },
+        "onboarding": {
+            "title": "Tareas y Pomodoro",
+            "description": "Organiza tus tareas y complétalas sencillamente"
+        },
+        "update_task_group_sheet": {
+            "title": "Editar grupo de tareas",
+            "name_input": "Ingrese el nombre del grupo",
+            "name_not_empty": "El nombre del grupo no puede estar vacío",
+            "delete": "Eliminar grupo",
+            "cant_delete": "No se puede eliminar el grupo porque tiene tareas relacionadas"
+        },
+        "update_task_sheet": {
+            "title": "Editar tarea",
+            "title_input": "Título de la tarea",
+            "description_input": "Descripción de la tarea (Opcional)",
+            "pomodoro_input": "Agregar pomodoro (Opcional)",
+            "select_time": "Seleccione tiempo",
+            "title_not_empty": "El título de la tarea no puede estar vacío",
+            "update": "Editar tarea",
+            "delete": "Eliminar tarea"
+        }
+    },
+    "widgets": {
+        "task_group_list": {
+            "alert1": "Solo se pueden crear hasta",
+            "alert2": "grupos de tareas"
+        }
+    }
+}

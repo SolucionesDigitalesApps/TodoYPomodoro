@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
 import 'package:todo_y_pomodoro_app/core/validator.dart';
 import 'package:todo_y_pomodoro_app/features/auth/controllers/auth_controller.dart';
@@ -38,18 +39,18 @@ class _RecoverPasswordPageState extends State<RecoverPasswordPage> {
             child: Column(
               children: [
                 const VSpacing(5),
-                const AppHeader(title: "Recuperar contraseña"),
+                AppHeader(title: FlutterI18n.translate(context, "pages.recover.title")),
                 const VSpacing(5),
                 CustomTextFormField(
                   keyboardType: TextInputType.emailAddress,
                   controller: emailController,
-                  hintText: "Correo",
+                  hintText: FlutterI18n.translate(context, "pages.recover.email_label"),
                   errorMessage: emailError,
                 ),
                 const VSpacing(8),
                 CustomButton(
                   onPressed: onSendEmail,
-                  label: "Enviar email", 
+                  label: FlutterI18n.translate(context, "pages.recover.send"), 
                   width: mqWidth(context, 90), 
                   color: Theme.of(context).primaryColor
                 )
@@ -58,14 +59,14 @@ class _RecoverPasswordPageState extends State<RecoverPasswordPage> {
           ),
           PageLoader(
             loading: loading, 
-            message: "Enviando correo"
+            message: FlutterI18n.translate(context, "pages.recover.sending")
           )
         ],
       )
     );
   }
   Future<void> onSendEmail() async {
-    emailError = emailValidator(emailController.text);
+    emailError = emailValidator(context, emailController.text);
     if(emailError.isNotEmpty){
       setState(() {});
       return;
@@ -83,13 +84,13 @@ class _RecoverPasswordPageState extends State<RecoverPasswordPage> {
       if(mounted){
         showErrorAlert(
           context, 
-          "Ocurrió un error", 
+          FlutterI18n.translate(context, "general.error"), 
           [response.message]
         );
       }
       return;
     }
     if(!mounted) return;
-    showSuccessAlert(context, "Estimado usuario", "Se ha enviado un correo a su dirección de correo electrónico").then((value) => Navigator.pop(context));
+    showSuccessAlert(context, FlutterI18n.translate(context, "general.dear"), FlutterI18n.translate(context, "pages.recover.sent_success")).then((value) => Navigator.pop(context));
   }
 }

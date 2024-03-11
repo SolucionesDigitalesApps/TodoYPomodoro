@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
 
 class EmptyView extends StatelessWidget {
@@ -12,8 +13,8 @@ class EmptyView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: mqHeigth(context, heigth),
-      child: const Center(
-        child: Text("Sin resultados")
+      child: Center(
+        child: Text(FlutterI18n.translate(context, "general.empty"))
       ),
     );
   }

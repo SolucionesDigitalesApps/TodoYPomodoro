@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_y_pomodoro_app/core/navigation.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
@@ -65,20 +66,20 @@ class _SignInPageState extends State<SignInPage> {
                 CustomTextFormField(
                   keyboardType: TextInputType.emailAddress,
                   controller: emailController,
-                  hintText: "Correo",
+                  hintText: FlutterI18n.translate(context, "pages.sign_in.email_label"),
                   errorMessage: emailError,
                 ),
                 const VSpacing(3),
                 CustomTextFormField(
                   controller: passwordController,
-                  hintText: "Contraseña",
+                  hintText: FlutterI18n.translate(context, "pages.sign_in.password_label"),
                   errorMessage: passwordError,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     CustomTextButton(
-                      label: "Olvidaste tu contraseña?", 
+                      label: FlutterI18n.translate(context, "pages.sign_in.forget_account"), 
                       onPressed: (){
                         Navigator.push(context, cupertinoNavigationRoute(context, const RecoverPasswordPage()));
                       }, 
@@ -88,13 +89,13 @@ class _SignInPageState extends State<SignInPage> {
                 const VSpacing(10),
                 CustomButton(
                   onPressed: onSignIn,
-                  label: "Iniciar sesión", 
+                  label: FlutterI18n.translate(context, "pages.sign_in.sign_in"), 
                   width: mqWidth(context, 90), 
                   color: Theme.of(context).primaryColor
                 ),
                 const VSpacing(2),
                 CustomTextButton(
-                  label: "Crear una nueva cuenta", 
+                  label: FlutterI18n.translate(context, "pages.sign_in.sign_up"), 
                   onPressed: (){
                     Navigator.push(context, cupertinoNavigationRoute(context, const SignUpPage()));
                   }, 
@@ -105,15 +106,15 @@ class _SignInPageState extends State<SignInPage> {
           ),
           PageLoader(
             loading: loading, 
-            message: "Iniciando sesión"
+            message: FlutterI18n.translate(context, "pages.sign_in.signingin")
           )
         ],
       )
     );
   }
   Future<void> onSignIn() async {
-    emailError = emailValidator(emailController.text);
-    passwordError = passwordValidator(passwordController.text);
+    emailError = emailValidator(context, emailController.text);
+    passwordError = passwordValidator(context, passwordController.text);
     if(emailError.isNotEmpty || passwordError.isNotEmpty){
       setState(() {});
       return;
@@ -132,7 +133,7 @@ class _SignInPageState extends State<SignInPage> {
       if(mounted){
         showErrorAlert(
           context, 
-          "Ocurrió un error", 
+          FlutterI18n.translate(context, "general.error"), 
           [response.message]
         );
       }
@@ -147,7 +148,7 @@ class _SignInPageState extends State<SignInPage> {
       if(mounted){
         showErrorAlert(
           context, 
-          "Ocurrió un error", 
+          FlutterI18n.translate(context, "general.error"), 
           [responseUser.message]
         );
       }
@@ -162,8 +163,8 @@ class _SignInPageState extends State<SignInPage> {
       if(mounted){
         showErrorAlert(
           context, 
-          "Estimado usuario", 
-          ["Su cuenta se encuentra deshabilitada. Comuníquese con el administrador para más información"]
+          FlutterI18n.translate(context, "general.dear"), 
+          [FlutterI18n.translate(context, "general.disabled")]
         );
       }
       await authController.signOut();

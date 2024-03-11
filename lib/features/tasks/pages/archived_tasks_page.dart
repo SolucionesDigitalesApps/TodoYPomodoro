@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
 import 'package:todo_y_pomodoro_app/features/auth/providers/user_provider.dart';
@@ -39,7 +40,7 @@ class _ArchivedTasksPageState extends State<ArchivedTasksPage> {
         child: Column(
           children: [
             const VSpacing(5),
-            const AppHeader(title: "Tareas completadas"),
+            AppHeader(title: FlutterI18n.translate(context, "pages.tasks_archived.title")),
             const VSpacing(3),
             const TaskGroupList(),
             const VSpacing(3),

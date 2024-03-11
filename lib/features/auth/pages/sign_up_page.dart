@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
 import 'package:todo_y_pomodoro_app/core/validator.dart';
@@ -50,24 +51,24 @@ class _SignUpPageState extends State<SignUpPage> {
             child: Column(
               children: [
                 const VSpacing(5),
-                const AppHeader(title: "Crear cuenta"),
+                AppHeader(title: FlutterI18n.translate(context, "pages.sign_up.sign_up")),
                 const VSpacing(5),
                 CustomTextFormField(
                   keyboardType: TextInputType.emailAddress,
                   controller: emailController,
-                  hintText: "Correo",
+                  hintText: FlutterI18n.translate(context, "pages.sign_up.email_label"),
                   errorMessage: emailError,
                 ),
                 const VSpacing(3),
                 CustomTextFormField(
                   controller: passwordController,
-                  hintText: "Contraseña",
+                  hintText: FlutterI18n.translate(context, "pages.sign_up.password_label"),
                   errorMessage: passwordError,
                 ),
                 const VSpacing(10),
                 CustomButton(
                   onPressed: onSignUp,
-                  label: "Crear cuenta", 
+                  label: FlutterI18n.translate(context, "pages.sign_up.sign_up"), 
                   width: mqWidth(context, 90), 
                   color: Theme.of(context).primaryColor
                 ),
@@ -78,15 +79,15 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           PageLoader(
             loading: loading, 
-            message: "Creando cuenta...", 
+            message: FlutterI18n.translate(context, "pages.sign_up.sigupingup"), 
           )
         ],
       )
     );
   }
   Future<void> onSignUp() async {
-    emailError = emailValidator(emailController.text);
-    passwordError = passwordValidator(passwordController.text);
+    emailError = emailValidator(context, emailController.text);
+    passwordError = passwordValidator(context, passwordController.text);
     if(emailError.isNotEmpty || passwordError.isNotEmpty){
       setState(() {});
       return;
@@ -105,7 +106,7 @@ class _SignUpPageState extends State<SignUpPage> {
       if(mounted){
         showErrorAlert(
           context, 
-          "Ocurrió un error", 
+          FlutterI18n.translate(context, "general.error"), 
           [response.message]
         );
       }
@@ -127,7 +128,7 @@ class _SignUpPageState extends State<SignUpPage> {
       if(mounted){
         showErrorAlert(
           context, 
-          "Ocurrió un error", 
+          FlutterI18n.translate(context, "general.error"), 
           [responseUser.message]
         );
       }

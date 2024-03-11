@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n_delegate.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_y_pomodoro_app/core/themes.dart';
 import 'package:todo_y_pomodoro_app/features/auth/providers/user_provider.dart';
@@ -11,7 +12,11 @@ import 'package:todo_y_pomodoro_app/features/tasks/providers/tasks_activity_prov
 import 'package:todo_y_pomodoro_app/features/tasks/providers/tasks_provider.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final FlutterI18nDelegate flutterI18nDelegate;
+  const MyApp({
+    super.key,
+    required this.flutterI18nDelegate
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +38,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Tasks&Pomodoro',
-        localizationsDelegates: const [
+        localizationsDelegates: [
+          flutterI18nDelegate,
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,

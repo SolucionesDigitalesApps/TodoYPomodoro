@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_y_pomodoro_app/core/navigation.dart';
 import 'package:todo_y_pomodoro_app/features/auth/controllers/auth_controller.dart';
@@ -68,7 +69,10 @@ class _TasksHomePageState extends State<TasksHomePage> {
               children: [
                 const VSpacing(5),
                 TasksHomeOptions(
-                  onSignOut: ()=> signOutUser(disabled: false)
+                  onSignOut: ()=> signOutUser(disabled: false),
+                  onChangeLanguage: () {
+                    setState(() {});
+                  },
                 ),
                 const VSpacing(3),
                 const TaskGroupList(),
@@ -83,7 +87,7 @@ class _TasksHomePageState extends State<TasksHomePage> {
             builder: (context, updateTaskLoading, _) {
               return PageLoader(
                 loading: updateTaskLoading, 
-                message: "Actualizando tareas..."
+                message: FlutterI18n.translate(context, "pages.task_home.updating_tasks")
               );
             },
           ),
@@ -100,7 +104,7 @@ class _TasksHomePageState extends State<TasksHomePage> {
           }
           showCustomBottomSheet(context, const CreateTaskSheet());
         }, 
-        label: const Text("Nueva tarea"), 
+        label: Text(FlutterI18n.translate(context, "pages.task_home.new_task")), 
         icon: const Icon(Icons.add),
       ),
     );
@@ -112,7 +116,7 @@ class _TasksHomePageState extends State<TasksHomePage> {
     if(resp == null) return;
     if(resp is ErrorResponse){
       if(!mounted) return;
-      showErrorAlert(context, "Estimado usuario", [resp.message]);
+      showErrorAlert(context, FlutterI18n.translate(context, "general.dear"), [resp.message]);
       return;
     }
     // ignore: use_build_context_synchronously
@@ -128,8 +132,8 @@ class _TasksHomePageState extends State<TasksHomePage> {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showErrorAlert(
           context,
-          "Estimado usuario",
-          ["Su cuenta se encuentra deshabilitada. Comuníquese con el administrador para más información"]
+          FlutterI18n.translate(context, "general.dear"),
+          [FlutterI18n.translate(context, "general.disabled")]
         );
       });
     }

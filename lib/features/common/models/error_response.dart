@@ -1,3 +1,5 @@
+import 'package:todo_y_pomodoro_app/core/constants.dart';
+
 class ErrorResponse {
   ErrorResponse({
     required this.message,
@@ -22,15 +24,15 @@ class ErrorResponse {
     statusCode: 500
   );
   static ErrorResponse get network => ErrorResponse(
-    message: "Error de conexión", 
+    message: language == "es" ? "Error de conexión" : "Network error", 
     statusCode: 408
   );
   static ErrorResponse get notFound => ErrorResponse(
-    message: "No encontrado", 
+    message: language == "es" ? "No encontrado" : "Not found", 
     statusCode: 500
   );
   static ErrorResponse get cancelled => ErrorResponse(
-    message: "Cancelado", 
+    message: language == "es" ? "Cancelado" : "Cancelled", 
     statusCode: 405
   );
 }

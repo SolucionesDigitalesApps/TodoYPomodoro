@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:todo_y_pomodoro_app/core/navigation.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/alerts.dart';
@@ -7,13 +8,20 @@ import 'package:todo_y_pomodoro_app/features/common/widgets/h_spacing.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/language_bottom_sheet.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/pages/archived_tasks_page.dart';
 
-class TasksHomeOptions extends StatelessWidget {
+class TasksHomeOptions extends StatefulWidget {
   final Function() onSignOut;
+  final Function() onChangeLanguage;
   const TasksHomeOptions({
     super.key,
-    required this.onSignOut
+    required this.onSignOut,
+    required this.onChangeLanguage,
   });
 
+  @override
+  State<TasksHomeOptions> createState() => _TasksHomeOptionsState();
+}
+
+class _TasksHomeOptionsState extends State<TasksHomeOptions> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,7 +33,7 @@ class TasksHomeOptions extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            'Tareas',
+            FlutterI18n.translate(context, "general.tasks"),
             style: Theme.of(context).textTheme.displayMedium,
           ),
           Row(
@@ -45,7 +53,9 @@ class TasksHomeOptions extends StatelessWidget {
                 size: 10, 
                 borderColor: const Color(0xff919191),
                 onPressed: (){
-                  showCustomBottomSheet(context, const LanguageBottomSheet());
+                  showCustomBottomSheet(context, const LanguageBottomSheet()).then((value) {
+                    widget.onChangeLanguage();
+                  });
                 }, 
                 icon: const Icon(Icons.language)
               ),
@@ -54,7 +64,7 @@ class TasksHomeOptions extends StatelessWidget {
                 borderRadius: 30,
                 size: 10, 
                 borderColor: const Color(0xff919191),
-                onPressed: onSignOut,
+                onPressed: widget.onSignOut,
                 icon: const Icon(Icons.logout)
               ),
             ],

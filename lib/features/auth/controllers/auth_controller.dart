@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:todo_y_pomodoro_app/core/constants.dart';
 import 'package:todo_y_pomodoro_app/features/auth/models/user_model.dart';
 import 'package:todo_y_pomodoro_app/features/common/models/error_response.dart';
 
@@ -94,22 +95,22 @@ class AuthController {
       if(e.code == "invalid-email"){
         return ErrorResponse(
           statusCode: 400, 
-          message: "El email ingresado es inválido"
+          message: language == "es" ? "El email ingresado es inválido" : "The email entered is invalid"
         );
       }else if (e.code == "user-disabled"){
         return ErrorResponse(
           statusCode: 401, 
-          message: "El usuario se encuentra suspendido"
+          message: language == "es" ? "El usuario se encuentra suspendido" : "The user is suspended"
         );
       }else if (e.code == "user-not-found"){
         return ErrorResponse(
           statusCode: 402, 
-          message: "El usuario no se encuentra registrado"
+          message: language == "es" ? "El usuario no se encuentra registrado" : "The user is not registered"
         );
       }else if (e.code == "wrong-password"){
         return ErrorResponse(
           statusCode: 403, 
-          message: "La contraseña es incorrecta o no está registrado con email"
+          message: language == "es" ? "La contraseña es incorrecta o no está registrado con email" : "The password is incorrect or the user is not registered with the email"
         );
       }else{
         return ErrorResponse.unknown;
@@ -136,22 +137,22 @@ class AuthController {
       if(e.code == "invalid-email"){
         return ErrorResponse(
           statusCode: 400, 
-          message: "El email ingresado es inválido"
+          message: language == "es" ? "El email ingresado es inválido" : "The email entered is invalid"
         );
       }else if (e.code == "email-already-in-use"){
         return ErrorResponse(
           statusCode: 401, 
-          message: "El email se encuentra registrado"
+          message: language == "es" ?  "El email se encuentra registrado" : "The email is already registered"
         );
       }else if (e.code == "operation-not-allowed"){
         return ErrorResponse(
           statusCode: 402, 
-          message: "No se encuentra habilitado el registro de usuarios"
+          message: language == "es" ? "No se encuentra habilitado el registro de usuarios" : "The registration of users is not enabled"
         );
       }else if (e.code == "weak-password"){
         return ErrorResponse(
           statusCode: 403, 
-          message: "La contraseña no es segura. Use números y letras"
+          message: language == "es" ? "La contraseña no es segura. Use números y letras" : "The password is not secure. Use numbers and letters"
         );
       }else{
         return ErrorResponse.unknown;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
 import 'package:todo_y_pomodoro_app/features/common/models/error_response.dart';
@@ -41,13 +42,13 @@ class _UpdateTaskGroupSheetState extends State<UpdateTaskGroupSheet> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const AppHeader(title: "Editar grupo de tareas"),
+          AppHeader(title: FlutterI18n.translate(context, "pages.update_task_group_sheet.title")),
           const VSpacing(3),
           CustomTextFormField(
             autofocus: true,
             controller: taskGroupLabelController,
             keyboardType: TextInputType.emailAddress,
-            hintText: "Ingrese el nombre del grupo",
+            hintText: FlutterI18n.translate(context, "pages.update_task_group_sheet.name_input"),
             errorMessage: groupNameError,
           ),
           const VSpacing(5),
@@ -58,7 +59,7 @@ class _UpdateTaskGroupSheetState extends State<UpdateTaskGroupSheet> {
                 loading: updateTaskGroupLoading,
                 onPressed: () async {
                   if(taskGroupLabelController.text.isEmpty){
-                    groupNameError = "El nombre del grupo no puede estar vacío";
+                    groupNameError = FlutterI18n.translate(context, "pages.update_task_group_sheet.name_not_empty");
                     setState(() {});
                     return;
                   }
@@ -73,13 +74,13 @@ class _UpdateTaskGroupSheetState extends State<UpdateTaskGroupSheet> {
                   if(resp == null) return;
                   if(resp is ErrorResponse){
                     if(!mounted) return;
-                    showErrorAlert(context, "Estimado usuario", [resp.message]);
+                    showErrorAlert(context, FlutterI18n.translate(context, "general.dears"), [resp.message]);
                     return;
                   }
                   if(!mounted) return;
                   Navigator.pop(context);
                 },
-                label: "Editar", 
+                label: FlutterI18n.translate(context, "genearal.edit"), 
                 width: mqWidth(context, 90), 
                 color: Theme.of(context).primaryColor
               );
@@ -90,14 +91,14 @@ class _UpdateTaskGroupSheetState extends State<UpdateTaskGroupSheet> {
             selector: (context, userProvider) => userProvider.deleteTaskLoading,
             builder: (context, deleteTaskLoading, _) {
               return CustomTextButton(
-                label: "Eliminar grupo", 
+                label: FlutterI18n.translate(context, "pages.update_task_group_sheet.delete"), 
                 loading: deleteTaskLoading, 
                 onPressed: () async {
                   final groupId = Provider.of<TasksActivityProvider>(context, listen: false).selectedTaskGroupId;
                   final tasksProvider = Provider.of<TasksProvider>(context, listen: false);
                   final currentTasks = tasksProvider.tasksPerGroup(groupId);
                   if(currentTasks.isNotEmpty){
-                    showInfoAlert(context, "Estimado usuario", "No se puede eliminar el grupo porque tiene tareas relacionadas");
+                    showInfoAlert(context, FlutterI18n.translate(context, "general.dear"), FlutterI18n.translate(context, "pages.update_task_group_sheet.cant_delete"));
                     return;
                   }
                   FocusScope.of(context).unfocus();
@@ -106,7 +107,7 @@ class _UpdateTaskGroupSheetState extends State<UpdateTaskGroupSheet> {
                   if(resp == null) return;
                   if(resp is ErrorResponse){
                     if(!mounted) return;
-                    showErrorAlert(context, "Estimado usuario", [resp.message]);
+                    showErrorAlert(context, FlutterI18n.translate(context, "general.dear"), [resp.message]);
                     return;
                   }
                   if(!mounted) return;
