@@ -99,6 +99,7 @@ class UserProvider extends ChangeNotifier {
   @override
   void dispose() {
     userSubs?.cancel();
+    userSubs = null;
     super.dispose();
   }
 }

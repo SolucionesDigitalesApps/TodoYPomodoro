@@ -9,6 +9,7 @@ import 'package:todo_y_pomodoro_app/features/auth/controllers/auth_controller.da
 import 'package:todo_y_pomodoro_app/features/auth/pages/sign_in_page.dart';
 import 'package:todo_y_pomodoro_app/features/auth/providers/user_provider.dart';
 import 'package:todo_y_pomodoro_app/features/common/controllers/common_controller.dart';
+import 'package:todo_y_pomodoro_app/features/common/controllers/notification_controller.dart';
 import 'package:todo_y_pomodoro_app/features/common/models/error_response.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/alerts.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/page_loader.dart';
@@ -33,8 +34,10 @@ class TasksHomePage extends StatefulWidget {
 
 class _TasksHomePageState extends State<TasksHomePage> {
   final commonController = CommonController();
+  final notificationController = NotificationController();
   StreamSubscription<TaskGroupModel>? createdTaskGroupSubs;
   StreamSubscription<dynamic>? userSubs;
+  StreamSubscription? notifSubs;
 
   @override
   void initState() {
@@ -52,12 +55,16 @@ class _TasksHomePageState extends State<TasksHomePage> {
         signOutUser(disabled: true);
       }
     });
+    notifSubs = notificationController.mensajes.listen((event) {
+      showInfoAlert(context, event.notification?.title ?? "", event.notification?.body ?? "");
+    });
     getAppUpdate();
   }
 
   @override
   void dispose() {
     createdTaskGroupSubs?.cancel();
+    notifSubs?.cancel();
     super.dispose();
   }
 

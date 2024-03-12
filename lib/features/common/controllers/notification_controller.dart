@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+
 
 typedef BackgroundMessageHandler = Future<void> Function(RemoteMessage message);
 
@@ -10,7 +12,7 @@ class NotificationController {
   factory NotificationController() => _instance;
   FirebaseMessaging messaging = FirebaseMessaging.instance;
 
-  // ignore: close_sinks
+
   final _messageStreamController = StreamController<RemoteMessage>.broadcast();
 
   Stream<RemoteMessage> get mensajes => _messageStreamController.stream;
@@ -25,19 +27,17 @@ class NotificationController {
       provisional: false,
       sound: true,
     );
-    messaging.subscribeToTopic('general');
+    if(Platform.isAndroid){
+      messaging.subscribeToTopic('general');
+    }
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      /* final newMessage = RemoteMessage(
-        data: message.data,
-        notification: message.notification,
-        ttl: 2
-      ); */
-      backgroundMessageHandler(message);
+      _messageStreamController.sink.add(message);
     });
 
     FirebaseMessaging.onBackgroundMessage(backgroundMessageHandler);
   }
+
 
   Future<String?> getToken() async {
     try {
@@ -49,7 +49,7 @@ class NotificationController {
       token = await messaging.getToken();
       return token;
     } catch (e) {
-      return "";
+      return null;
     }
   }
 
