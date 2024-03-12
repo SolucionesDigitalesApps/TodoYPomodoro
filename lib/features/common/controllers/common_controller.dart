@@ -18,7 +18,7 @@ class CommonController {
     try {
       late DocumentSnapshot snapshot;
       if (Platform.isAndroid) {
-        snapshot = await firestoreDB.collection(configurationCollection).doc("common").get();
+        snapshot = await firestoreDB.collection(configurationCollection).doc("android").get();
       } else {
         snapshot = await firestoreDB.collection(configurationCollection).doc("ios").get();
       }
