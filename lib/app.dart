@@ -62,7 +62,7 @@ class _MyAppState extends State<MyApp> {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Tasks&Pomodoro',
+        title: 'TareasYPomodoro',
         localizationsDelegates: [
           widget.flutterI18nDelegate,
           GlobalMaterialLocalizations.delegate,
