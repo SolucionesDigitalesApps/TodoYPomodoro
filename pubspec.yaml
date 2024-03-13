@@ -31,6 +31,7 @@ dependencies:
   shared_preferences: ^2.0.13
   url_launcher: ^6.1.6
   google_mobile_ads: ^4.0.0
+  collection: ^1.17.0
 
 dev_dependencies:
   flutter_test:

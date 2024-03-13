@@ -6,6 +6,7 @@ class UserModel {
     required this.enabled,
     required this.lastGroupId,
     required this.lastTaskOrder,
+    required this.fcmToken
   });
 
   final String id;
@@ -13,6 +14,7 @@ class UserModel {
   final bool enabled;
   final String lastGroupId;
   final int lastTaskOrder;
+  final String fcmToken;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
     id: json["id"] ?? "",
@@ -20,6 +22,7 @@ class UserModel {
     enabled: json["enabled"]?? false,
     lastGroupId: json["last_group_id"] ?? "",
     lastTaskOrder: json["last_task_order"]?? 0,
+    fcmToken: json["fcm_token"] ?? ""
   );
 
   Map<String, dynamic> toJson() => {
@@ -28,6 +31,7 @@ class UserModel {
     "enabled": enabled,
     "last_group_id": lastGroupId,
     "last_task_order": lastTaskOrder,
+    "fcm_token": fcmToken
   };
 
   static UserModel get empty => UserModel(
@@ -35,7 +39,8 @@ class UserModel {
     email: "",
     enabled: false,
     lastGroupId: "",
-    lastTaskOrder: 0
+    lastTaskOrder: 0,
+    fcmToken: ""
   );
   
   UserModel copyWith ({
@@ -44,11 +49,13 @@ class UserModel {
     bool? enabled,
     String? lastGroupId,
     int? lastTaskOrder,
+    String? fcmToken
   }) => UserModel(
     id: id?? this.id,
     email: email?? this.email,
     enabled: enabled?? this.enabled,
     lastGroupId: lastGroupId?? this.lastGroupId,
     lastTaskOrder: lastTaskOrder?? this.lastTaskOrder,
+    fcmToken: fcmToken?? this.fcmToken,
   );
 }

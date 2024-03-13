@@ -7,6 +7,7 @@ import 'package:todo_y_pomodoro_app/core/validator.dart';
 import 'package:todo_y_pomodoro_app/features/auth/controllers/auth_controller.dart';
 import 'package:todo_y_pomodoro_app/features/auth/models/user_model.dart';
 import 'package:todo_y_pomodoro_app/features/auth/providers/user_provider.dart';
+import 'package:todo_y_pomodoro_app/features/common/controllers/notification_controller.dart';
 import 'package:todo_y_pomodoro_app/features/common/models/error_response.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/alerts.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/app_header.dart';
@@ -28,6 +29,7 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   final authController = AuthController();
+  final notificationController = NotificationController();
   
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -113,13 +115,16 @@ class _SignUpPageState extends State<SignUpPage> {
       }
       return;
     }
+
+    final fcmToken = await notificationController.getToken();
     final respTemp = response as User;
     final userModel = UserModel(
       id: respTemp.uid, 
       email: emailController.text, 
       enabled: true, 
       lastGroupId: "",
-      lastTaskOrder: 0
+      lastTaskOrder: 0,
+      fcmToken: fcmToken
     );
     final responseUser = await authController.createUserById(userModel);
     if(responseUser is ErrorResponse){

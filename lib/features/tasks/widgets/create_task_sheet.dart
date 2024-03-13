@@ -115,18 +115,17 @@ class _CreateTaskSheetState extends State<CreateTaskSheet> {
                           showErrorAlert(context, FlutterI18n.translate(context, "general.dear"), [resp.message]);
                           return;
                         }
-                        final respUser = await userProvider.updateUser(userProvider.currentUser.copyWith(
+                        final newUser = userProvider.currentUser.copyWith(
                           lastTaskOrder: newOrder
-                        ));
+                        );
+                        final respUser = await userProvider.updateUser(newUser);
                         if(respUser == null) return;
                         if(respUser is ErrorResponse){
                           if(!mounted) return;
                           showErrorAlert(context, FlutterI18n.translate(context, "general.dear"), [resp.message]);
                           return;
                         }
-                        userProvider.setNewUser(userProvider.currentUser.copyWith(
-                          lastTaskOrder: newOrder
-                        ));
+                        userProvider.setNewUser(newUser);
                         if(!mounted) return;
                         Navigator.pop(context);
                       },

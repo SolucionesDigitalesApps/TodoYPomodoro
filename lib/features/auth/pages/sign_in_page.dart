@@ -11,6 +11,7 @@ import 'package:todo_y_pomodoro_app/features/auth/pages/recover_password_page.da
 import 'package:todo_y_pomodoro_app/features/auth/pages/sign_up_page.dart';
 import 'package:todo_y_pomodoro_app/features/auth/providers/user_provider.dart';
 import 'package:todo_y_pomodoro_app/features/common/controllers/common_controller.dart';
+import 'package:todo_y_pomodoro_app/features/common/controllers/notification_controller.dart';
 import 'package:todo_y_pomodoro_app/features/common/models/error_response.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/alerts.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/app_version_label.dart';
@@ -34,6 +35,7 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends State<SignInPage> {
   final authController = AuthController();
   final commonController = CommonController();
+  final notificationController = NotificationController();
   
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -189,9 +191,19 @@ class _SignInPageState extends State<SignInPage> {
       await authController.signOut();
       return;
     }
+    final fcmToken = await notificationController.getToken();
+    late UserModel newUser;
+    if(data.fcmToken != fcmToken){
+      newUser = data.copyWith(
+        fcmToken: fcmToken
+      );
+      authController.updateUser(newUser);
+    }else{
+      newUser = data;
+    }
     if(mounted){
-      Provider.of<UserProvider>(context, listen: false).setNewUser(data);
-      Provider.of<TasksActivityProvider>(context, listen: false).selectedTaskGroupId = data.lastGroupId;
+      Provider.of<UserProvider>(context, listen: false).setNewUser(newUser);
+      Provider.of<TasksActivityProvider>(context, listen: false).selectedTaskGroupId = newUser.lastGroupId;
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const TasksHomePage()), (route) => false);
     }
   }

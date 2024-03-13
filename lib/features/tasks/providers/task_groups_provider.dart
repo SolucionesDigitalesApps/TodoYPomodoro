@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_y_pomodoro_app/features/common/models/error_response.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/controllers/task_groups_controller.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/models/task_group_model.dart';
+import 'package:collection/collection.dart';
 
 class TaskGroupsProvider extends ChangeNotifier {
 
@@ -16,7 +17,7 @@ class TaskGroupsProvider extends ChangeNotifier {
   bool taskGroupsInitialized = false;
   List<TaskGroupModel> taskGroups = [];
 
-  Future<void> getTaskGroupsSubscription(String userId) async {
+  Future<void> getTaskGroupsSubscription(String userId, String lastGroupId) async {
     if(taskGroupsSubscription != null) return;
     taskGroupsLoading = true;
     taskGroupsError = false;
@@ -25,7 +26,12 @@ class TaskGroupsProvider extends ChangeNotifier {
       taskGroupsLoading = false;
       taskGroupsError = false;
       if(taskGroups.isNotEmpty && !taskGroupsInitialized){
-        selectTaskGroupSink(taskGroups.first);
+        final lastGroup = taskGroups.firstWhereOrNull((element) => element.id == lastGroupId);
+        if(lastGroup != null){
+          selectTaskGroupSink(lastGroup);
+        }else{
+          selectTaskGroupSink(taskGroups.first);
+        }
       }
       taskGroupsInitialized = true;
       notifyListeners();

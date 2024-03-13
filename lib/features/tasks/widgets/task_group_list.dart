@@ -32,7 +32,7 @@ class _TaskGroupListState extends State<TaskGroupList> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final userProvider = Provider.of<UserProvider>(context, listen: false);
-      taskGroupsProvider.getTaskGroupsSubscription(userProvider.currentUser.id);
+      taskGroupsProvider.getTaskGroupsSubscription(userProvider.currentUser.id, userProvider.currentUser.lastGroupId);
     });
   }
 
@@ -64,7 +64,15 @@ class _TaskGroupListState extends State<TaskGroupList> {
               taskGroupModelSelected: tasksActivityProvider.selectedTaskGroupId,
               key: Key("Task_group_item_${item.id}"),
               onPressed: (){
-                Provider.of<TasksActivityProvider>(context, listen: false).selectedTaskGroupId = item.id;
+                final tasksActivityProvider = Provider.of<TasksActivityProvider>(context, listen: false);
+                final userProvider = Provider.of<UserProvider>(context, listen: false);
+                tasksActivityProvider.selectedTaskGroupId = item.id;
+                final currentUser = userProvider.currentUser;
+                final newUser = currentUser.copyWith(
+                  lastGroupId: item.id
+                );
+                userProvider.updateUser(newUser);
+                userProvider.setNewUser(newUser);
               }, 
               onLongPress: (){
                 showCustomBottomSheet(context, UpdateTaskGroupSheet(taskGroupModel: item,));

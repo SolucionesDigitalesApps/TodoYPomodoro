@@ -55,12 +55,20 @@ class _RouterPageState extends State<RouterPage> {
       }
       return;
     }
-    final user = resp as UserModel;
-    //TODO: Actualizar token
-    // final token = await notificationController.getToken() ?? "";
-    // await authController.updateUser(user.copyWith());
+    final fcmToken = await notificationController.getToken();
+    final data = resp as UserModel;
+    late UserModel newUser;
+    if(data.fcmToken != fcmToken){
+      newUser = data.copyWith(
+        fcmToken: fcmToken
+      );
+      authController.updateUser(newUser);
+    }else{
+      newUser = data;
+    }
     if(mounted){
-      Provider.of<TasksActivityProvider>(context, listen: false).selectedTaskGroupId = user.lastGroupId;
+      Provider.of<UserProvider>(context, listen: false).setNewUser(newUser);
+      Provider.of<TasksActivityProvider>(context, listen: false).selectedTaskGroupId = newUser.lastGroupId;
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const TasksHomePage()), (route) => false);
     }
   }

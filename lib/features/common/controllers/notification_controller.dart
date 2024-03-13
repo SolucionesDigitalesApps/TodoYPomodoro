@@ -39,17 +39,13 @@ class NotificationController {
   }
 
 
-  Future<String?> getToken() async {
+  Future<String> getToken() async {
     try {
       String? token;
       token = await messaging.getToken();
-      if(token != null) return token;
-      token = await messaging.getToken();
-      if(token != null) return token;
-      token = await messaging.getToken();
-      return token;
+      return token ?? "";
     } catch (e) {
-      return null;
+      return "";
     }
   }
 
