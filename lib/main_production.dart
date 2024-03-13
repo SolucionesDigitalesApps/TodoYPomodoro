@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n_delegate.dart';
 import 'package:flutter_i18n/loaders/file_translation_loader.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:todo_y_pomodoro_app/app.dart';
 import 'package:todo_y_pomodoro_app/features/common/controllers/local_controller.dart';
 
@@ -34,6 +35,14 @@ void main() async {
     ),
   );
   HttpOverrides.global = MyHttpOverrides();
-  runApp(MyApp(flutterI18nDelegate: flutterI18nDelegate));
+  await SentryFlutter.init(
+    (options) {
+      options.dsn = 'https://7e15294fb0888de0721dcc5774abc562@o1110619.ingest.us.sentry.io/4506905814368256';
+      // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+      // We recommend adjusting this value in production.
+      options.tracesSampleRate = 1.0;
+    },
+    appRunner: () => runApp(MyApp(flutterI18nDelegate: flutterI18nDelegate)),
+  );
   
 }
