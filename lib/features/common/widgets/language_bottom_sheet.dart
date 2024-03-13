@@ -32,7 +32,8 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            AppHeader(title: FlutterI18n.translate(context, "pages.language_sheet.title")),
+            // AppHeader(title: FlutterI18n.translate(context, "pages.language_sheet.title")),
+            AppHeader(title: "Seleccione otro lenguaje"),
             const VSpacing(3),
             const Divider(),
             ListTile(
