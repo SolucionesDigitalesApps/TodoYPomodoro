@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class Themes {
 
   static get lightMode => ThemeData(
-    primaryColor: Colors.black,
+    primaryColor: const Color(0xffef5843),
     fontFamily: "SourceSans3",
     textTheme: const TextTheme(
       displayLarge: TextStyle(

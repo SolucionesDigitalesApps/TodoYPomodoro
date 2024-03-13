@@ -63,7 +63,7 @@ class _UpdateTaskSheetState extends State<UpdateTaskSheet> {
             CustomTextFormField(
               controller: taskDescriptionController,
               keyboardType: TextInputType.emailAddress,
-              hintText: FlutterI18n.translate(context, "pages.update_task_sheet.title_description_input"),
+              hintText: FlutterI18n.translate(context, "pages.update_task_sheet.description_input"),
               errorMessage: groupNameError,
             ),
             const VSpacing(2),

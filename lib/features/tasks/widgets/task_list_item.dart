@@ -16,10 +16,12 @@ import 'package:todo_y_pomodoro_app/features/tasks/widgets/update_task_sheet.dar
 class TaskListItem extends StatelessWidget {
   final TaskModel taskModel;
   final bool fromPomodoroPage;
+  final Function() onCompleteTask;
   const TaskListItem({
     super.key,
     required this.taskModel,
-    this.fromPomodoroPage = false
+    this.fromPomodoroPage = false,
+    required this.onCompleteTask
   });
 
   @override
@@ -59,6 +61,7 @@ class TaskListItem extends StatelessWidget {
                 if(taskModel.hasPomodoro && !fromPomodoroPage){
                   Navigator.push(context, cupertinoNavigationRoute(context, PomodoroPage(
                     taskModel: taskModel,
+                    rewarded: false,
                   )));
                   return;
                 }
@@ -76,9 +79,7 @@ class TaskListItem extends StatelessWidget {
                   return;
                 }
                 if(fromPomodoroPage){
-                  // ignore: use_build_context_synchronously
-                  if(!context.mounted) return;
-                  Navigator.pop(context);
+                  onCompleteTask();
                 }
               }, 
               icon: taskModel.hasPomodoro && !fromPomodoroPage ? const Icon(Icons.play_arrow_rounded) : const Icon(Icons.check)

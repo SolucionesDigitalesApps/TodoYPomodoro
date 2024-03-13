@@ -1,4 +1,5 @@
 // ignore: depend_on_referenced_packages
+import 'dart:async';
 import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n_delegate.dart';
 import 'package:flutter_i18n/loaders/file_translation_loader.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:todo_y_pomodoro_app/app.dart';
 import 'package:todo_y_pomodoro_app/features/common/controllers/local_controller.dart';
 
@@ -18,6 +20,7 @@ import 'package:todo_y_pomodoro_app/features/common/controllers/local_controller
 }
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  unawaited(MobileAds.instance.initialize());
   await Firebase.initializeApp();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitDown,

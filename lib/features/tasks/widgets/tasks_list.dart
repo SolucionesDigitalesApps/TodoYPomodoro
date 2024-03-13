@@ -45,7 +45,8 @@ class _TasksListState extends State<TasksList> {
           final taskModel = taskList[index];
           return TaskListItem(
             key: Key("task_list_item_${taskModel.id}"),
-            taskModel: taskModel
+            taskModel: taskModel,
+            onCompleteTask: (){},
           );
         },
         padding: EdgeInsets.only(

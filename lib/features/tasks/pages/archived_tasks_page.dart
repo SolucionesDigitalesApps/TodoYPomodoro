@@ -60,7 +60,8 @@ class _ArchivedTasksPageState extends State<ArchivedTasksPage> {
                       final taskModel = tasks[index];
                       return TaskListItem(
                         key: Key("task_list_item_${taskModel.id}"),
-                        taskModel: taskModel
+                        taskModel: taskModel,
+                        onCompleteTask: (){},
                       );
                     },
                     padding: EdgeInsets.zero,

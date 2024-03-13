@@ -1,7 +1,9 @@
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_y_pomodoro_app/core/ad_helper.dart';
 import 'package:todo_y_pomodoro_app/core/date_utils.dart';
 import 'package:todo_y_pomodoro_app/core/task_state_enum.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
@@ -10,6 +12,7 @@ import 'package:todo_y_pomodoro_app/features/common/widgets/alerts.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/app_header.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_icon_button.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/h_spacing.dart';
+import 'package:todo_y_pomodoro_app/features/common/widgets/page_loader.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/scaffold_wrapper.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/v_spacing.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/models/task_model.dart';
@@ -18,9 +21,11 @@ import 'package:todo_y_pomodoro_app/features/tasks/widgets/task_list_item.dart';
 
 class PomodoroPage extends StatefulWidget {
   final TaskModel taskModel;
+  final bool rewarded;
   const PomodoroPage({
     super.key,
     required this.taskModel,
+    required this.rewarded,
   });
 
   @override
@@ -28,7 +33,16 @@ class PomodoroPage extends StatefulWidget {
 }
 
 class _PomodoroPageState extends State<PomodoroPage> {
+  InterstitialAd? _interstitialAd;
+  RewardedInterstitialAd? _rewardedInterstitialAd;
   CountDownController pomodoroController = CountDownController();
+
+  @override
+  void initState() {
+    super.initState();
+    loadInterstitialAd(widget.rewarded);
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScaffoldWrapper(
@@ -44,11 +58,17 @@ class _PomodoroPageState extends State<PomodoroPage> {
                 TaskListItem(
                   taskModel: widget.taskModel,
                   fromPomodoroPage: true,
+                  onCompleteTask: () async {
+                    pomodoroController.pause();
+                    await showSuccessAlert(context, FlutterI18n.translate(context, "general.dear"), FlutterI18n.translate(context, "pages.pomodoro.finished"));
+                    showInterstitialAd(widget.rewarded);
+                  },
                 ),
                 const VSpacing(3),
                 CircularCountDownTimer(
                   controller: pomodoroController,
-                  duration: widget.taskModel.pomodoro,
+                  // duration: widget.taskModel.pomodoro,
+                  duration: 10,
                   width: mqWidth(context, 70),
                   height: mqWidth(context, 70),
                   fillColor: Colors.white,
@@ -61,7 +81,6 @@ class _PomodoroPageState extends State<PomodoroPage> {
                     fontWeight: FontWeight.bold,
                   ),
                   onComplete: () async {
-                    await showSuccessAlert(context, FlutterI18n.translate(context, "general.dear"), FlutterI18n.translate(context, "pages.pomodoro.finished"));
                     // ignore: use_build_context_synchronously
                     if(!context.mounted) return;
                     final tasksProvider = Provider.of<TasksProvider>(context, listen: false);
@@ -77,9 +96,9 @@ class _PomodoroPageState extends State<PomodoroPage> {
                       showErrorAlert(context, FlutterI18n.translate(context, "general.dear"), [resp.message]);
                       return;
                     }
-                    // ignore: use_build_context_synchronously
-                    if(!context.mounted) return;
-                    Navigator.pop(context);
+                    if(!mounted) return;
+                    await showSuccessAlert(context, FlutterI18n.translate(context, "general.dear"), FlutterI18n.translate(context, "pages.pomodoro.finished"));
+                    showInterstitialAd(widget.rewarded);
                   },
                 ),
                 const VSpacing(3),
@@ -127,9 +146,98 @@ class _PomodoroPageState extends State<PomodoroPage> {
                 )
               ]
             )
-          )
+          ),
+          Selector<TasksProvider, bool>(
+            selector: (context, tasksProvider) => tasksProvider.updateTaskLoading,
+            builder: (context, updateTaskLoading, _) {
+              return PageLoader(
+                loading: updateTaskLoading, 
+                message: FlutterI18n.translate(context, "pages.pomodoro.completing")
+              );
+            },
+          ),
         ]
       )
+    );
+  }
+  void loadInterstitialAd(bool rewarded) async {
+    if(rewarded){
+      RewardedInterstitialAd.load(
+        adUnitId: AdHelper.bannerAdUnitId,
+        request: const AdRequest(),
+        rewardedInterstitialAdLoadCallback: RewardedInterstitialAdLoadCallback(
+          // Called when an ad is successfully received.
+          onAdLoaded: (ad) {
+            _rewardedInterstitialAd = ad;
+          },
+          // Called when an ad request failed.
+          onAdFailedToLoad: (LoadAdError error) {
+            debugPrint('RewardedInterstitialAd failed to load: $error');
+          },
+        ));
+      return;
+    }
+    InterstitialAd.load(
+      adUnitId: AdHelper.bannerAdUnitId,
+      request: const AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (ad) {
+          debugPrint("AD LOADED");
+          _interstitialAd = ad;
+        },
+        // Called when an ad request failed.
+        onAdFailedToLoad: (error) {
+          debugPrint("AD FAILED");
+          _interstitialAd?.dispose();
+          Navigator.pop(context);
+        },
+      )
+    );
+  }
+  void showInterstitialAd(bool rewarded) async {
+    if(rewarded){
+      if(_rewardedInterstitialAd == null){
+        Navigator.pop(context);
+      }
+      debugPrint("AD SHOWED");
+      _rewardedInterstitialAd!.show(
+        onUserEarnedReward: (ad, reward) {
+          
+        },
+      );
+      _rewardedInterstitialAd?.fullScreenContentCallback = FullScreenContentCallback(
+        onAdDismissedFullScreenContent: (ad) {
+          _rewardedInterstitialAd?.dispose();
+          ad.dispose();
+          debugPrint("AD CLOSED");
+          Navigator.pop(context);
+        },
+        onAdFailedToShowFullScreenContent:(ad, error) {
+          _rewardedInterstitialAd?.dispose();
+          ad.dispose();
+          debugPrint("AD CLOSED");
+          Navigator.pop(context);
+        },
+      );
+    }
+    if(_interstitialAd == null){
+      Navigator.pop(context);
+    }
+    debugPrint("AD SHOWED");
+    _interstitialAd!.show();
+    _interstitialAd?.fullScreenContentCallback = FullScreenContentCallback(
+      onAdDismissedFullScreenContent: (ad) {
+        _interstitialAd?.dispose();
+        ad.dispose();
+        debugPrint("AD FAILED");
+        Navigator.pop(context);
+      },
+      onAdFailedToShowFullScreenContent: (ad, error) {
+        _rewardedInterstitialAd?.dispose();
+        ad.dispose();
+        debugPrint("AD FAILED");
+        Navigator.pop(context);
+      },
     );
   }
 }

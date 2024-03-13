@@ -63,7 +63,8 @@
         "pomodoro": {
             "title": "Pomodoro",
             "finished": "Task finished",
-            "focus": "Stay focused for"
+            "focus": "Stay focused for",
+            "completing": "Completing task..."
         },
         "create_task_group_sheet": {
             "title": "New Task Group",
