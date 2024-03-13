@@ -34,7 +34,6 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    //TODO: Verificar icono de notificacion
     notificationController.initNotifications(myBackgroundMessageHandler).then((value) {
       notificationController.getToken().then((value) {
         debugPrint("FCM TOKEN");
