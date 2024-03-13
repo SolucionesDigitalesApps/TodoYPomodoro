@@ -64,6 +64,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   controller: passwordController,
                   hintText: FlutterI18n.translate(context, "pages.sign_up.password_label"),
                   errorMessage: passwordError,
+                  obscureText: true,
                 ),
                 const VSpacing(10),
                 CustomButton(

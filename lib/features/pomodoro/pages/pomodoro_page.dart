@@ -60,8 +60,11 @@ class _PomodoroPageState extends State<PomodoroPage> {
                   fromPomodoroPage: true,
                   onCompleteTask: () async {
                     pomodoroController.pause();
-                    await showSuccessAlert(context, FlutterI18n.translate(context, "general.dear"), FlutterI18n.translate(context, "pages.pomodoro.finished"));
-                    showInterstitialAd(widget.rewarded);
+                    await showSuccessAlert(context, FlutterI18n.translate(context, "general.dear"), FlutterI18n.translate(context, "pages.pomodoro.finished")).then((value) {
+                      //Quitar si se muestran anuncios
+                      Navigator.pop(context);
+                    });
+                    // showInterstitialAd(widget.rewarded);
                   },
                 ),
                 const VSpacing(3),
@@ -97,8 +100,11 @@ class _PomodoroPageState extends State<PomodoroPage> {
                       return;
                     }
                     if(!mounted) return;
-                    await showSuccessAlert(context, FlutterI18n.translate(context, "general.dear"), FlutterI18n.translate(context, "pages.pomodoro.finished"));
-                    showInterstitialAd(widget.rewarded);
+                    await showSuccessAlert(context, FlutterI18n.translate(context, "general.dear"), FlutterI18n.translate(context, "pages.pomodoro.finished")).then((value) {
+                      //Quitar si se muestran anuncios
+                      Navigator.pop(context);
+                    });
+                    // showInterstitialAd(widget.rewarded);
                   },
                 ),
                 const VSpacing(3),

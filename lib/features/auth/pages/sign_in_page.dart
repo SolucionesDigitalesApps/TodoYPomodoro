@@ -66,8 +66,8 @@ class _SignInPageState extends State<SignInPage> {
                 GeneralImage(
                   width: mqHeigth(context, 20),
                   height: mqHeigth(context, 20),
-                  url: "",
-                  fromLocal: false,
+                  url: "assets/images/launcher_icon.png",
+                  fromLocal: true,
                   fit: BoxFit.cover,
                 ),
                 const VSpacing(10),
@@ -82,6 +82,7 @@ class _SignInPageState extends State<SignInPage> {
                   controller: passwordController,
                   hintText: FlutterI18n.translate(context, "pages.sign_in.password_label"),
                   errorMessage: passwordError,
+                  obscureText: true,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -149,7 +150,11 @@ class _SignInPageState extends State<SignInPage> {
           context, 
           FlutterI18n.translate(context, "general.error"), 
           [response.message]
-        );
+        ).then((value) {
+          if(response.statusCode == 404){
+            Navigator.push(context, cupertinoNavigationRoute(context, const SignUpPage()));
+          }
+        });
       }
       return;
     }

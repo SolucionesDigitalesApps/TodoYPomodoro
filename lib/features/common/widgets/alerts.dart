@@ -21,7 +21,8 @@ Future<void> showInfoAlert(BuildContext context, String title, String message) a
           const VSpacing(2),
           Container(
             margin: EdgeInsets.only(
-              bottom: mqHeigth(context, 1)
+              bottom: mqHeigth(context, 1),
+              left: mqWidth(context, 3)
             ),
             child: Text(message)
           ),
@@ -87,7 +88,9 @@ Future<void> showSuccessAlert(BuildContext context, String title, String message
       contentPadding: const EdgeInsets.all(10),
       title: Text(title),
       content: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        padding: EdgeInsets.only(
+          left: mqWidth(context, 3)
+        ),
         child: Text(message),
       ),
       actions: [

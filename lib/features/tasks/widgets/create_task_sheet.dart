@@ -46,6 +46,7 @@ class _CreateTaskSheetState extends State<CreateTaskSheet> {
             const TaskGroupList(),
             const VSpacing(3),
             CustomTextFormField(
+              autofocus: true,
               controller: taskTitleController,
               keyboardType: TextInputType.emailAddress,
               hintText: FlutterI18n.translate(context, "pages.create_task_sheet.title_input"),

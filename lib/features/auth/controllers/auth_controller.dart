@@ -112,6 +112,11 @@ class AuthController {
           statusCode: 403, 
           message: language == "es" ? "La contraseña es incorrecta o no está registrado con email" : "The password is incorrect or the user is not registered with the email"
         );
+      }else if (e.code == "invalid-credential"){
+        return ErrorResponse(
+          statusCode: 404, 
+          message: language == "es" ? "No se encuentra registrado, lo llevaremos al registro" : "It is not registered, we will take it to the registry"
+        );
       }else{
         return ErrorResponse.unknown;
       }
