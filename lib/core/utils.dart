@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:package_info/package_info.dart';
-import 'package:todo_y_pomodoro_app/core/constants.dart';
 import 'package:todo_y_pomodoro_app/core/launcher_utils.dart';
+import 'package:todo_y_pomodoro_app/features/common/controllers/local_controller.dart';
 import 'package:todo_y_pomodoro_app/features/common/models/app_update.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/alerts.dart';
 
@@ -19,43 +19,15 @@ double mqWidth(BuildContext context, double percentage){
 Future<void> showAppUpdateOrNot(BuildContext context, AppUpdate appUpdate) async {
   final isAndroid = Platform.isAndroid;
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  final localController = LocalController();
   String buildNumber = packageInfo.buildNumber;
   final versionNumber = appUpdate.versionNumber;
   if (versionNumber > int.parse(buildNumber)) {
     // ignore: use_build_context_synchronously
     if(!context.mounted) return;
-    showDialog(
-      barrierDismissible: !appUpdate.forced,
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(
-          language == "es" ? appUpdate.titleSpanish : appUpdate.titleEnglish,
-          style: TextStyle(
-            fontSize: 18,
-            color: Theme.of(context).textTheme.displayLarge!.color
-          )
-        ),
-        content: Text(language == "es" ? appUpdate.descriptionSpanish : appUpdate.descriptionEnglish),
-        actions: [
-          !appUpdate.forced
-            ? TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: Text(FlutterI18n.translate(context, "general.not_now"),
-                  style: const TextStyle(color: Colors.grey)
-                )
-              )
-            : Container(),
-          TextButton(
-            onPressed: () async {
-              Navigator.pop(context, true);
-            },
-            child: Text(FlutterI18n.translate(context, "general.update"), style: TextStyle(color: Theme.of(context).primaryColor))
-          ),
-        ]
-      )
-    ).then((value) async {
+    showUpdateDialog(context, appUpdate, true).then((value) async {
       if (value == null) {
-        if (appUpdate.forced) {
+        if (appUpdate.forcedRegular) {
           SystemNavigator.pop();
         }
       } else {
@@ -76,11 +48,25 @@ Future<void> showAppUpdateOrNot(BuildContext context, AppUpdate appUpdate) async
             "${FlutterI18n.translate(context, "updates.must1")} ${isAndroid ? "PlayStore" : "AppStore"} ${FlutterI18n.translate(context, "general.must2")}"
           );
         }
-        if (appUpdate.forced) {
+        if (appUpdate.forcedRegular) {
+          SystemNavigator.pop();
+        }
+      }
+    });
+  }else if(appUpdate.otaVersion > localController.otaVersion){
+    if(!context.mounted) return;
+    showUpdateDialog(context, appUpdate, false).then((value) async {
+      if (value == null) {
+        if (appUpdate.forcedOta) {
+          SystemNavigator.pop();
+        }
+      } else {
+        if (appUpdate.forcedOta) {
           SystemNavigator.pop();
         }
       }
     });
   }
+  localController.otaVersion = appUpdate.otaVersion;
 }
 

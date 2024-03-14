@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:todo_y_pomodoro_app/core/constants.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
+import 'package:todo_y_pomodoro_app/features/common/models/app_update.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/v_spacing.dart';
 
 Future<void> showInfoAlert(BuildContext context, String title, String message) async{
@@ -102,6 +104,40 @@ Future<void> showSuccessAlert(BuildContext context, String title, String message
     )
   );
   return;
+}
+Future<bool?> showUpdateDialog(BuildContext context, AppUpdate appUpdate, bool regular) async{
+  final forced = regular ? appUpdate.forcedRegular: appUpdate.forcedOta;
+  final resp = await showDialog(
+    barrierDismissible: !forced,
+    context: context,
+    builder: (context) => AlertDialog(
+      title: Text(
+        language == "es" ? appUpdate.titleSpanish : appUpdate.titleEnglish,
+        style: TextStyle(
+          fontSize: 18,
+          color: Theme.of(context).textTheme.displayLarge!.color
+        )
+      ),
+      content: Text(language == "es" ? appUpdate.descriptionSpanish : appUpdate.descriptionEnglish),
+      actions: [
+        !forced
+          ? TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(FlutterI18n.translate(context, "general.not_now"),
+                style: const TextStyle(color: Colors.grey)
+              )
+            )
+          : Container(),
+        TextButton(
+          onPressed: () async {
+            Navigator.pop(context, true);
+          },
+          child: Text(FlutterI18n.translate(context, "general.update"), style: TextStyle(color: Theme.of(context).primaryColor))
+        ),
+      ]
+    )
+  );
+  return resp;
 }
 Future<void> showErrorAlert(BuildContext context, String title, List<String> message) async{
   await showDialog(

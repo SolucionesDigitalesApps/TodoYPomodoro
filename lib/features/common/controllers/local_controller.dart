@@ -20,6 +20,14 @@ class LocalController {
     return _prefs.getString('todoYPomodoroLocalLang') ?? "";
   }
 
+  set otaVersion(double otaVersion) {
+    _prefs.setDouble('todoYPomodoroOtaVersion', otaVersion);
+  }
+
+  double get otaVersion {
+    return _prefs.getDouble('todoYPomodoroOtaVersion') ?? 0.0;
+  }
+
 
 
 }

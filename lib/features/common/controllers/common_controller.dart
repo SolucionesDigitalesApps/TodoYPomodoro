@@ -27,11 +27,13 @@ class CommonController {
         return AppUpdate(
           versionNumber: data["version_number"] ?? 0,
           versionString: data["version_string"] ?? "1.0.0",
-          forced: data["forced"] ?? false,
+          forcedRegular: data["forced_regular"] ?? false,
+          forcedOta: data["forced_ota"] ?? false,
           titleSpanish: data["title_spanish"]?? "",
           titleEnglish: data["title_english"]?? "",
           descriptionSpanish: data["description_spanish"]?? "",
           descriptionEnglish: data["description_english"]?? "",
+          otaVersion: data["ota_version"]?.toDouble() ?? 0.0,
         );
       }else{
         return null;

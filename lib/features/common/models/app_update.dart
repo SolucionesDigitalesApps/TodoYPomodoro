@@ -5,7 +5,9 @@ class AppUpdate {
   final String titleEnglish;
   final String descriptionSpanish;
   final String descriptionEnglish;
-  final bool forced;
+  final bool forcedRegular;
+  final bool forcedOta;
+  final double otaVersion;
   AppUpdate({
     required this.versionNumber,
     required this.versionString,
@@ -13,6 +15,8 @@ class AppUpdate {
     required this.titleEnglish,
     required this.descriptionSpanish,
     required this.descriptionEnglish,
-    required this.forced,
+    required this.forcedRegular,
+    required this.forcedOta,
+    required this.otaVersion,
   });
 }
