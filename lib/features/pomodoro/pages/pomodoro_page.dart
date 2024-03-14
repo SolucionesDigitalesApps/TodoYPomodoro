@@ -4,6 +4,7 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_y_pomodoro_app/core/ad_helper.dart';
+import 'package:todo_y_pomodoro_app/core/constants.dart';
 import 'package:todo_y_pomodoro_app/core/date_utils.dart';
 import 'package:todo_y_pomodoro_app/core/task_state_enum.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
@@ -61,10 +62,12 @@ class _PomodoroPageState extends State<PomodoroPage> {
                   onCompleteTask: () async {
                     pomodoroController.pause();
                     await showSuccessAlert(context, FlutterI18n.translate(context, "general.dear"), FlutterI18n.translate(context, "pages.pomodoro.finished")).then((value) {
-                      //Quitar si se muestran anuncios
-                      Navigator.pop(context);
+                      if(adsEnabled){
+                        showInterstitialAd(widget.rewarded);
+                      }else{
+                        Navigator.pop(context);
+                      }
                     });
-                    // showInterstitialAd(widget.rewarded);
                   },
                 ),
                 const VSpacing(3),
@@ -101,10 +104,12 @@ class _PomodoroPageState extends State<PomodoroPage> {
                     }
                     if(!mounted) return;
                     await showSuccessAlert(context, FlutterI18n.translate(context, "general.dear"), FlutterI18n.translate(context, "pages.pomodoro.finished")).then((value) {
-                      //Quitar si se muestran anuncios
-                      Navigator.pop(context);
+                      if(adsEnabled){
+                        showInterstitialAd(widget.rewarded);
+                      }else{
+                        Navigator.pop(context);
+                      }
                     });
-                    // showInterstitialAd(widget.rewarded);
                   },
                 ),
                 const VSpacing(3),
