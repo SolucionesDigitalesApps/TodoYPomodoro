@@ -73,8 +73,8 @@ class _PomodoroPageState extends State<PomodoroPage> {
                 const VSpacing(3),
                 CircularCountDownTimer(
                   controller: pomodoroController,
-                  // duration: widget.taskModel.pomodoro,
-                  duration: 10,
+                  duration: widget.taskModel.pomodoro,
+                  // duration: 10,
                   width: mqWidth(context, 70),
                   height: mqWidth(context, 70),
                   fillColor: Colors.white,
