@@ -56,7 +56,7 @@ workflows:
     name: Patch Android Workflow
     environment:
       android_signing:
-        - codemagic
+        - todoy_pomodoro_app_key
       groups:
         - todo_y_pomodoro_app
       flutter: 3.19.2
