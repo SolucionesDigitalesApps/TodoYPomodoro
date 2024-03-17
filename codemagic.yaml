@@ -7,7 +7,7 @@ definitions:
         # Install the Shorebird CLI
         curl --proto '=https' --tlsv1.2 https://raw.githubusercontent.com/shorebirdtech/install/main/install.sh -sSf | bash
         # Set Shorebird PATH
-        echo PATH="/Users/builder/.shorebird/bin:$PATH" >> $CM_ENV        
+        echo PATH="$HOME/.shorebird/bin:$PATH" >> $CM_ENV        
     - &flutter_analyze
       name: Run static code analysis
       script: flutter analyze
