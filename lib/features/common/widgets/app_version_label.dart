@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
+import 'package:todo_y_pomodoro_app/core/constants.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
 
 class AppVersionLabel extends StatefulWidget {
@@ -34,7 +35,7 @@ class _AppVersionLabelState extends State<AppVersionLabel> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Text(
-            "V $version",
+            "V $version + $patchVersion",
             style: const TextStyle(
               color: Colors.black54
             )
