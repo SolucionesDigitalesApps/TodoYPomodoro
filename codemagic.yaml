@@ -40,7 +40,7 @@ workflows:
       - *shorebird_install   
       - name: Build with Shorebird
         script: |
-          shorebird release android --flavor production -t lib/main_production.dart --force -- \
+          SHOREBIRD_TOKEN="$SHOREBIRD_TOKEN" && shorebird release android --flavor production -t lib/main_production.dart --force -- \
           --build-name=$FLUTTER_BUILD_NAME \
           --build-number=$FLUTTER_BUILD_NUMBER          
     artifacts:
@@ -66,10 +66,9 @@ workflows:
       branch_patterns:
         - pattern: master
     scripts:
-      - *flutter_analyze
       - *setup_local_properties
       - *shorebird_install 
       - name: Patch Android app with Shorebird
-        script: shorebird patch android --force --flavor production -t lib/main_production.dart
+        script: SHOREBIRD_TOKEN="$SHOREBIRD_TOKEN" && shorebird patch android --force --flavor production -t lib/main_production.dart
     artifacts:
       - build/**/outputs/**/*.aab
