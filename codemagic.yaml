@@ -21,7 +21,7 @@ workflows:
     name: Release Android Workflow
     environment:
       android_signing:
-        - codemagic
+        - todoy_pomodoro_app_key
       groups:
         - todo_y_pomodoro_app
         - google_credentials
