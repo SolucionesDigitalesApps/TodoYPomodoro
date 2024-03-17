@@ -40,9 +40,10 @@ workflows:
       - *shorebird_install   
       - name: Build with Shorebird
         script: |
+        BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
           export SHOREBIRD_TOKEN="$SHOREBIRD_TOKEN" && shorebird release android --flavor production -t lib/main_production.dart --force -- \
-          --build-name=$FLUTTER_BUILD_NAME \
-          --build-number=$FLUTTER_BUILD_NUMBER          
+          --build-name=1.0.0 \
+          --build-number=$BUILD_NUMBER          
     artifacts:
       - build/**/outputs/**/*.aab
     publishing:
