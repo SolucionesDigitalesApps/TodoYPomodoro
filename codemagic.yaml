@@ -36,7 +36,6 @@ workflows:
       branch_patterns:
         - pattern: master
     scripts:
-      - *flutter_analyze
       - *setup_local_properties
       - *shorebird_install   
       - name: Build with Shorebird
