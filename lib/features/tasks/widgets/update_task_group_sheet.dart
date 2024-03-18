@@ -80,7 +80,7 @@ class _UpdateTaskGroupSheetState extends State<UpdateTaskGroupSheet> {
                   if(!mounted) return;
                   Navigator.pop(context);
                 },
-                label: FlutterI18n.translate(context, "genearal.edit"), 
+                label: FlutterI18n.translate(context, "general.edit"), 
                 width: mqWidth(context, 90), 
                 color: Theme.of(context).primaryColor
               );
