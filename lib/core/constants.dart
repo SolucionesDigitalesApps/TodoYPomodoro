@@ -6,4 +6,4 @@ String language = "es";
 
 bool adsEnabled = false;
 
-int patchVersion = 2;
+int patchVersion = 3;
