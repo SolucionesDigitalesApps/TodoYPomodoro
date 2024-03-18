@@ -12,6 +12,7 @@ class AppVersionLabel extends StatefulWidget {
 
 class _AppVersionLabelState extends State<AppVersionLabel> {
   String version = "";
+  
   @override
   void initState() {
     super.initState();
@@ -25,6 +26,7 @@ class _AppVersionLabelState extends State<AppVersionLabel> {
       setState(() {});
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -1,16 +1,31 @@
-# todo_y_pomodoro_app
+## Inicialización
 
-A new Flutter project.
+***Flutter versión: 3.19.2***
 
-## Getting Started
+#### Pase a producción
 
-This project is a starting point for a Flutter application.
+- Actualizar en pubspec.yaml la versión del versionCode y versionName
+- Actualizar en android/app/build.gradle el versionCode y versionName
+- Actualizar en constants.dart el patchVersion a 0
+- Crear el commit y subir a development
+- Navegar a master y hacer un merge de development. Subir.
+- Crear el tag de acuerdo a la versión actual. Ejem: v1.0.3+6
+- En caso de compilado manual ejecutar el comando:
+```
+    shorebird release android --flavor production -t lib/main_production.dart
+```
+- A continuación usar el archivo .aab y subirlo al canal de producción de PlayStore
+- En caso de compilado en la nube (Codemagic). Seleccionar la rama master, el workflow Release Android e iniciar el compilado.
 
-A few resources to get you started if this is your first Flutter project:
+#### Publicación de parche
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Actualizar en constants.dart el patchVersion a 1 (Si anteriormente era 0)
+- Crear el commit y subir a development
+- Navegar a master y hacer un merge de development. Subir.
+- Crear el tag de acuerdo a la versión actual. Ejem: v1.0.3+6-patch1
+- En caso de compilado manual ejecutar el comando:
+```
+    shorebird patch android --flavor production -t lib/main_production.dart
+```
+- En caso de compilado en la nube (Codemagic). Seleccionar la rama master, el workflow Patch Android e iniciar el compilado.
+- En ambos casos la publicación del parche se hace en automático luego de compilado.

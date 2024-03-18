@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:package_info/package_info.dart';
+import 'package:shorebird_code_push/shorebird_code_push.dart';
 import 'package:todo_y_pomodoro_app/core/launcher_utils.dart';
 import 'package:todo_y_pomodoro_app/features/common/controllers/local_controller.dart';
 import 'package:todo_y_pomodoro_app/features/common/models/app_update.dart';
@@ -22,12 +23,21 @@ Future<void> showAppUpdateOrNot(BuildContext context, AppUpdate appUpdate) async
   final localController = LocalController();
   String buildNumber = packageInfo.buildNumber;
   final versionNumber = appUpdate.versionNumber;
+  final shorebirdCodePush = ShorebirdCodePush();
+  double otaVersion = localController.otaVersion;
+  if(otaVersion == 0.0){
+    otaVersion = double.parse(buildNumber);
+  }
   if (versionNumber > int.parse(buildNumber)) {
     // ignore: use_build_context_synchronously
-    if(!context.mounted) return;
+    if(!context.mounted) {
+      localController.otaVersion = appUpdate.otaVersion;
+      return;
+    }
     showUpdateDialog(context, appUpdate, true).then((value) async {
       if (value == null) {
         if (appUpdate.forcedRegular) {
+          localController.otaVersion = appUpdate.otaVersion;
           SystemNavigator.pop();
         }
       } else {
@@ -41,7 +51,9 @@ Future<void> showAppUpdateOrNot(BuildContext context, AppUpdate appUpdate) async
         bool success = await LauncherUtils.openUrl(context, url);
         if (!success) {
           // ignore: use_build_context_synchronously
-          if(!context.mounted) return;
+          if(!context.mounted){
+            localController.otaVersion = appUpdate.otaVersion;
+          }
           showInfoAlert(
             context,
             FlutterI18n.translate(context, "general.dear"),
@@ -49,21 +61,30 @@ Future<void> showAppUpdateOrNot(BuildContext context, AppUpdate appUpdate) async
           );
         }
         if (appUpdate.forcedRegular) {
+          localController.otaVersion = appUpdate.otaVersion;
           SystemNavigator.pop();
         }
       }
     });
-  }else if(appUpdate.otaVersion > localController.otaVersion){
-    if(!context.mounted) return;
+  }else if(appUpdate.otaVersion > otaVersion){
+    //Se hace una doble verificación, desde Firebase y desde Shorebird
+    final isUpdateAvailable = await shorebirdCodePush.isNewPatchAvailableForDownload();
+
+    if (!isUpdateAvailable) {
+      localController.otaVersion = appUpdate.otaVersion;
+      return;
+    }
+    if(!context.mounted) {
+      localController.otaVersion = appUpdate.otaVersion;
+      return;
+    }
     showUpdateDialog(context, appUpdate, false).then((value) async {
       if (value == null) {
         if (appUpdate.forcedOta) {
-          SystemNavigator.pop();
+          await shorebirdCodePush.downloadUpdateIfAvailable();
         }
       } else {
-        if (appUpdate.forcedOta) {
-          SystemNavigator.pop();
-        }
+        await shorebirdCodePush.downloadUpdateIfAvailable();
       }
     });
   }
