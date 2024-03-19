@@ -4,6 +4,6 @@ const int groupsLimit = 10;
 
 String language = "es";
 
-bool adsEnabled = false;
+bool adsEnabled = true;
 
 int patchVersion = 0;
