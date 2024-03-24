@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:intl/intl.dart';
 
 String formatDuration(BuildContext context, Duration duration) {
   final hours = duration.inHours.remainder(24);
@@ -28,4 +29,8 @@ String formatSeconds(BuildContext context, int seconds) {
       }
     }
   }
+}
+String formatDate(DateTime? date) {
+  if(date == null) return "";
+  return DateFormat('dd-MM-yyyy').format(date);
 }

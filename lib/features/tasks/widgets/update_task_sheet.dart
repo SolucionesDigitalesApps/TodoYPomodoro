@@ -7,6 +7,7 @@ import 'package:todo_y_pomodoro_app/features/common/models/error_response.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/alerts.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/app_header.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_button.dart';
+import 'package:todo_y_pomodoro_app/features/common/widgets/custom_multiline_box.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_text_button.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_text_form_field.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/sheet_content_layout.dart';
@@ -60,7 +61,7 @@ class _UpdateTaskSheetState extends State<UpdateTaskSheet> {
               hintText: FlutterI18n.translate(context, "pages.update_task_sheet.title_input"),
               errorMessage: groupNameError,
             ),const VSpacing(3),
-            CustomTextFormField(
+            CustomMultilineBox(
               controller: taskDescriptionController,
               keyboardType: TextInputType.emailAddress,
               hintText: FlutterI18n.translate(context, "pages.update_task_sheet.description_input"),

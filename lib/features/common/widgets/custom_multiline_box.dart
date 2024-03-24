@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
 
-class CustomTextFormField extends StatelessWidget {
+class CustomMultilineBox extends StatelessWidget {
   final String hintText;
   final bool obscureText;
   final Function(String)? onChanged;
@@ -20,7 +20,7 @@ class CustomTextFormField extends StatelessWidget {
   final int? maxLength;
   final bool autofocus;
 
-  const CustomTextFormField({
+  const CustomMultilineBox({
     required this.hintText, 
     this.obscureText = false,
     this.onChanged,
@@ -57,6 +57,7 @@ class CustomTextFormField extends StatelessWidget {
               controller: controller,
               obscureText: obscureText,
               onChanged: onChanged,
+              maxLines: 3,
               validator: validator,
               keyboardType: keyboardType,
               maxLength: maxLength,

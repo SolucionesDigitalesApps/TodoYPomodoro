@@ -9,6 +9,7 @@ import 'package:todo_y_pomodoro_app/features/common/widgets/alerts.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/app_header.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/app_version_label.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_button.dart';
+import 'package:todo_y_pomodoro_app/features/common/widgets/custom_multiline_box.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_text_form_field.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/sheet_content_layout.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/v_spacing.dart';
@@ -51,12 +52,14 @@ class _CreateTaskSheetState extends State<CreateTaskSheet> {
               keyboardType: TextInputType.emailAddress,
               hintText: FlutterI18n.translate(context, "pages.create_task_sheet.title_input"),
               errorMessage: groupNameError,
+              maxLength: 50,
             ),const VSpacing(3),
-            CustomTextFormField(
+            CustomMultilineBox(
               controller: taskDescriptionController,
               keyboardType: TextInputType.emailAddress,
               hintText: FlutterI18n.translate(context, "pages.create_task_sheet.description_input"),
               errorMessage: groupNameError,
+              maxLength: 200,
             ),
             const VSpacing(2),
             Container(

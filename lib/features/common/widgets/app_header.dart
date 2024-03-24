@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_icon_button.dart';
+import 'package:todo_y_pomodoro_app/features/common/widgets/h_spacing.dart';
 
 class AppHeader extends StatelessWidget {
   final String title;
@@ -20,16 +21,20 @@ class AppHeader extends StatelessWidget {
       child: Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CustomIconButton(
-                size: 10, 
-                onPressed: onBack ?? () => Navigator.pop(context),
-                icon: const Icon(Icons.arrow_back)
+              SizedBox(
+                width: mqWidth(context, 10),
+                child: CustomIconButton(
+                  size: 10, 
+                  onPressed: onBack ?? () => Navigator.pop(context),
+                  icon: const Icon(Icons.arrow_back)
+                ),
               ),
+              Text(title, style: Theme.of(context).textTheme.titleLarge),
+              const HSpacing(10)
             ],
           ),
-          Text(title, style: Theme.of(context).textTheme.titleLarge),
         ],
       ),
     );

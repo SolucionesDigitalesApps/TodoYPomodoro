@@ -2,6 +2,8 @@
 
 ***Flutter versión: 3.19.2***
 
+- Sentry: darien.r.leiva@gmail.com
+
 #### Pase a producción
 
 - Actualizar en pubspec.yaml la versión del versionCode y versionName
@@ -16,6 +18,7 @@
 - A continuación usar el archivo .aab y subirlo al canal de producción de PlayStore
 - En caso de compilado en la nube (Codemagic). Seleccionar la rama master, el workflow Release Android e iniciar el compilado.
 - En firestore->configuration->android, actualizar version_number, version_string y ota_update de acuerdo a la configuración anterior.
+- Regresar a la rama development
 
 #### Publicación de parche
 
@@ -30,3 +33,4 @@
 - En caso de compilado en la nube (Codemagic). Seleccionar la rama master, el workflow Patch Android e iniciar el compilado.
 - En ambos casos la publicación del parche se hace en automático luego de compilado.
 - En firestore->configuration->android, actualizar ota_update de acuerdo a la configuración anterior. Ejemplo 3.1, 3.2, 3.3, etc.
+- Regresar a la rama development

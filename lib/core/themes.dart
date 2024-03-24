@@ -5,6 +5,17 @@ class Themes {
   static get lightMode => ThemeData(
     primaryColor: const Color(0xffef5843),
     fontFamily: "SourceSans3",
+    timePickerTheme: TimePickerThemeData(
+      confirmButtonStyle: ButtonStyle(
+        textStyle: MaterialStateProperty.resolveWith<TextStyle?>(
+        (Set<MaterialState> states) {
+          return const TextStyle(color: Color(0xffef5843)); // TextStyle for enabled state
+        },
+        )
+      ),
+      dialHandColor: const Color(0xffef5843),
+      dialBackgroundColor: const Color(0xffef5843).withOpacity(0.2)
+    ),
     textTheme: const TextTheme(
       displayLarge: TextStyle(
         fontSize: 30,

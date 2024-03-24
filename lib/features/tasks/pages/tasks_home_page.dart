@@ -115,8 +115,10 @@ class _TasksHomePageState extends State<TasksHomePage> {
           }
           showCustomBottomSheet(context, const CreateTaskSheet());
         }, 
-        label: Text(FlutterI18n.translate(context, "pages.task_home.new_task")), 
-        icon: const Icon(Icons.add),
+        label: Text(FlutterI18n.translate(context, "pages.task_home.new_task"), style: const TextStyle(
+          color: Colors.white
+        )), 
+        icon: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }

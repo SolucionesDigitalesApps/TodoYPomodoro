@@ -28,7 +28,7 @@ class TasksController {
       where("deleted_at", isNull: true)
         .where("user_id", isEqualTo: userId)
           .where("state", isEqualTo: TaskState.completed.value)
-          .orderBy("updated_at", descending: false)
+          .orderBy("updated_at", descending: true)
           .snapshots();
 
   //GET
