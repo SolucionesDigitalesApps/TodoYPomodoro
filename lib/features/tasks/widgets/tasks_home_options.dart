@@ -32,12 +32,24 @@ class _TasksHomeOptionsState extends State<TasksHomeOptions> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            FlutterI18n.translate(context, "general.tasks"),
-            style: Theme.of(context).textTheme.displayMedium,
+          Row(
+            children: [
+              Image.network(
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvkVO8gT6xF1U5-humPo8JKqlpBJEv-rdajA&s', // Replace with your image URL
+                width: 50.0,
+                height: 50.0,
+                fit: BoxFit.cover,
+              ),
+              const HSpacing(2),
+              Text(
+                FlutterI18n.translate(context, "general.tasks"),
+                style: Theme.of(context).textTheme.displayMedium, 
+              ),
+            ],
           ),
           Row(
             children: [
+              
               CustomIconButton(
                 borderRadius: 30,
                 size: 10, 
