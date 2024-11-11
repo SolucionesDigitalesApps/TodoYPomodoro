@@ -38,7 +38,7 @@ class _TasksListState extends State<TasksList> {
       height: mqHeigth(context, 80),
       child: ReorderableListView.builder(
         onReorder: (oldIndex, newIndex) {
-          tasksProvider.swapTasks(oldIndex, newIndex);
+          tasksProvider.swapTasks(oldIndex,  newIndex > oldIndex ? newIndex - 1 : newIndex);
         },
         itemCount: taskList.length,
         itemBuilder: (context, index) {

@@ -48,6 +48,7 @@ class TasksProvider extends ChangeNotifier {
     notifyListeners();
     tasksSubscription = tasksController.tasksStream(userId).listen((snapshots) {
       tasks = tasksController.parseTasks(snapshots.docs);
+      print(tasks);
       tasksLoading = false;
       tasksError = false;
       notifyListeners();
