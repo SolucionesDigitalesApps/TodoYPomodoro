@@ -1,6 +1,7 @@
 ## Inicialización
 
-***Flutter versión: 3.19.2***
+***Flutter versión: 3.24.3***
+***Java JDK: 17***
 
 - Sentry: darien.r.leiva@gmail.com
 
