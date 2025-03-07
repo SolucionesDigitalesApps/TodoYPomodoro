@@ -35,8 +35,8 @@ class _RouterPageState extends State<RouterPage> {
   }
 
   Future<void> loadSession() async {
-    final currentLanguage = localController.localLanguage;
-    if(currentLanguage.isEmpty){
+    // final currentLanguage = localController.localLanguage;
+    /* if(currentLanguage.isEmpty){
       String systemLanguage = window.locale.languageCode;
       if (systemLanguage == 'en') {
         changeLanguage(context, systemLanguage);
@@ -47,7 +47,7 @@ class _RouterPageState extends State<RouterPage> {
       }
     }else{
       changeLanguage(context, currentLanguage);
-    }
+    } */
     final resp = await Provider.of<UserProvider>(context, listen: false).getCurrentUser();
     if(resp is ErrorResponse){
       if(mounted){

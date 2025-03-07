@@ -5,8 +5,6 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n_delegate.dart';
-import 'package:flutter_i18n/loaders/file_translation_loader.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:todo_y_pomodoro_app/app.dart';
@@ -29,14 +27,14 @@ void main() async {
   ]);
   final LocalController localManager = LocalController();
   await localManager.initPrefs();
-  final FlutterI18nDelegate flutterI18nDelegate = FlutterI18nDelegate(
+  /* final FlutterI18nDelegate flutterI18nDelegate = FlutterI18nDelegate(
     translationLoader: FileTranslationLoader(
       useCountryCode: false,
       fallbackFile: 'es',
       basePath: 'assets/i18n',
       forcedLocale: const Locale('es')
     ),
-  );
+  ); */
   HttpOverrides.global = MyHttpOverrides();
   await SentryFlutter.init(
     (options) {
@@ -45,7 +43,7 @@ void main() async {
       // We recommend adjusting this value in production.
       options.tracesSampleRate = 1.0;
     },
-    appRunner: () => runApp(MyApp(flutterI18nDelegate: flutterI18nDelegate)),
+    appRunner: () => runApp(MyApp()),
   );
   
 }

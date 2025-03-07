@@ -1,0 +1,96 @@
+general:
+  cancel: "Cancel"
+  accept: "Accept"
+  close: "Close"
+  next: "Next"
+  error: "Error"
+  dear: "Dear user"
+  disabled: "Your account is disabled. Please contact the administrator for more information"
+  empty: "No results"
+  create: "Create"
+  tasks: "Tasks"
+  edit: "Edit"
+  update: "Update"
+  notNow: "Not now"
+validators:
+  invalidEmail: "Invalid email"
+  invalidPassword: "Invalid password"
+time:
+  minute: "minute"
+  minutes: "minutes"
+  hour: "hour"
+  hours: "hours"
+  day: "day"
+  days: "days"
+  and: "and"
+pages:
+  signIn:
+    emailLabel: "Email"
+    passwordLabel: "Password"
+    forgetAccount: "Forgot your password?"
+    signIn: "Sign In"
+    signUp: "Create Account"
+    signingIn: "Signing in..."
+  signUp:
+    title: "Create Account"
+    emailLabel: "Email"
+    passwordLabel: "Password"
+    signUp: "Sign Up"
+    signingUp: "Creating account..."
+  recover:
+    title: "Recover Password"
+    emailLabel: "Email"
+    send: "Send Email"
+    sending: "Sending email..."
+    sentSuccess: "An email has been sent to your email address"
+  taskHome:
+    updatingTasks: "Updating tasks..."
+    newTask: "New task"
+  tasksArchived:
+    title: "Archived Tasks"
+  languageSheet:
+    title: "Select Language"
+    spanish: "Spanish"
+    english: "English"
+  pomodoro:
+    title: "Pomodoro"
+    finished: "Task finished"
+    focus: "Stay focused for"
+    completing: "Completing task..."
+  createTaskGroupSheet:
+    title: "New Task Group"
+    labelInput: "Enter group name"
+    labelNotEmpty: "Group name cannot be empty"
+  createTaskSheet:
+    title: "Create Task"
+    titleInput: "Task title"
+    descriptionInput: "Task description (Optional)"
+    pomodoroInput: "Add pomodoro (Optional)"
+    selectTime: "Select time"
+    titleNotEmpty: "Task title cannot be empty"
+    create: "Create Task"
+  onboarding:
+    title: "Tasks and Pomodoro"
+    description: "Organize your tasks and complete them easily"
+  updateTaskGroupSheet:
+    title: "Edit Task Group"
+    nameInput: "Enter group name"
+    nameNotEmpty: "Group name cannot be empty"
+    delete: "Delete Group"
+    cantDelete: "Cannot delete group because it has related tasks"
+  updateTaskSheet:
+    title: "Edit Task"
+    titleInput: "Task title"
+    descriptionInput: "Task description (Optional)"
+    pomodoroInput: "Add pomodoro (Optional)"
+    selectTime: "Select time"
+    titleNotEmpty: "Task title cannot be empty"
+    update: "Update Task"
+    delete: "Delete Task"
+widgets:
+  taskGroupList:
+    alert1: "Only"
+    alert2: "task groups"
+updates:
+  must1: "Should go"
+  must2: "manually"

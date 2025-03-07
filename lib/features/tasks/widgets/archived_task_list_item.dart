@@ -1,17 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:provider/provider.dart';
 import 'package:todo_y_pomodoro_app/core/date_utils.dart';
-import 'package:todo_y_pomodoro_app/core/navigation.dart';
 import 'package:todo_y_pomodoro_app/core/task_state_enum.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
-import 'package:todo_y_pomodoro_app/features/common/models/error_response.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/alerts.dart';
-import 'package:todo_y_pomodoro_app/features/common/widgets/custom_icon_button.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/v_spacing.dart';
-import 'package:todo_y_pomodoro_app/features/pomodoro/pages/pomodoro_page.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/models/task_model.dart';
-import 'package:todo_y_pomodoro_app/features/tasks/providers/tasks_provider.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/widgets/update_task_sheet.dart';
 
 class ArchivedTaskListItem extends StatelessWidget {

@@ -12,11 +12,11 @@
         "tasks": "Tareas y Pomodoro",
         "edit": "Editar",
         "update": "Actualizar",
-        "not_now": "Ahora no"
+        "notNow": "Ahora no"
     },
     "validators": {
-        "invalid_email": "El correo electrónico no es válido",
-        "invalid_password": "La contraseña no es válida"
+        "invalidEmail": "El correo electrónico no es válido",
+        "invalidPassword": "La contraseña no es válida"
     },
     "time": {
         "minute": "minuto",
@@ -28,36 +28,36 @@
         "and": " y "
     },
     "pages": {
-        "sign_in": {
-            "email_label": "Correo electrónico",
-            "password_label": "Contraseña",
-            "forget_account": "¿Olvidaste tu contraseña?",
-            "sign_in": "Iniciar sesión",
-            "sign_up": "Crear cuenta",
+        "signIn": {
+            "emailLabel": "Correo electrónico",
+            "passwordLabel": "Contraseña",
+            "forgetAccount": "¿Olvidaste tu contraseña?",
+            "signIn": "Iniciar sesión",
+            "signUp": "Crear cuenta",
             "signingin": "Iniciando sesión..."
         },
-        "sign_up": {
+        "signUp": {
             "title": "Crear cuenta",
-            "email_label": "Correo electrónico",
-            "password_label": "Contraseña",
-            "sign_up": "Crear cuenta",
+            "emailLabel": "Correo electrónico",
+            "passwordLabel": "Contraseña",
+            "signUp": "Crear cuenta",
             "sigupingup": "Creando cuenta..."
         },
         "recover": {
             "title": "Recuperar contraseña",
-            "email_label": "Correo electrónico",
+            "emailLabel": "Correo electrónico",
             "send": "Enviar correo",
             "sending": "Enviando correo...",
-            "sent_success": "Se ha enviado un correo a su dirección de correo electrónico"
+            "sentSuccess": "Se ha enviado un correo a su dirección de correo electrónico"
         },
-        "task_home": {
-            "updating_tasks": "Actualizando tareas...",
-            "new_task": "Nueva tarea"
+        "taskHome": {
+            "updatingTasks": "Actualizando tareas...",
+            "newTask": "Nueva tarea"
         },
-        "tasks_archived": {
+        "tasksArchived": {
             "title": "Tareas completadas"
         },
-        "language_sheet": {
+        "languageSheet": {
             "title": "Seleccione lenguaje",
             "spanish": "Español",
             "english": "Inglés"
@@ -68,44 +68,44 @@
             "focus": "Mantente enfocado por",
             "completing": "Completando tarea"
         },
-        "create_task_group_sheet": {
+        "createTaskGroupSheet": {
             "title": "Nuevo grupo de tareas",
-            "label_input": "Ingrese el nombre del grupo",
-            "label_not_empty": "El nombre del grupo no puede estar vacío"
+            "labelInput": "Ingrese el nombre del grupo",
+            "labelNotEmpty": "El nombre del grupo no puede estar vacío"
         },
-        "create_task_sheet": {
+        "createTaskSheet": {
             "title": "Crear tarea",
-            "title_input": "Título de la tarea",
-            "description_input": "Descripción de la tarea (Opcional)",
-            "pomodoro_input": "Agregar pomodoro (Opcional)",
-            "select_time": "Seleccione tiempo",
-            "title_not_empty": "El título de la tarea no puede estar vacío",
+            "titleInput": "Título de la tarea",
+            "descriptionInput": "Descripción de la tarea (Opcional)",
+            "pomodoroInput": "Agregar pomodoro (Opcional)",
+            "selectTime": "Seleccione tiempo",
+            "titleNotEmpty": "El título de la tarea no puede estar vacío",
             "create": "Crear tarea"
         },
         "onboarding": {
             "title": "Tareas y Pomodoro",
             "description": "Organiza tus tareas y complétalas sencillamente"
         },
-        "update_task_group_sheet": {
+        "updateTaskGroupSheet": {
             "title": "Editar grupo de tareas",
-            "name_input": "Ingrese el nombre del grupo",
-            "name_not_empty": "El nombre del grupo no puede estar vacío",
+            "nameInput": "Ingrese el nombre del grupo",
+            "nameNotEmpty": "El nombre del grupo no puede estar vacío",
             "delete": "Eliminar grupo",
-            "cant_delete": "No se puede eliminar el grupo porque tiene tareas relacionadas"
+            "cantDelete": "No se puede eliminar el grupo porque tiene tareas relacionadas"
         },
-        "update_task_sheet": {
+        "updateTaskSheet": {
             "title": "Editar tarea",
-            "title_input": "Título de la tarea",
-            "description_input": "Descripción de la tarea (Opcional)",
-            "pomodoro_input": "Agregar pomodoro (Opcional)",
-            "select_time": "Seleccione tiempo",
-            "title_not_empty": "El título de la tarea no puede estar vacío",
+            "titleInput": "Título de la tarea",
+            "descriptionInput": "Descripción de la tarea (Opcional)",
+            "pomodoroInput": "Agregar pomodoro (Opcional)",
+            "selectTime": "Seleccione tiempo",
+            "titleNotEmpty": "El título de la tarea no puede estar vacío",
             "update": "Editar tarea",
             "delete": "Eliminar tarea"
         }
     },
     "widgets": {
-        "task_group_list": {
+        "taskGroupList": {
             "alert1": "Solo se pueden crear hasta",
             "alert2": "grupos de tareas"
         }

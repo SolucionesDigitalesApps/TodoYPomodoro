@@ -1,0 +1,96 @@
+general:
+  cancel: "Cancelar"
+  accept: "Aceptar"
+  close: "Cerrar"
+  next: "Siguiente"
+  error: "Ocurrió un error"
+  dear: "Estimado usuario"
+  disabled: "Su cuenta se encuentra deshabilitada. Comuníquese con el administrador para más información"
+  empty: "Sin resultados"
+  create: "Crear"
+  tasks: "Tareas y Pomodoro"
+  edit: "Editar"
+  update: "Actualizar"
+  notNow: "Ahora no"
+validators:
+  invalidEmail: "El correo electrónico no es válido"
+  invalidPassword: "La contraseña no es válida"
+time:
+  minute: "minuto"
+  minutes: "minutos"
+  hour: "hora"
+  hours: "horas"
+  day: "día"
+  days: "días"
+  and: " y "
+pages:
+  signIn:
+    emailLabel: "Correo electrónico"
+    passwordLabel: "Contraseña"
+    forgetAccount: "¿Olvidaste tu contraseña?"
+    signIn: "Iniciar sesión"
+    signUp: "Crear cuenta"
+    signingin: "Iniciando sesión..."
+  signUp:
+    title: "Crear cuenta"
+    emailLabel: "Correo electrónico"
+    passwordLabel: "Contraseña"
+    signUp: "Crear cuenta"
+    sigupingup: "Creando cuenta..."
+  recover:
+    title: "Recuperar contraseña"
+    emailLabel: "Correo electrónico"
+    send: "Enviar correo"
+    sending: "Enviando correo..."
+    sentSuccess: "Se ha enviado un correo a su dirección de correo electrónico"
+  taskHome:
+    updatingTasks: "Actualizando tareas..."
+    newTask: "Nueva tarea"
+  tasksArchived:
+    title: "Tareas completadas"
+  languageSheet:
+    title: "Seleccione lenguaje"
+    spanish: "Español"
+    english: "Inglés"
+  pomodoro:
+    title: "Pomodoro"
+    finished: "La tarea ha finalizado"
+    focus: "Mantente enfocado por"
+    completing: "Completando tarea"
+  createTaskGroupSheet:
+    title: "Nuevo grupo de tareas"
+    labelInput: "Ingrese el nombre del grupo"
+    labelNotEmpty: "El nombre del grupo no puede estar vacío"
+  createTaskSheet:
+    title: "Crear tarea"
+    titleInput: "Título de la tarea"
+    descriptionInput: "Descripción de la tarea (Opcional)"
+    pomodoroInput: "Agregar pomodoro (Opcional)"
+    selectTime: "Seleccione tiempo"
+    titleNotEmpty: "El título de la tarea no puede estar vacío"
+    create: "Crear tarea"
+  onboarding:
+    title: "Tareas y Pomodoro"
+    description: "Organiza tus tareas y complétalas sencillamente"
+  updateTaskGroupSheet:
+    title: "Editar grupo de tareas"
+    nameInput: "Ingrese el nombre del grupo"
+    nameNotEmpty: "El nombre del grupo no puede estar vacío"
+    delete: "Eliminar grupo"
+    cantDelete: "No se puede eliminar el grupo porque tiene tareas relacionadas"
+  updateTaskSheet:
+    title: "Editar tarea"
+    titleInput: "Título de la tarea"
+    descriptionInput: "Descripción de la tarea (Opcional)"
+    pomodoroInput: "Agregar pomodoro (Opcional)"
+    selectTime: "Seleccione tiempo"
+    titleNotEmpty: "El título de la tarea no puede estar vacío"
+    update: "Editar tarea"
+    delete: "Eliminar tarea"
+widgets:
+  taskGroupList:
+    alert1: "Solo se pueden crear hasta"
+    alert2: "grupos de tareas"
+updates:
+  must1: "Debe ir a"
+  must2: "manualmente"

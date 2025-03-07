@@ -1,8 +1,8 @@
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n_delegate.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_y_pomodoro_app/core/localization/app_localizations.dart';
 import 'package:todo_y_pomodoro_app/core/themes.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
 import 'package:todo_y_pomodoro_app/features/auth/providers/user_provider.dart';
@@ -21,10 +21,8 @@ Future<void> myBackgroundMessageHandler(RemoteMessage message) async {
 }
 
 class MyApp extends StatefulWidget {
-  final FlutterI18nDelegate flutterI18nDelegate;
   const MyApp({
     super.key,
-    required this.flutterI18nDelegate
   });
 
   @override
@@ -36,6 +34,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver{
   AppLifecycleState lastAppState = AppLifecycleState.resumed;
   final navigatorKey = GlobalKey<NavigatorState>();
   final commonController = CommonController();
+  Locale currentLocale = const Locale('en');
   
   @override
   void initState() {
@@ -51,6 +50,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver{
       if(event.data["type"] == "ota_update"){
         getAppUpdate();
       }
+    });
+    AppLocalizations.setLocaleStream.listen((event) {
+      currentLocale = event;
+      setState(() {});
     });
   }
 
@@ -90,15 +93,13 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver{
         navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
         title: 'TareasYPomodoro',
-        localizationsDelegates: [
-          widget.flutterI18nDelegate,
+        supportedLocales: AppLocalizations.supportedLocales,
+        locale: currentLocale,
+        localizationsDelegates: const [
           GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: const [
-          Locale('en', 'US'),
-          Locale('es', 'ES'),
+          GlobalWidgetsLocalizations.delegate,
+          AppLocalizations.delegate,
         ],
         theme: Themes.lightMode,
         home: const RouterPage()
