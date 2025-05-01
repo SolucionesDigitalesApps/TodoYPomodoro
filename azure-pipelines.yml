@@ -18,7 +18,8 @@ stages:
       inputs:
         mode: 'auto'
         channel: 'stable'
-        version: 'latest'
+        version: 'custom'
+        customVersion: 3.24.3
 
     - task: FlutterCommand@0
       displayName: "Run Flutter diagnostics"
@@ -31,6 +32,7 @@ stages:
       inputs:
         target: 'aab'
         projectDirectory: '$(Build.SourcesDirectory)'
+        buildFlavour: 'production'
 
     - task: CopyFiles@2
       displayName: "Copy app to staging directory"
