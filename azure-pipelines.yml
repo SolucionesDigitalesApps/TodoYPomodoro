@@ -12,6 +12,24 @@ stages:
   - job: AndroidJob
     displayName: Android
     steps: 
+    
+    - task: DownloadSecureFile@1
+      displayName: "Download key.properties file"
+      name: downloadKeyProps
+      inputs:
+        secureFile: 'key.properties'
+
+    - task: DownloadSecureFile@1
+      displayName: "Download .jks file"
+      name: downloadKeystore
+      inputs:
+        secureFile: 'miruta_key.jks'
+
+    - script: |
+        mkdir -p android/app
+        mv $(downloadKeyProps.secureFilePath) android/key.properties
+        mv $(downloadKeystore.secureFilePath) android/app/miruta_key.jks
+      displayName: 'Move secure files into project'
 
     - task: FlutterInstall@0
       displayName: "Install Flutter SDK"
