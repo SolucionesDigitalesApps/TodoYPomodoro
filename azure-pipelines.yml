@@ -33,6 +33,7 @@ stages:
         target: 'aab'
         projectDirectory: '$(Build.SourcesDirectory)'
         buildFlavour: 'production'
+        extraArgs: '-t lib/main_production.dart'
 
     - task: CopyFiles@2
       displayName: "Copy app to staging directory"
