@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shorebird_code_push/shorebird_code_push.dart';
 import 'package:todo_y_pomodoro_app/core/launcher_utils.dart';
 import 'package:todo_y_pomodoro_app/features/common/controllers/local_controller.dart';
