@@ -1,0 +1,69 @@
+trigger:
+  - master
+
+stages:
+- stage: AndroidStage
+  pool:
+    vmImage: 'ubuntu-latest'
+  dependsOn: []
+  displayName: Android Build
+  jobs:
+
+  - job: AndroidJob
+    displayName: Android
+    steps: 
+    
+    - task: DownloadSecureFile@1
+      displayName: "Download key.properties file"
+      name: downloadKeyProps
+      inputs:
+        secureFile: 'key.properties'
+
+    - task: DownloadSecureFile@1
+      displayName: "Download .jks file"
+      name: downloadKeystore
+      inputs:
+        secureFile: 'miruta_key.jks'
+
+    - script: |
+        mkdir -p android/app
+        mv $(downloadKeyProps.secureFilePath) android/key.properties
+        mv $(downloadKeystore.secureFilePath) android/app/miruta_key.jks
+      displayName: 'Move secure files into project'
+
+    - task: FlutterInstall@0
+      displayName: "Install Flutter SDK"
+      inputs:
+        mode: 'auto'
+        channel: 'stable'
+        version: 'custom'
+        customVersion: 3.24.3
+
+    - task: FlutterCommand@0
+      displayName: "Run Flutter diagnostics"
+      inputs:
+        projectDirectory: '.'
+        arguments: 'doctor -v'
+
+    - task: FlutterBuild@0
+      displayName: "Build application"
+      inputs:
+        target: 'aab'
+        projectDirectory: '$(Build.SourcesDirectory)'
+        buildFlavour: 'production'
+        extraArgs: '-t lib/main_production.dart'
+
+    - task: CopyFiles@2
+      displayName: "Copy app to staging directory"
+      inputs:
+        sourceFolder: '$(Agent.BuildDirectory)'
+        contents: '**/bundle/**'
+        targetFolder: '$(Build.StagingDirectory)'
+        flattenFolders: true
+
+    - task: PublishBuildArtifacts@1
+      displayName: "Publish AAB file"
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'AAB'
+        publishLocation: 'Container'
