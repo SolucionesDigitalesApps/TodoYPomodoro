@@ -113,7 +113,7 @@ class _TasksHomePageState extends State<TasksHomePage> {
             showCustomBottomSheet(context, const CreateTaskGroupSheet());
             return;
           }
-          showCustomBottomSheet(context, const CreateTaskSheet());
+          Navigator.push(context, cupertinoNavigationRoute(context, const CreateTaskPage()));
         }, 
         label: Text(FlutterI18n.translate(context, "pages.task_home.new_task"), style: const TextStyle(
           color: Colors.white

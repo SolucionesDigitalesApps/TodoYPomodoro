@@ -11,7 +11,6 @@ import 'package:todo_y_pomodoro_app/features/common/widgets/app_version_label.da
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_button.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_multiline_box.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_text_form_field.dart';
-import 'package:todo_y_pomodoro_app/features/common/widgets/sheet_content_layout.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/v_spacing.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/duration_selector.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/models/task_model.dart';
@@ -19,16 +18,16 @@ import 'package:todo_y_pomodoro_app/features/tasks/providers/tasks_activity_prov
 import 'package:todo_y_pomodoro_app/features/tasks/providers/tasks_provider.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/widgets/task_group_list.dart';
 
-class CreateTaskSheet extends StatefulWidget {
-  const CreateTaskSheet({
+class CreateTaskPage extends StatefulWidget {
+  const CreateTaskPage({
     super.key,
   });
 
   @override
-  State<CreateTaskSheet> createState() => _CreateTaskSheetState();
+  State<CreateTaskPage> createState() => _CreateTaskPageState();
 }
 
-class _CreateTaskSheetState extends State<CreateTaskSheet> {
+class _CreateTaskPageState extends State<CreateTaskPage> {
   final taskTitleController = TextEditingController();
   final taskDescriptionController = TextEditingController();
   Duration selectedDuration = const Duration(seconds: 0);
@@ -37,11 +36,12 @@ class _CreateTaskSheetState extends State<CreateTaskSheet> {
   @override
   Widget build(BuildContext context) {
     final taskGroupId = Provider.of<TasksActivityProvider>(context).selectedTaskGroupId;
-    return SheetContentLayout(
-      child: SingleChildScrollView(
+    return Scaffold(
+      body: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            const VSpacing(5),
             AppHeader(title: FlutterI18n.translate(context, "pages.create_task_sheet.title")),
             const VSpacing(3),
             const TaskGroupList(),

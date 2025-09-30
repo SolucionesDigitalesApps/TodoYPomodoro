@@ -10,7 +10,6 @@ import 'package:todo_y_pomodoro_app/features/common/widgets/custom_button.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_multiline_box.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_text_button.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/custom_text_form_field.dart';
-import 'package:todo_y_pomodoro_app/features/common/widgets/sheet_content_layout.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/v_spacing.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/duration_selector.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/models/task_model.dart';
@@ -18,18 +17,18 @@ import 'package:todo_y_pomodoro_app/features/tasks/providers/tasks_activity_prov
 import 'package:todo_y_pomodoro_app/features/tasks/providers/tasks_provider.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/widgets/task_group_list.dart';
 
-class UpdateTaskSheet extends StatefulWidget {
+class UpdateTaskPage extends StatefulWidget {
   final TaskModel taskModel;
-  const UpdateTaskSheet({
+  const UpdateTaskPage({
     super.key,
     required this.taskModel,
   });
 
   @override
-  State<UpdateTaskSheet> createState() => _UpdateTaskSheetState();
+  State<UpdateTaskPage> createState() => _UpdateTaskPageState();
 }
 
-class _UpdateTaskSheetState extends State<UpdateTaskSheet> {
+class _UpdateTaskPageState extends State<UpdateTaskPage> {
   late TextEditingController taskTitleController;
   late TextEditingController taskDescriptionController;
   late Duration selectedDuration;
@@ -46,11 +45,12 @@ class _UpdateTaskSheetState extends State<UpdateTaskSheet> {
   @override
   Widget build(BuildContext context) {
     final taskGroupId = Provider.of<TasksActivityProvider>(context, listen: false).selectedTaskGroupId;
-    return SheetContentLayout(
-      child: SingleChildScrollView(
+    return Scaffold(
+      body: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            const VSpacing(5),
             AppHeader(title: FlutterI18n.translate(context, "pages.update_task_sheet.title")),
             const VSpacing(3),
             const TaskGroupList(),

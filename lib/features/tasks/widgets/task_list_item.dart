@@ -11,7 +11,7 @@ import 'package:todo_y_pomodoro_app/features/common/widgets/v_spacing.dart';
 import 'package:todo_y_pomodoro_app/features/pomodoro/pages/pomodoro_page.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/models/task_model.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/providers/tasks_provider.dart';
-import 'package:todo_y_pomodoro_app/features/tasks/widgets/update_task_sheet.dart';
+import 'package:todo_y_pomodoro_app/features/tasks/widgets/update_task_page.dart';
 
 class TaskListItem extends StatelessWidget {
   final TaskModel taskModel;
@@ -34,9 +34,7 @@ class TaskListItem extends StatelessWidget {
       child: InkWell(
         onTap: (){
           if(taskModel.state != TaskState.pending.value) return;
-          showCustomBottomSheet(context, UpdateTaskSheet(
-            taskModel: taskModel,
-          ));
+          Navigator.push(context, cupertinoNavigationRoute(context, UpdateTaskPage(taskModel: taskModel)));
         },
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
