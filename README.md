@@ -14,7 +14,7 @@
 - Crear el tag de acuerdo a la versión actual. Ejem: v1.0.3+6
 - En caso de compilado manual ejecutar el comando:
 ```
-    shorebird release android --flavor production -t lib/main_production.dart
+    shorebird release android --flavor production -t lib/main_production.dart --flutter-version=3.32.0
 ```
 - A continuación usar el archivo .aab y subirlo al canal de producción de PlayStore
 - En caso de compilado en la nube (Codemagic). Seleccionar la rama master, el workflow Release Android e iniciar el compilado.
@@ -29,7 +29,7 @@
 - Crear el tag de acuerdo a la versión actual. Ejem: v1.0.3+6-patch1
 - En caso de compilado manual ejecutar el comando:
 ```
-    shorebird patch android --flavor production -t lib/main_production.dart
+    shorebird patch android --flavor production -t lib/main_production.dart --flutter-version=3.32.0
 ```
 - En caso de compilado en la nube (Codemagic). Seleccionar la rama master, el workflow Patch Android e iniciar el compilado.
 - En ambos casos la publicación del parche se hace en automático luego de compilado.

@@ -18,25 +18,18 @@ class TasksProvider extends ChangeNotifier {
   List<TaskModel> tasksPerGroup(String groupId) => 
     tasks.where((task) => task.groupId == groupId).toList();
   
-  void swapTasks<TaskModel>(int index1, int index2) {
-    final orders = tasks.map((e) => e.order).toList();
-    if (index1 < 0 || index2 < 0 || index1 >= tasks.length || index2 >= tasks.length) {
-      return;
-    }
-    
-    if (index1 == index2) {
-      return;
-    }
-    final tempMoving = tasks[index1];
-    tasks.removeAt(index1);
-    tasks.insert(index2, tempMoving);
-    for(int i = 0; i < tasks.length; i++) {
-      tasks[i] = tasks[i].copyWith(
-        updatedAt: tasks[i].updatedAt, 
-        deletedAt: tasks[i].deletedAt,
-        order: orders[i]
-      );
-    }
+  void swapTasks<TaskModel>(int oldIndex, int newIndex) {
+    final movingTask = tasks[oldIndex];
+    final receivingTask = tasks[newIndex];
+
+    // 1. Crear copias con los nuevos 'order'
+    final updatedMoving = movingTask.copyWith(order: receivingTask.order, updatedAt: movingTask.updatedAt, deletedAt: movingTask.deletedAt);
+    final updatedReceiving = receivingTask.copyWith(order: movingTask.order, updatedAt: receivingTask.updatedAt, deletedAt: receivingTask.deletedAt);
+
+    // 2. Intercambiar posiciones en la lista
+    tasks[oldIndex] = updatedReceiving;
+    tasks[newIndex] = updatedMoving;
+    tasks = tasks.map((e){ return e.copyWith(updatedAt: e.updatedAt, deletedAt: e.deletedAt);}).toList();
     notifyListeners();
     tasksController.swapTasks(tasks);
   }
@@ -48,7 +41,6 @@ class TasksProvider extends ChangeNotifier {
     notifyListeners();
     tasksSubscription = tasksController.tasksStream(userId).listen((snapshots) {
       tasks = tasksController.parseTasks(snapshots.docs);
-      print(tasks);
       tasksLoading = false;
       tasksError = false;
       notifyListeners();

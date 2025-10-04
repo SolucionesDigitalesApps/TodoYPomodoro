@@ -31,14 +31,16 @@ class _TasksListState extends State<TasksList> {
     final tasksActivityProvider = Provider.of<TasksActivityProvider>(context);
     final tasksProvider = Provider.of<TasksProvider>(context);
     final taskList = tasksProvider.tasksPerGroup(tasksActivityProvider.selectedTaskGroupId);
-    // taskList.sort((a, b) => b.order.compareTo(a.order));
     return tasksProvider.tasksLoading ? const LoadingView(heigth: 80) :
       tasksProvider.tasksError ? const ErrorView(heigth: 80) : 
     SizedBox(
       height: mqHeigth(context, 80),
       child: ReorderableListView.builder(
         onReorder: (oldIndex, newIndex) {
-          tasksProvider.swapTasks(oldIndex,  newIndex > oldIndex ? newIndex - 1 : newIndex);
+          final realOldIndex = tasksProvider.tasks.indexWhere((task) => task.id == taskList[oldIndex].id);
+          final realNewIndex = tasksProvider.tasks.indexWhere((task) => task.id == taskList[newIndex].id);
+          print("oldIndex: ${realOldIndex}, newIndex: ${realNewIndex}");
+          tasksProvider.swapTasks(realOldIndex,  realNewIndex);
         },
         itemCount: taskList.length,
         itemBuilder: (context, index) {
