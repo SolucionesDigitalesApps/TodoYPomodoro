@@ -1,12 +1,14 @@
 // ignore: depend_on_referenced_packages
 import 'dart:io';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n_delegate.dart';
 import 'package:flutter_i18n/loaders/file_translation_loader.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:todo_y_pomodoro_app/app.dart';
+import 'package:todo_y_pomodoro_app/features/common/controllers/local_controller.dart';
 
  class MyHttpOverrides extends HttpOverrides{
   @override
@@ -17,13 +19,13 @@ import 'package:todo_y_pomodoro_app/app.dart';
 }
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
+  await Firebase.initializeApp();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitDown,
     DeviceOrientation.portraitUp,
   ]);
-  // final LocalController localManager = LocalController();
-  // await localManager.initPrefs();
+  final LocalController localManager = LocalController();
+  await localManager.initPrefs();
   final FlutterI18nDelegate flutterI18nDelegate = FlutterI18nDelegate(
     translationLoader: FileTranslationLoader(
       useCountryCode: false,
