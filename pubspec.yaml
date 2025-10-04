@@ -18,21 +18,21 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   provider: ^6.0.5
-  # sentry_flutter: ^7.18.0
+  sentry_flutter: ^9.6.0
   flutter_svg: ^1.0.3
-  # package_info_plus: ^8.3.1
+  package_info_plus: ^8.3.1
   # firebase_core: ^2.14.0
   # firebase_auth: ^4.6.3
   # firebase_messaging: ^14.6.3
   # cloud_firestore: ^4.8.1
   duration_picker: ^1.2.0
   circular_countdown_timer: ^0.2.3
-  # flutter_i18n: ^0.36.2
+  flutter_i18n: ^0.36.2
   shared_preferences: ^2.5.3
-  # url_launcher: ^6.3.2
+  url_launcher: ^6.3.2
   # google_mobile_ads: ^6.0.0
   collection: ^1.17.0
-  # shorebird_code_push: ^1.1.3
+  shorebird_code_push: ^1.1.3
   win32: ^5.7.2
   # webview_flutter: ^4.13.0
 
