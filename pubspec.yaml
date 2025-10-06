@@ -4,7 +4,7 @@ description: A new Flutter project.
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.5+6
+version: 1.0.6+8
 
 environment:
   sdk: ^3.5.3
@@ -21,10 +21,10 @@ dependencies:
   sentry_flutter: ^9.6.0
   flutter_svg: ^1.0.3
   package_info_plus: ^8.3.1
-  firebase_core: ^2.14.0
-  firebase_auth: ^4.6.3
-  firebase_messaging: ^14.6.3
-  cloud_firestore: ^4.8.1
+  firebase_core: ^4.1.1
+  firebase_auth: ^6.1.0
+  firebase_messaging: ^16.0.2
+  cloud_firestore: ^6.0.0
   duration_picker: ^1.2.0
   circular_countdown_timer: ^0.2.3
   flutter_i18n: ^0.36.2
