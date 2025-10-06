@@ -134,14 +134,14 @@ class _PomodoroPageState extends State<PomodoroPage> {
                       size: 24, 
                       fillColor: Theme.of(context).primaryColor,
                       onPressed: (){
-                        if(pomodoroController.isPaused.value){
+                        if(pomodoroController.isPaused){
                           pomodoroController.resume();
                         }else{
                           pomodoroController.pause();
                         }
                         setState(() {});
                       }, 
-                      icon: Icon(pomodoroController.isPaused.value ? Icons.play_arrow_rounded : Icons.pause, color: Colors.white, size: 30)
+                      icon: Icon(pomodoroController.isPaused ? Icons.play_arrow_rounded : Icons.pause, color: Colors.white, size: 30)
                     ),
                     const HSpacing(3),
                     CustomIconButton(
