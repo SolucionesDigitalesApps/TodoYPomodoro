@@ -26,16 +26,16 @@ class TaskListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        vertical: mqHeigth(context, 1.5),
-        horizontal: mqWidth(context, 5)
-      ),
-      child: InkWell(
-        onTap: (){
-          if(taskModel.state != TaskState.pending.value) return;
-          Navigator.push(context, cupertinoNavigationRoute(context, UpdateTaskPage(taskModel: taskModel)));
-        },
+    return InkWell(
+      onTap: (){
+        if(taskModel.state != TaskState.pending.value) return;
+        Navigator.push(context, cupertinoNavigationRoute(context, UpdateTaskPage(taskModel: taskModel)));
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          vertical: mqHeigth(context, 1.5),
+          horizontal: mqWidth(context, 5)
+        ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

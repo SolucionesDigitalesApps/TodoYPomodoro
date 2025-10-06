@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_y_pomodoro_app/core/date_utils.dart';
-import 'package:todo_y_pomodoro_app/core/navigation.dart';
-import 'package:todo_y_pomodoro_app/core/task_state_enum.dart';
 import 'package:todo_y_pomodoro_app/core/utils.dart';
+import 'package:todo_y_pomodoro_app/features/common/models/error_response.dart';
+import 'package:todo_y_pomodoro_app/features/common/widgets/alerts.dart';
 import 'package:todo_y_pomodoro_app/features/common/widgets/v_spacing.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/models/task_model.dart';
-import 'package:todo_y_pomodoro_app/features/tasks/widgets/update_task_page.dart';
+import 'package:todo_y_pomodoro_app/features/tasks/providers/tasks_provider.dart';
 
 class ArchivedTaskListItem extends StatelessWidget {
   final TaskModel taskModel;
@@ -26,9 +28,17 @@ class ArchivedTaskListItem extends StatelessWidget {
         horizontal: mqWidth(context, 5)
       ),
       child: InkWell(
-        onTap: (){
-          if(taskModel.state != TaskState.pending.value) return;
-          Navigator.push(context, cupertinoNavigationRoute(context, UpdateTaskPage(taskModel: taskModel)));
+        onLongPress: () async {
+          final value = await showQuestionAlert(context, "¿Está seguro?", "De eliminar la tarea");
+          if(value == null) return;  
+          final tasksProvider = Provider.of<TasksProvider>(context, listen: false);
+          final resp = await tasksProvider.updateTask(taskModel.copyWith(
+            updatedAt: DateTime.now(), 
+            deletedAt: DateTime.now()
+          ));
+          if(resp is ErrorResponse){
+            showErrorAlert(context, FlutterI18n.translate(context, "general.dear"), [FlutterI18n.translate(context, "general.error")]);
+          }
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
