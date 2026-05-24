@@ -19,17 +19,21 @@ class TasksProvider extends ChangeNotifier {
     tasks.where((task) => task.groupId == groupId).toList();
   
   void swapTasks<TaskModel>(int oldIndex, int newIndex) {
-    final movingTask = tasks[oldIndex];
-    final receivingTask = tasks[newIndex];
+    if (oldIndex < 0 || newIndex < 0 || oldIndex >= tasks.length || newIndex >= tasks.length) {
+      return;
+    }
 
-    // 1. Crear copias con los nuevos 'order'
-    final updatedMoving = movingTask.copyWith(order: receivingTask.order, updatedAt: movingTask.updatedAt, deletedAt: movingTask.deletedAt);
-    final updatedReceiving = receivingTask.copyWith(order: movingTask.order, updatedAt: receivingTask.updatedAt, deletedAt: receivingTask.deletedAt);
+    // Remover el elemento de su posición actual
+    final movingTask = tasks.removeAt(oldIndex);
 
-    // 2. Intercambiar posiciones en la lista
-    tasks[oldIndex] = updatedReceiving;
-    tasks[newIndex] = updatedMoving;
-    tasks = tasks.map((e){ return e.copyWith(updatedAt: e.updatedAt, deletedAt: e.deletedAt);}).toList();
+    // Insertarlo en la nueva posición
+    tasks.insert(newIndex, movingTask);
+
+    // Actualizar los órdenes de todos los elementos
+    for (int i = 0; i < tasks.length; i++) {
+      tasks[i] = tasks[i].copyWith(order: i + 1, updatedAt: tasks[i].updatedAt, deletedAt: tasks[i].deletedAt);
+    }
+
     notifyListeners();
     tasksController.swapTasks(tasks);
   }
@@ -49,6 +53,11 @@ class TasksProvider extends ChangeNotifier {
       tasksError = true;
       notifyListeners();
     });
+  }
+
+  int get maxTaskOrder {
+    if (tasks.isEmpty) return 0;
+    return tasks.map((task) => task.order).reduce((a, b) => a > b ? a : b);
   }
 
   //GET

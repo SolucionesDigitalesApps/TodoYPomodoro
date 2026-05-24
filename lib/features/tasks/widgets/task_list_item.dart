@@ -17,11 +17,13 @@ class TaskListItem extends StatelessWidget {
   final TaskModel taskModel;
   final bool fromPomodoroPage;
   final Function() onCompleteTask;
+  final int index;
   const TaskListItem({
     super.key,
     required this.taskModel,
     this.fromPomodoroPage = false,
-    required this.onCompleteTask
+    required this.onCompleteTask,
+    required this.index
   });
 
   @override
@@ -36,8 +38,9 @@ class TaskListItem extends StatelessWidget {
           vertical: mqHeigth(context, 1.5),
           horizontal: mqWidth(context, 5)
         ),
+        color: index % 2 == 0 ? Colors.white : const Color(0xffF5F5F5),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
               width: mqWidth(context, 80),
@@ -45,8 +48,12 @@ class TaskListItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(taskModel.title, style: Theme.of(context).textTheme.bodyLarge, maxLines: 2, overflow: TextOverflow.ellipsis,),
-                  const VSpacing(1),
-                  if(taskModel.hasDescription) Text(taskModel.description, style: Theme.of(context).textTheme.bodySmall, maxLines: 1, overflow: TextOverflow.ellipsis,),
+                  if(taskModel.hasDescription) Column(
+                    children: [
+                      const VSpacing(1),
+                      Text(taskModel.description, style: Theme.of(context).textTheme.bodySmall, maxLines: 1, overflow: TextOverflow.ellipsis,),
+                    ],
+                  ),
                 ],
               ),
             ),

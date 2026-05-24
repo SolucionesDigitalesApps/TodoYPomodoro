@@ -49,6 +49,7 @@ class _TasksListState extends State<TasksList> {
             key: Key("task_list_item_${taskModel.id}"),
             taskModel: taskModel,
             onCompleteTask: (){},
+            index: index,
           );
         },
         padding: EdgeInsets.only(

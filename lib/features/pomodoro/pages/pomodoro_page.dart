@@ -57,6 +57,7 @@ class _PomodoroPageState extends State<PomodoroPage> {
                 TaskListItem(
                   taskModel: widget.taskModel,
                   fromPomodoroPage: true,
+                  index: 0,
                   onCompleteTask: () async {
                     pomodoroController.pause();
                     await showSuccessAlert(context, FlutterI18n.translate(context, "general.dear"), FlutterI18n.translate(context, "pages.pomodoro.finished")).then((value) {

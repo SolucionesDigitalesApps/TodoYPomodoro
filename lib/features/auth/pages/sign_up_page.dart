@@ -123,7 +123,6 @@ class _SignUpPageState extends State<SignUpPage> {
       email: emailController.text, 
       enabled: true, 
       lastGroupId: "",
-      lastTaskOrder: 0,
       fcmToken: fcmToken
     );
     final responseUser = await authController.createUserById(userModel);

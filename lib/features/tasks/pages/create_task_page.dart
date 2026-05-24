@@ -99,7 +99,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                         FocusScope.of(context).unfocus();
                         final tasksProvider = Provider.of<TasksProvider>(context, listen: false);
                         final userProvider = Provider.of<UserProvider>(context, listen: false);
-                        final newOrder = userProvider.currentUser.lastTaskOrder + 1;
+                        final newOrder = tasksProvider.maxTaskOrder + 1;
                         final task = TaskModel.empty.copyWith(
                           updatedAt: null, 
                           deletedAt: null, 
@@ -118,17 +118,6 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                           showErrorAlert(context, FlutterI18n.translate(context, "general.dear"), [resp.message]);
                           return;
                         }
-                        final newUser = userProvider.currentUser.copyWith(
-                          lastTaskOrder: newOrder
-                        );
-                        final respUser = await userProvider.updateUser(newUser);
-                        if(respUser == null) return;
-                        if(respUser is ErrorResponse){
-                          if(!mounted) return;
-                          showErrorAlert(context, FlutterI18n.translate(context, "general.dear"), [resp.message]);
-                          return;
-                        }
-                        userProvider.setNewUser(newUser);
                         if(!mounted) return;
                         Navigator.pop(context);
                       },

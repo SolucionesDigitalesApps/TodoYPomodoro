@@ -20,7 +20,7 @@ import 'package:todo_y_pomodoro_app/features/tasks/providers/task_groups_provide
 import 'package:todo_y_pomodoro_app/features/tasks/providers/tasks_activity_provider.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/providers/tasks_provider.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/widgets/create_task_group_sheet.dart';
-import 'package:todo_y_pomodoro_app/features/tasks/widgets/create_task_sheet.dart';
+import 'package:todo_y_pomodoro_app/features/tasks/pages/create_task_page.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/widgets/task_group_list.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/widgets/tasks_home_options.dart';
 import 'package:todo_y_pomodoro_app/features/tasks/widgets/tasks_list.dart';
@@ -116,7 +116,8 @@ class _TasksHomePageState extends State<TasksHomePage> {
           Navigator.push(context, cupertinoNavigationRoute(context, const CreateTaskPage()));
         }, 
         label: Text(FlutterI18n.translate(context, "pages.task_home.new_task"), style: const TextStyle(
-          color: Colors.white
+          color: Colors.white,
+          fontSize: 16
         )), 
         icon: const Icon(Icons.add, color: Colors.white),
       ),

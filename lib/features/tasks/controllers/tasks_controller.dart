@@ -20,7 +20,7 @@ class TasksController {
       where("deleted_at", isNull: true)
         .where("state", isEqualTo: TaskState.pending.value)
         .where("user_id", isEqualTo: userId)
-          .orderBy("order", descending: true)
+          .orderBy("order", descending: false)
           .snapshots();
           
   Stream<QuerySnapshot<Map<String, dynamic>>> tasksArchivedStream(String userId, String groupId) => 
